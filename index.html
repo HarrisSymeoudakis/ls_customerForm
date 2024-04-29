@@ -332,8 +332,8 @@
            .then(response => response.json())
            .then(data => {
          		// Display JSON data on the page
-         	const jsonDataElement = document.getElementById('jsonData');
-         	jsonDataElement.innerText = JSON.stringify(data, null, 2); // Pretty-print JSON
+         	//const jsonDataElement = document.getElementById('jsonData');
+         	//jsonDataElement.innerText = JSON.stringify(data, null, 2); // Pretty-print JSON
          	document.getElementById('customerId').value = data.customerId;
          	document.getElementById('name').value = data.firstName;
          	document.getElementById('lastName').value = data.lastName;
