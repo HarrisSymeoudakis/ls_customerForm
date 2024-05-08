@@ -344,6 +344,10 @@
       <script>
          fetch('https://ls-customerserver.onrender.com/swagger')
             .then(response => response.json())
+            .then(data => {
+         		// Display JSON data on the page
+         	   console.log('storeId: ', data.storeId);
+           })
             .catch(error => console.error('Error fetching data:', error));
       </script>
    </body>
