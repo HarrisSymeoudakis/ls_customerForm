@@ -330,6 +330,7 @@
       <script>
          fetch('https://ls-customerserver.onrender.com/latest')
            .then(response => response.json())
+            .then(console.log(response)
            .then(data => {
          		// Display JSON data on the page
          	//const jsonDataElement = document.getElementById('jsonData');
