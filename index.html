@@ -126,7 +126,7 @@
                 document.getElementById('customerId').value = data.customerId;
                 document.getElementById('name').value = data.firstName;
                 document.getElementById('lastName').value = data.lastName;
-                document.getElementById('email').value = data.email; // Assuming you have an input field with id 'email' for email
+                document.getElementById('email').value = data.emails.email; // Assuming you have an input field with id 'email' for email
             })
             .catch(error => console.error('Error fetching data:', error));
 
@@ -141,7 +141,7 @@
             // Update the data
             responseData.customerId = customerId;
             responseData.firstName = name;
-            responseData.email = email;
+            responseData.emails.email = email;
             responseData.lastName = lastName;
 
             // Log the updated response to the console
