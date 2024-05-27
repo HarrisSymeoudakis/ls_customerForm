@@ -27,6 +27,6 @@
 .list-group-item.active {
     z-index: 2;
     color: #fff;
-    background-color: #f3a32c;
-    border-color: #f3a32c;
+    background-color: #f3a32c !important;
+    border-color: #f3a32c !important;
 }
