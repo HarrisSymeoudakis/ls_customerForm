@@ -29,10 +29,9 @@ body {
 
 .list-group-item.active {
     z-index: 3;
-    background-color: #f3a32c !important;
-    border-color: #f3a32c !important;
+    background-color: #f3a32c ;
+    border-color: #f3a32c ;
 }
 
-.blue-text {
-    color: blue;
-}
+.form-control{
+    border-color : #f3a32c;}
