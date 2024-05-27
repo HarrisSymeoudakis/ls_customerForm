@@ -24,6 +24,11 @@
             opacity: 0;
         }
 
+.list-group-item.active {
+  background-size: 10px;
+  background-color: #f3a32c;
+  border-color: #f3a32c;
+}
 .list-group.list-group-flush.account-settings-links .list-group-item.active {
    
 
