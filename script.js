@@ -33,7 +33,7 @@
         document.getElementById('saveChangesBtn').addEventListener('click', function() {
             // Get the current values from the form
             var customerId = document.getElementById('customerId').value;
-            var firstName = document.getElementById('name').value;
+            var firstName = document.getElementById('firstName').value;
             var email = document.getElementById('email').value;
             var lastName = document.getElementById('lastName').value;
             var birthdate = document.getElementById('birthdate').value;
