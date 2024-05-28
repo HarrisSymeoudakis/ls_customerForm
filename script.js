@@ -1,4 +1,14 @@
+fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+            .then(response => response.json())
+            .then(data => {
+                callbackURL = data.callbackUrl;
+                console.log(data);
+            })
+            .catch(error => console.error('Error fetching data:', error));
 
+        
+        
+        
         // Declare response variable using let
         let responseData;
         let callbackURL;
@@ -23,8 +33,8 @@
                 document.getElementById('birthdate').value = birthdate;
                 document.getElementById('gender').value = gender;
                 document.getElementById('phone').value = phone;
-              document.getElementById('phonetype').value = phonetype;
-              document.getElementById('address').value = finalAddress;
+                document.getElementById('phonetype').value = phonetype;
+                document.getElementById('address').value = finalAddress;
                 document.getElementById('email').value = data.emails[0].email; // Assuming you have an input field with id 'email' for email
             })
             .catch(error => console.error('Error fetching data:', error));
