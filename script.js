@@ -1,6 +1,7 @@
 fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
+              console.log(data);
               // Get the tbody element where we want to append the new rows
               const tbody = document.getElementById('ordersTableBody');
               
@@ -13,14 +14,14 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                       
                       // Create cells and add content
                       newRow.innerHTML = `
-                          <td>${header.documentKey.number}</td>
-                          <td>${new Date(header.documentDate).toLocaleDateString()}</td>
-                          <td>${header.storeId || 'N/A'}</td>
-                          <td>${header.customer.id}</td>
-                          <td>${header.customer.lastName}</td>
-                          <td>quantity</td>
-                          <td>tax inc</td>
-                          <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
+                      <td>${header.documentKey.number}</td>
+                      <td>${new Date(header.documentDate).toLocaleDateString()}</td>
+                      <td>${header.storeId || 'N/A'}</td>
+                      <td>${header.customer.id}</td>
+                      <td>${header.customer.lastName}</td>
+                      <td>quantity</td>
+                      <td>tax inc</td>
+                      <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
                           <td style="width: 20%;">
                               <a href="#" class="table-link text-warning">
                                   <span class="fa-stack">
