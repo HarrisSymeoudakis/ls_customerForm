@@ -1,10 +1,54 @@
 fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
-                callbackURL = data.callbackUrl;
-                console.log(data);
-            })
-            .catch(error => console.error('Error fetching data:', error));
+              // Get the tbody element where we want to append the new rows
+              const tbody = document.getElementById('ordersTableBody');
+              
+              // Iterate through each header in the response
+              data.forEach((order, index) => {
+                  const header = order.header;
+                  if (header) {
+                      // Create a new row element
+                      const newRow = document.createElement('tr');
+                      
+                      // Create cells and add content
+                      newRow.innerHTML = `
+                          <td>${header.documentKey.number}</td>
+                          <td>${new Date(header.documentDate).toLocaleDateString()}</td>
+                          <td>${header.storeId || 'N/A'}</td>
+                          <td>${header.customer.id}</td>
+                          <td>${header.customer.lastName}</td>
+                          <td>${header.lines.length}</td>
+                          <td>${header.totalAmount || 'N/A'} EUR</td>
+                          <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
+                          <td style="width: 20%;">
+                              <a href="#" class="table-link text-warning">
+                                  <span class="fa-stack">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                  </span>
+                              </a>
+                              <a href="#" class="table-link text-info">
+                                  <span class="fa-stack">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                  </span>
+                              </a>
+                              <a href="#" class="table-link danger">
+                                  <span class="fa-stack">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                  </span>
+                              </a>
+                          </td>
+                      `;
+                      
+                      // Append the new row to the tbody
+                      tbody.appendChild(newRow);
+                  }
+              });
+          })
+          .catch(error => console.error('Error fetching data:', error));
 
         
         
