@@ -3,7 +3,7 @@
         let responseData;
         let callbackURL;
 
-        fetch('https://ls-customerserver.onrender.com/swagger.customerOrders')
+        fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
                     console.log(order_data);
