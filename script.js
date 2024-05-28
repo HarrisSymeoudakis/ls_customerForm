@@ -10,7 +10,7 @@
                 callbackURL = data.callbackUrl;
                 delete data.callbackUrl;
                 responseData = data;
-                let birthdate = data.birthMonth + "//" +data.birthDay+ "//"+ data.birthYear;
+                let birthdate = data.birthMonth + "/" +data.birthDay+ "/"+ data.birthYear;
                 let gender = data.gender;
                 let customerAddressInfo =data.postalAddresses[0];
                 let finalAddress = customerAddressInfo.addressConsent + " " +customerAddressInfo.addressLine1 +" "+customerAddressInfo.city +" "+customerAddressInfo.postalCode; 
@@ -18,8 +18,13 @@
                 let phonetype = data.phones[0].phoneType;
                 console.log(birthdate , gender ,finalAddress,phone,phonetype);
                 document.getElementById('customerId').value = data.customerId;
-                document.getElementById('name').value = data.firstName;
+                document.getElementById('firstName').value = data.firstName;
                 document.getElementById('lastName').value = data.lastName;
+                document.getElementById('birthdate').value = birthdate;
+                document.getElementById('gender').value = gender;
+                document.getElementById('phone').value = phone;
+              document.getElementById('phonetype').value = phonetype;
+              document.getElementById('address').value = finalAddress;
                 document.getElementById('email').value = data.emails[0].email; // Assuming you have an input field with id 'email' for email
             })
             .catch(error => console.error('Error fetching data:', error));
