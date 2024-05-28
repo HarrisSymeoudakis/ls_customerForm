@@ -12,7 +12,7 @@
                 responseData = data;
                 let birthdate = data.birthMonth + "" +data.birthDay+ ""+ data.birthYear;
                 let gender = data.gender;
-                let customerAddressInfo =data.postaladdresses[0];
+                let customerAddressInfo =data.postalAddresses[0];
                 let finalAddress = customerAddressInfo.addressConsent + "" +customerAddressInfo.addressLine1 +""+customerAddressInfo.city +""+customerAddressInfo.postalCode; 
                 let phone = data.phones[0].phone;
                 let phonetype = data.phones[0].phoneType;
