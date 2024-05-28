@@ -6,7 +6,7 @@
         fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
-                    console.log(order_data);
+                    console.log("order_data_new");
                     console.log(data);
                 })
             .catch(error => console.error('Error fetching data:', error));
