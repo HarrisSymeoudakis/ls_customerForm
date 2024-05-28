@@ -38,9 +38,7 @@ body {
         box-shadow: 0 0 0 0.2rem rgba(243, 163, 44, 0.5);
     } 
 
-.main-box.no-header {
-    padding-top: 20px;
-}
+
 .main-box {
     background: #FFFFFF;
     -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
