@@ -18,8 +18,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                           <td>${header.storeId || 'N/A'}</td>
                           <td>${header.customer.id}</td>
                           <td>${header.customer.lastName}</td>
-                          <td>${header.lines.length}</td>
-                          <td>${header.totalAmount || 'N/A'} EUR</td>
+                          <td>quantity</td>
+                          <td>tax inc/td>
                           <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
                           <td style="width: 20%;">
                               <a href="#" class="table-link text-warning">
