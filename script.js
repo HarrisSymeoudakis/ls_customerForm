@@ -3,6 +3,14 @@
         let responseData;
         let callbackURL;
 
+        fetch('https://ls-customerserver.onrender.com/swagger.customerOrders')
+            .then(response => response.json())
+            .then(data => {
+                    console.log(order_data);
+                    console.log(data);
+                })
+            .catch(error => console.error('Error fetching data:', error));
+
         // Fetch data from server and populate the form
         fetch('https://ls-customerserver.onrender.com/latest')
             .then(response => response.json())
