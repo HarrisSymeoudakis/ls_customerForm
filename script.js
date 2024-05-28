@@ -10,10 +10,10 @@
                 callbackURL = data.callbackUrl;
                 delete data.callbackUrl;
                 responseData = data;
-                let birthdate = data.birthMonth + "" +data.birthDay+ ""+ data.birthYear;
+                let birthdate = data.birthMonth + "//" +data.birthDay+ "//"+ data.birthYear;
                 let gender = data.gender;
                 let customerAddressInfo =data.postalAddresses[0];
-                let finalAddress = customerAddressInfo.addressConsent + "" +customerAddressInfo.addressLine1 +""+customerAddressInfo.city +""+customerAddressInfo.postalCode; 
+                let finalAddress = customerAddressInfo.addressConsent + " " +customerAddressInfo.addressLine1 +" "+customerAddressInfo.city +" "+customerAddressInfo.postalCode; 
                 let phone = data.phones[0].phone;
                 let phonetype = data.phones[0].phoneType;
                 console.log(birthdate , gender ,finalAddress,phone,phonetype);
