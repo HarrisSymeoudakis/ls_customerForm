@@ -10,7 +10,7 @@
                 callbackURL = data.callbackUrl;
                 delete data.callbackUrl;
                 responseData = data;
-                let birthdate = data.birthMonth + "//" +data.birthDay+ "//"+ data.birthYear;
+                let birthdate = data.birthMonth + "" +data.birthDay+ ""+ data.birthYear;
                 let gender = data.gender;
                 let customerAddressInfo =data.postaladdresses[0];
                 let finalAddress = customerAddressInfo.addressConsent + "" +customerAddressInfo.addressLine1 +""+customerAddressInfo.city +""+customerAddressInfo.postalCode; 
