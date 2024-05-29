@@ -2,6 +2,12 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
               console.log(data);
+            });
+
+fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
               // Get the tbody element where we want to append the new rows
               const tbody = document.getElementById('ordersTableBody');
               
