@@ -42,22 +42,20 @@ body {
     background-color: #f3a32c;
     border-color: #3c4395;
 }
-
-
-.text-primary.mr-3 {
+.text-primary {
     color: #fff;
     background-color: #f3a32c;
     border-color: #3c4395;
     text-decoration:none;
 }
 
-
-.text-primary.mr-3:hover {
+.text-primary:hover {
     color: var(--bs-btn-hover-color);
     background-color: var(--bs-btn-hover-bg);
     border-color: var(--bs-btn-hover-border-color);
     text-decoration:none;
 }
+
 
 .card {
     background-clip: padding-box;
