@@ -16,11 +16,7 @@ body {
 
 
 
-.btn:hover {
-    color: var(--bs-btn-hover-color);
-    background-color: var(--bs-btn-hover-bg);
-    border-color: var(--bs-btn-hover-border-color);
-}
+
 
 .btn-primary {
     --bs-btn-color: #fff;
@@ -44,11 +40,16 @@ body {
 }
 
 
-.btn:active, .btn-primary:active {
-    color: var(--bs-btn-active-color);
-    background-color: var(--bs-btn-active-bg);
-    border-color: var(--bs-btn-active-border-color);
+.btn:hover,
+.btn:focus,
+.btn-primary:focus,
+.btn:active,
+.btn-primary:active {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
 }
+
 
 .text-primary {
     color: #fff !important;
