@@ -9,17 +9,17 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
     .then(data => {
         console.log(data);
         // Get the tbody element where we want to append the new rows
-        const tbody = document.getElementById('ordersTableBody');
-
+        const tbodyOrders = document.getElementById('ordersTableBody');
+        const tbodyReservations = document.getElementById('reservationsTableBody');
         // Iterate through each header in the response
         data.forEach((order, index) => {
             const header = order.header;
             if (header) {
                 // Create a new row element
-                const newRow = document.createElement('tr');
-
+                const newRowOrder = document.createElement('tr');
+                const newRowReservation = document.createElement('tr');
                 // Create cells and add content
-                newRow.innerHTML = `
+                newRowOrder.innerHTML = `
                 <td>${header.documentKey.number}</td>
                 <td>${new Date(header.documentDate).toLocaleDateString()}</td>
                 <td>${header.storeId || 'N/A'}</td>
@@ -50,8 +50,31 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                     </td>
                 `;
 
+                newRowReservation.innerHTML = `
+                <td>${header.documentKey.number}</td>
+                <td>${new Date(header.documentDate).toLocaleDateString()}</td>
+                <td>${header.storeId || 'N/A'}</td>
+                <td>${header.customer.id}</td>
+                <td>${header.customer.lastName}</td>
+                <td>quantity</td>
+                <td>tax inc</td>
+                <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
+                    <td style="width: 20%;">
+                        <a href="#" class="table-link text-warning">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    
+                    </td>
+                `;
+
+
+
                 // Append the new row to the tbody
-                tbody.appendChild(newRow);
+                tbodyOrders.appendChild(newRowOrder);
+                tbodyReservations.appendChild(newRowReservation);
             }
         });
     })
