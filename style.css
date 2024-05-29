@@ -42,6 +42,14 @@ body {
     background-color: #f3a32c;
     border-color: #3c4395;
 }
+
+
+.btn:active, .btn-primary:active {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+}
+
 .text-primary {
     color: #fff !important;
     background-color: #f3a32c !important;
