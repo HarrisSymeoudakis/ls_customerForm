@@ -125,6 +125,9 @@ a {
     font-size: 0.875em;
     color: #3c4395;
 }
+.border-primary {
+    border-color: #3c4395 !important;
+}
 
 /* .table thead tr th {
     border-bottom: 2px solid #e7ebee;
