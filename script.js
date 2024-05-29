@@ -1,4 +1,4 @@
-fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             .then(response => response.json())
             .then(data => {
               console.log(data);
