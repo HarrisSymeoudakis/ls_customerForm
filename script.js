@@ -158,4 +158,5 @@ function validateEmail() {
         message.style.color = "red";
     }
 }
-   
+
+validateEmail();
