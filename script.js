@@ -181,6 +181,6 @@ function validateEmail() {
     } else {
         message.textContent = "Invalid Email Address";
         message.style.color = "red";
-    }
+    }hh
 }
 
