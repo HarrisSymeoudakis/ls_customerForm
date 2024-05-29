@@ -7,8 +7,7 @@ body {
     margin-top: 20px;
 }
 
-.label{
-    color: #3c4395;}
+
 
 .ui-w-80 {
     width: 80px !important;
@@ -65,6 +64,7 @@ body {
     border-radius: 3px;
     font-size: 0.875em;
     font-weight: 600;
+    color: #3c4395;
 }
 .user-list tbody td .user-subhead {
     font-size: 0.875em;
