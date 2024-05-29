@@ -68,6 +68,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
         fetch('https://ls-customerserver.onrender.com/latest')
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 callbackURL = data.callbackUrl;
                 delete data.callbackUrl;
                 responseData = data;
