@@ -94,6 +94,11 @@ body {
 label{
     color: #3c4395;
 }
+
+mb-1{
+    color: #3c4395;
+}
+    
 .user-list tbody td .user-subhead {
     font-size: 0.875em;
     font-style: italic;
