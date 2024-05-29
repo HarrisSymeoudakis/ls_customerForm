@@ -44,6 +44,21 @@ body {
 }
 
 
+.text-primary.mr-3 {
+    color: #fff;
+    background-color: #f3a32c;
+    border-color: #3c4395;
+    text-decoration:none;
+}
+
+
+.text-primary.mr-3:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+    text-decoration:none;
+}
+
 .card {
     background-clip: padding-box;
     box-shadow: 0 1px 4px rgba(24,28,33,0.012);
