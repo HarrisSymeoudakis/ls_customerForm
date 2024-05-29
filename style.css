@@ -64,6 +64,10 @@ body {
     border-radius: 3px;
     font-size: 0.875em;
     font-weight: 600;
+    
+}
+
+label{
     color: #3c4395;
 }
 .user-list tbody td .user-subhead {
