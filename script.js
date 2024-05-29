@@ -176,10 +176,10 @@ function validateEmail() {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}$/;
 
     if (emailPattern.test(email)) {
-        message.textContent = "Valid Email Address!!";
+        message.textContent = "Valid Email Address";
         message.style.color = "green";
     } else {
-        message.textContent = "Invalid Email Address!!";
+        message.textContent = "Invalid Email Address";
         message.style.color = "red";
     }
 }
