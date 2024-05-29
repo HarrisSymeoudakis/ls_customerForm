@@ -85,6 +85,9 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 document.getElementById('postalCode').value = finalAddress.postalCode;
                 document.getElementById('email').value = data.emails[0].email; // Assuming you have an input field with id 'email' for email
             validateEmail();
+
+                        const emailField = document.getElementById('email');
+        emailField.addEventListener('input', validateEmail);
             })
             .catch(error => console.error('Error fetching data:', error));
 
