@@ -43,16 +43,15 @@ body {
     border-color: #3c4395;
 }
 .text-primary {
-    color: #fff;
-    background-color: #f3a32c;
-    border-color: #3c4395;
+    color: #fff !important;
+    background-color: #f3a32c !important;
+    
     text-decoration:none;
 }
 
 .text-primary:hover {
-    color: var(--bs-btn-hover-color);
-    background-color: var(--bs-btn-hover-bg);
-    border-color: var(--bs-btn-hover-border-color);
+    color: #fff !important;
+    background-color: #3c4395 !important;
     text-decoration:none;
 }
 
