@@ -143,4 +143,19 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 console.error('Error:', error);
             });
         });
+
+function validateEmail(){
+            const emailField = document.getElementById('email');
+            const email = emailField.value;
+            cosnt message = document.getElementById('message');
+            const emailPattern=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}$/;
+
+            if (emailPattern.test(email)){
+                        message.textContent = "Valid Email Address!!";
+                        message.style.color="green";
+            }else{
+                      message.textContent = "Invalid Email Address!!";
+                        message.style.color="red"; 
+            }
+}
    
