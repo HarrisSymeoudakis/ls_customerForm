@@ -14,11 +14,7 @@ body {
     height: auto;
 }
 
-.btn-default {
-    border-color: rgba(24,28,33,0.1);
-    background: rgba(0,0,0,0);
-    color: #4E5155;
-}
+
 
 .btn:hover {
     color: var(--bs-btn-hover-color);
