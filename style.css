@@ -81,7 +81,7 @@ a {
 }
 
 .table thead tr th {
-    text-transform: uppercase;
+    text-transform: none;
     font-size: 0.875em;
 }
 /* .table thead tr th {
