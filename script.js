@@ -67,8 +67,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 responseData = data;
                 let birthdate = data.birthMonth + "/" +data.birthDay+ "/"+ data.birthYear;
                 let gender = data.gender;
-                let customerAddressInfo =data.postalAddresses[0];
-                let finalAddress = data.postalAddresses[0].addressConsent + " " +data.postalAddresses[0].addressLine1 +" "+data.postalAddresses[0].city +" "+data.postalAddresses[0].postalCode; 
+                
+                let finalAddress = data.postalAddresses[0];
                 let phone = data.phones[0].phone;
                 let phonetype = data.phones[0].phoneType;
                 console.log(birthdate , gender ,finalAddress,phone,phonetype);
@@ -79,7 +79,10 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 document.getElementById('gender').value = gender;
                 document.getElementById('phone').value = phone;
                 document.getElementById('phonetype').value = phonetype;
-                document.getElementById('address').value = finalAddress;
+                document.getElementById('addressConsent').value = finalAddress.addressConsent;
+                document.getElementById('addressLine1').value = finalAddress.addressLine1;
+                document.getElementById('city').value = finalAddress.city;
+                document.getElementById('postalCode').value = finalAddress.postalCode;
                 document.getElementById('email').value = data.emails[0].email; // Assuming you have an input field with id 'email' for email
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -96,6 +99,11 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             var phone = document.getElementById('phone').value;
             var phonetype = document.getElementById('phonetype').value;
             var address = document.getElementById('address').value;
+            var addressConsent = document.getElementById('addressConsent').value;
+            var addressLine1 = document.getElementById('addressLine1').value;
+            var city = document.getElementById('city').value;
+            var postalCode = document.getElementById('postalCode').value;
+
 
             // Update the data
             responseData.customerId = customerId;
@@ -111,12 +119,11 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             responseData.birthMonth =birthDates[0];
             responseData.birthDay=birthDates[1];
             responseData.birthYear=birthDates[2];
-            
-            const addresses = address.split(" ");
-            responseData.postalAddresses[0].addressConsent=addresses[0];
-            responseData.postalAddresses[0].addressLine1=addresses[1];
-            responseData.postalAddresses[0].city =addresses[2];
-            responseData.postalAddresses[0].postalCode=addresses[3];
+         
+            responseData.postalAddresses[0].addressConsent=addressConsent;
+            responseData.postalAddresses[0].addressLine1=addressLine1;
+            responseData.postalAddresses[0].city =city;
+            responseData.postalAddresses[0].postalCode=postalCode;
 
             // Log the updated response to the console
             console.log('Updated response:', responseData);
