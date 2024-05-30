@@ -1,4 +1,11 @@
 function handleEditButtonClick(event) {
+    // Enable address editing
+    const addressInfo = event.target.closest('.addresses-item').querySelector('.address-info');
+    addressInfo.contentEditable = true;
+    addressInfo.focus();
+}
+
+function handleAddressContainerClick(event) {
     // Remove border class from all addresses
     const addresses = document.querySelectorAll('.addresses-item');
     addresses.forEach(address => {
@@ -7,12 +14,13 @@ function handleEditButtonClick(event) {
 
     // Add border class to the clicked address
     const clickedAddress = event.target.closest('.addresses-item');
-    clickedAddress.classList.add('border', 'border-primary');
-
-    // Enable address editing for the clicked address
-    const addressInfo = clickedAddress.querySelector('.address-info');
-    addressInfo.contentEditable = true;
-    addressInfo.focus();
+    if (clickedAddress) {
+        clickedAddress.classList.add('border', 'border-primary');
+    }
+}
+function handleDeleteButtonClick(event) {
+    const addressItem = event.target.closest('.addresses-item');
+    addressItem.remove(); // Remove the entire address item from the DOM
 }
 
 fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
@@ -88,10 +96,14 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             const editButton = addressItem.querySelector('.edit-address-btn');
             editButton.addEventListener('click', handleEditButtonClick);
 
+            const deleteButton = addressItem.querySelector('.delete-address-btn');
+    deleteButton.addEventListener('click', handleDeleteButtonClick);
+
+
             addressCount++; // Increment the address count
         });
         
-
+        addressContainer.addEventListener('click', handleAddressContainerClick);
     });
 
 fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
