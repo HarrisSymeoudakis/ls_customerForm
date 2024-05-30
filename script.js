@@ -1,3 +1,26 @@
+document.getElementById('newAddressBtn').addEventListener('click', function() {
+    // Create a new address item
+    const newAddressItem = document.createElement('div');
+    newAddressItem.classList.add('col-md-6', 'addresses-item', 'mb-4', 'shadow-sm');
+    
+    // Create the address title element
+    const title = document.createElement('h6');
+    title.classList.add('mb-1', 'address-title');
+    title.textContent = "addressType"; // Set the address type here
+    
+    // Create the address info element
+    const info = document.createElement('p');
+    info.classList.add('text-black', 'address-info');
+    info.textContent = "countryId, zipCode, city, linesValue"; // Set the address info here
+    
+    // Append title and info to the address item
+    newAddressItem.appendChild(title);
+    newAddressItem.appendChild(info);
+    
+    // Append the new address item to the addresses container
+    document.getElementById('addressesContainer').appendChild(newAddressItem);
+});
+
 function handleEditButtonClick(event) {
     // Disable editing for all editable elements except the one clicked
     const allEditableElements = document.querySelectorAll('[contentEditable="true"]');
