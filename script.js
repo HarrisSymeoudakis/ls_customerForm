@@ -1,25 +1,53 @@
 document.getElementById('newAddressBtn').addEventListener('click', function() {
-    // Create a new address item
-    const newAddressItem = document.createElement('div');
-    newAddressItem.classList.add('col-md-6', 'addresses-item', 'mb-4', 'shadow-sm');
-    
-    // Create the address title element
-    const title = document.createElement('h6');
-    title.classList.add('mb-1', 'address-title');
-    title.textContent = "addressType"; // Set the address type here
-    
-    // Create the address info element
-    const info = document.createElement('p');
-    info.classList.add('text-black', 'address-info');
-    info.textContent = "countryId, zipCode, city, linesValue"; // Set the address info here
-    
-    // Append title and info to the address item
-    newAddressItem.appendChild(title);
-    newAddressItem.appendChild(info);
-    
-    // Append the new address item to the addresses container
-    document.getElementById('addressesContainer').appendChild(newAddressItem);
-});
+    // Example data for a new address (replace with actual data)
+    const addressTypes = 'Home';
+    const countryId = 'USA';
+    const zipCode = '12345';
+    const city = 'New York';
+    const linesValue = '123 Main St';
+
+    const addressItem = document.createElement('div');
+        addressItem.classList.add('col-md-6');
+
+        const cardContainer = document.createElement('div');
+        cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+
+        const goldMembersContainer = document.createElement('div');
+        goldMembersContainer.classList.add('gold-members', 'p-4');
+
+        const mediaContainer = document.createElement('div');
+        mediaContainer.classList.add('media');
+
+        const iconContainer = document.createElement('div');
+        iconContainer.classList.add('mr-3');
+        iconContainer.innerHTML = '<i class="icofont-ui-home icofont-3x"></i>';
+
+        const mediaBody = document.createElement('div');
+        mediaBody.classList.add('media-body');
+
+        const title = document.createElement('h6');
+        title.classList.add('mb-1', 'address-title');
+        title.textContent = addressTypes;
+
+        const addressInfo = document.createElement('p');
+        addressInfo.classList.add('text-black', 'address-info');
+        addressInfo.textContent = `${countryId}, ${zipCode}, ${city}, ${linesValue}`;
+
+        // Append the elements to construct the address box
+        mediaBody.appendChild(title);
+        mediaBody.appendChild(addressInfo);
+        mediaContainer.appendChild(iconContainer);
+        mediaContainer.appendChild(mediaBody);
+        goldMembersContainer.appendChild(mediaContainer);
+        cardContainer.appendChild(goldMembersContainer);
+        addressItem.appendChild(cardContainer);
+
+        // Append the new address box to the address container
+        const addressContainer = document.getElementById('addressContainer');
+        addressContainer.appendChild(addressItem);
+
+
+    });
 
 function handleEditButtonClick(event) {
     // Disable editing for all editable elements except the one clicked
