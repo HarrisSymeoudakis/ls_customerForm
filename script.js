@@ -13,7 +13,7 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
         addressItemCol.classList.add( 'col-md-6');
 
         const cardContainer = document.createElement('div');
-        cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+        cardContainer.classList.add('bg-white', 'card', 'mb-4', 'border', 'shadow-sm');
 
         const goldMembersContainer = document.createElement('div');
         goldMembersContainer.classList.add('gold-members', 'p-4');
@@ -126,7 +126,7 @@ function reorganizeAddresses() {
         if (index % 2 === 0) {
             // Create a new row for every even index
             row = document.createElement('div');
-            row.classList.add('row');
+            row.classList.add('row', 'addresses-item');
             addressContainer.appendChild(row);
         }
         // Append the address to the current row
@@ -147,7 +147,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             if (addressCount % 2 === 0) { // Check if it's time to start a new row
                 // Create a new row element
                 const row = document.createElement('div');
-                row.classList.add('row');
+                row.classList.add('row', 'addresses-item');
                 addressContainer.appendChild(row); // Append the new row to the container
             }
         
@@ -158,7 +158,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             addressItem.classList.add('col-md-6');
         
             const cardContainer = document.createElement('div');
-            cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+            cardContainer.classList.add('bg-white', 'card', 'mb-4', 'border', 'shadow-sm');
         
             const goldMembersContainer = document.createElement('div');
             goldMembersContainer.classList.add('gold-members', 'p-4');
