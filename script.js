@@ -1,7 +1,77 @@
 fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        console.log(data)
+        addressesData =data;
+        // Assuming `addressesData` is the array containing the address information fetched from the server
+        const addressContainer = document.getElementById('addressContainer');
+        let addressCount = 0; // Initialize the address count
+        
+        addressesData.forEach((address, index) => {
+            if (addressCount % 2 === 0) { // Check if it's time to start a new row
+                // Create a new row element
+                const row = document.createElement('div');
+                row.classList.add('row');
+                addressContainer.appendChild(row); // Append the new row to the container
+            }
+        
+            const addressTypes = address.types.length > 1 ? address.types.join(', ') : address.types[0]; // Join multiple types with commas if more than one
+        
+            // Create elements for the address details
+            const addressItem = document.createElement('div');
+            addressItem.classList.add('col-md-6');
+        
+            const cardContainer = document.createElement('div');
+            cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'border-primary', 'shadow');
+        
+            const goldMembersContainer = document.createElement('div');
+            goldMembersContainer.classList.add('gold-members', 'p-4');
+        
+            const mediaContainer = document.createElement('div');
+            mediaContainer.classList.add('media');
+        
+            const iconContainer = document.createElement('div');
+            iconContainer.classList.add('mr-3');
+            iconContainer.innerHTML = '<i class="icofont-ui-home icofont-3x"></i>';
+        
+            const mediaBody = document.createElement('div');
+            mediaBody.classList.add('media-body');
+        
+            const title = document.createElement('h6');
+            title.classList.add('mb-1');
+            title.textContent = addressTypes;
+        
+            const addressInfo = document.createElement('p');
+            addressInfo.classList.add('text-black');
+            addressInfo.innerHTML = `
+                ${address.country.id}, ${address.zipCode}, ${address.city}, ${address.lines[0]?.value || ''}
+            `;
+        
+            const actionsContainer = document.createElement('p');
+            actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
+            actionsContainer.innerHTML = `
+                <a class="btn btn-primary" data-toggle="modal" data-target="#add-address-modal" href="#"><i class="icofont-ui-edit"></i> EDIT</a>
+                <a class="text-danger" data-toggle="modal" data-target="#delete-address-modal" href="#"><i class="icofont-ui-delete"></i> DELETE</a>
+            `;
+        
+            // Append elements to construct the address item
+            mediaBody.appendChild(title);
+            mediaBody.appendChild(addressInfo);
+            mediaBody.appendChild(actionsContainer);
+            mediaContainer.appendChild(iconContainer);
+            mediaContainer.appendChild(mediaBody);
+            goldMembersContainer.appendChild(mediaContainer);
+            cardContainer.appendChild(goldMembersContainer);
+            addressItem.appendChild(cardContainer);
+        
+            // Append the address item to the current row
+            const currentRow = addressContainer.lastChild; // Get the last row
+            currentRow.appendChild(addressItem);
+        
+            addressCount++; // Increment the address count
+        });
+        
+
     });
 
 fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
