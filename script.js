@@ -321,20 +321,26 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
-                                                                                        ${order.lines.map((line, index) => `
+                                                                                    ${order.lines.map((line, index) => {
+                                                                                        const quantity = line.quantities.quantity;
+                                                                                        const unitPrice = line.unitPrice;
+                                                                                        const total = quantity * unitPrice;
+                                                                                        return `
                                                                                             <tr>
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
-                                                                                                <td>${line.quantities.quantity}</td>
-                                                                                                <td>Discount ${index + 1}</td>
+                                                                                                <td>${quantity}</td>
+                                                                                                <td>${unitPrice.toFixed(2)}</td>
                                                                                                 <td>Amount ${index + 1}</td>
                                                                                                 <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
+                                                                                                <td class="text-right">${total.toFixed(2)}</td>
                                                                                             </tr>
-                                                                                        `).join('')}
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
+                                                                                        `;
+                                                                                    }).join('')}
+                                                                                </tbody>
+                                                                            </table>
                                                                         </div>
+                                                                    </div>
                                                                         <div class="cart-body">
                                                                             <div class="row">
                                                                                 <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
