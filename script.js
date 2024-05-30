@@ -1,5 +1,14 @@
 function handleEditButtonClick(event) {
-    // Enable address editing
+    // Disable editing for all editable elements except the one clicked
+    const allEditableElements = document.querySelectorAll('[contentEditable="true"]');
+    allEditableElements.forEach(element => {
+        if (element !== event.target.closest('.addresses-item').querySelector('.address-info') &&
+            element !== event.target.closest('.addresses-item').querySelector('.address-title')) {
+            element.contentEditable = false;
+        }
+    });
+
+    // Enable address editing for the clicked item
     const addressItem = event.target.closest('.addresses-item');
     const addressInfo = addressItem.querySelector('.address-info');
     const title = addressItem.querySelector('.address-title');
