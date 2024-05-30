@@ -67,6 +67,7 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
         const addressContainer = document.getElementById('addressContainer');
         addressContainer.appendChild(addressItem);
 
+        reorganizeAddresses();
 
     });
 
@@ -107,6 +108,24 @@ function handleAddressContainerClick(event) {
 function handleDeleteButtonClick(event) {
     const addressItem = event.target.closest('.addresses-item');
     addressItem.remove(); // Remove the entire address item from the DOM
+    reorganizeAddresses();
+}
+
+function reorganizeAddresses() {
+    const addressContainer = document.getElementById('addressContainer');
+    const addresses = addressContainer.querySelectorAll('.addresses-item');
+
+    let row = null;
+    addresses.forEach((address, index) => {
+        if (index % 2 === 0) {
+            // Create a new row for every even index
+            row = document.createElement('div');
+            row.classList.add('row');
+            addressContainer.appendChild(row);
+        }
+        // Append the address to the current row
+        row.appendChild(address);
+    });
 }
 
 fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
