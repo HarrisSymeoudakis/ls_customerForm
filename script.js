@@ -7,7 +7,7 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
     const linesValue = '123 Main St';
 
     const addressItem = document.createElement('div');
-        addressItem.classList.add('col-md-6');
+        addressItem.classList.add('row', 'col-md-6');
 
         const cardContainer = document.createElement('div');
         cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
@@ -41,6 +41,35 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
         goldMembersContainer.appendChild(mediaContainer);
         cardContainer.appendChild(goldMembersContainer);
         addressItem.appendChild(cardContainer);
+
+        // Append the edit and delete buttons
+        const editBtn = document.createElement('button');
+        editBtn.classList.add('btn', 'btn-primary', 'mr-2');
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', function() {
+            // Handle edit functionality here
+            // For now, let's log a message
+            console.log('Edit button clicked for new address box');
+            // Toggle the class for edit mode
+            cardContainer.classList.toggle('border', 'border-primary');
+            cardContainer.classList.toggle('shadow-sm');
+            addressInfo.contentEditable = true;
+            title.contentEditable = true;
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('btn', 'btn-danger');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', function() {
+            // Handle delete functionality here
+            // For now, let's log a message
+            console.log('Delete button clicked for new address box');
+            // Remove the address box from the DOM
+            addressItem.remove();
+        });
+
+        mediaBody.appendChild(editBtn);
+        mediaBody.appendChild(deleteBtn);
 
         // Append the new address box to the address container
         const addressContainer = document.getElementById('addressContainer');
