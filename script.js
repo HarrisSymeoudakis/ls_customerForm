@@ -245,26 +245,26 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 <td>quantity</td>
                 <td>tax inc</td>
                 <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
-                    <td style="width: 20%;">
-                        <a href="#" class="table-link text-warning">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#" class="table-link text-info">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#" class="table-link danger">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </td>
+                <td style="width: 20%;">
+                <a href="#" class="table-link text-warning" onclick="showPopup(${index})">
+                    <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+                <a href="#" class="table-link text-info" onclick="editOrder(${index})">
+                    <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+                <a href="#" class="table-link danger" onclick="deleteOrder(${index})">
+                    <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </td>
                 `;
 
 
@@ -275,11 +275,46 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 
             }
         });
+
+        window.ordersData = data;
     })
     .catch(error => console.error('Error fetching data:', error));
     
     
     
+    function showPopup(index) {
+        const order = window.ordersData[index];
+        const lines = order.lines;
+        const orderDetailsBody = document.getElementById('orderDetailsBody');
+        orderDetailsBody.innerHTML = '';
+    
+        lines.forEach((line, lineIndex) => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <th scope="row">${lineIndex + 1}</th>
+                <td>${line.description}</td>
+                <td>${line.quantities.quantity}</td>
+                <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
+            `;
+            orderDetailsBody.appendChild(newRow);
+        });
+    
+        document.getElementById('popupContainer').style.display = 'block';
+    }
+
+    
+function closePopup() {
+    document.getElementById('popupContainer').style.display = 'none';
+}
+
+// Placeholder functions for edit and delete
+function editOrder(index) {
+    alert('Edit order functionality is not implemented yet.');
+}
+
+function deleteOrder(index) {
+    alert('Delete order functionality is not implemented yet.');
+}
     
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
     .then(response => response.json())
@@ -302,7 +337,6 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
                 <td>${header.customer.lastName}</td>
                 <td>${header.totalQuantity}</td>
                 <td>tax inc</td>
-                <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
                     <td style="width: 20%;">
                         <a href="#" class="table-link text-warning">
                             <span class="fa-stack">
