@@ -493,7 +493,7 @@ fetch('https://ls-customerserver.onrender.com/latest')
     })
     .catch(error => console.error('Error fetching data:', error));
 
-document.getElementById('saveChangesBtn').addEventListener('click', function() {
+/* document.getElementById('saveChangesBtn').addEventListener('click', function() {
     const customerId = document.getElementById('customerId').value;
     const firstName = document.getElementById('firstName').value;
     const email = document.getElementById('email').value;
@@ -541,7 +541,7 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
     }).catch((error) => {
         console.error('Error:', error);
     });
-});
+}); */
 
 function validateEmail() {
     const emailField = document.getElementById('email');
