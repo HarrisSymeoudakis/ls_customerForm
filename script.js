@@ -7,10 +7,10 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
     const linesValue = '123 Main St';
 
     const addressItem = document.createElement('div');
-        addressItem.classList.add('row', 'addresses-item');
+        addressItem.classList.add('row');
 
         const addressItemCol = document.createElement('div');
-        addressItemCol.classList.add( 'col-md-6');
+        addressItemCol.classList.add( 'col-md-6', 'addresses-item');
 
         const cardContainer = document.createElement('div');
         cardContainer.classList.add('bg-white', 'card', 'mb-4', 'border', 'shadow-sm');
