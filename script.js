@@ -7,7 +7,10 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
     const linesValue = '123 Main St';
 
     const addressItem = document.createElement('div');
-        addressItem.classList.add('row', 'col-md-6');
+        addressItem.classList.add('row');
+
+        const addressItemCol = document.createElement('div');
+        addressItemCol.classList.add( 'col-md-6');
 
         const cardContainer = document.createElement('div');
         cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
@@ -48,7 +51,8 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
         mediaContainer.appendChild(mediaBody);
         goldMembersContainer.appendChild(mediaContainer);
         cardContainer.appendChild(goldMembersContainer);
-        addressItem.appendChild(cardContainer);
+        addressItem.appendChild(addressItemCol);
+        addressItemCol.appendChild(cardContainer);
 
         const editButton = addressItem.querySelector('.edit-address-btn');
             editButton.addEventListener('click', handleEditButtonClick);
