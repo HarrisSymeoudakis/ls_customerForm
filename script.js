@@ -221,21 +221,17 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
         addressContainer.addEventListener('click', handleAddressContainerClick);
     });
 
-fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+    fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        // Get the tbody element where we want to append the new rows
         const tbodyOrders = document.getElementById('ordersTableBody');
         
-        // Iterate through each header in the response
         data.forEach((order, index) => {
             const header = order.header;
             if (header) {
-                // Create a new row element
                 const newRowOrder = document.createElement('tr');
               
-                // Create cells and add content
                 newRowOrder.innerHTML = `
                 <td>${header.documentKey.number}</td>
                 <td>${new Date(header.documentDate).toLocaleDateString()}</td>
@@ -246,18 +242,18 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                 <td>tax inc</td>
                 <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
                 <td style="width: 20%;">
-                <a href="#" class="table-link text-warning" onclick="showPopup(${index})">
-                    <span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                    </span>
-                </a>
-                <a href="#" class="table-link text-info" onclick="editOrder(${index})">
-                    <span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                    </span>
-                </a>
+                    <a href="#" class="table-link text-warning" onclick="showPopup(${index})">
+                        <span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="table-link text-info" onclick="showPopup(${index})">
+                        <span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
                 <a href="#" class="table-link danger" onclick="deleteOrder(${index})">
                     <span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
@@ -282,25 +278,121 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
     
     
     
-    function showPopup(index) {
-        const order = window.ordersData[index];
-        const lines = order.lines;
-        const orderDetailsBody = document.getElementById('orderDetailsBody');
-        orderDetailsBody.innerHTML = '';
+    function showPopup(orderIndex) {
+        fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+            .then(response => response.json())
+            .then(data => {
+                const order = data[orderIndex];
+                const modalHtml = `
+                    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="contentbar">
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="card m-b-30">
+                                                        <div class="card-header">
+                                                            <h5 class="card-title">Cart</h5>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-lg-10 col-xl-8">
+                                                                    <div class="cart-container">
+                                                                        <div class="cart-head">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-borderless">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th scope="col">No Reference</th>
+                                                                                            <th scope="col">Description</th>                                               
+                                                                                            <th scope="col">Quantity</th>
+                                                                                            <th scope="col">Price Discount</th>
+                                                                                            <th scope="col">Amount</th>
+                                                                                            <th scope="col">Delivery Date</th>
+                                                                                            <th scope="col" class="text-right">Total</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        ${order.lines.map((line, index) => `
+                                                                                            <tr>
+                                                                                                <td>${index + 1}</td>
+                                                                                                <td>${line.description}</td>
+                                                                                                <td>${line.quantities.quantity}</td>
+                                                                                                <td>Discount ${index + 1}</td>
+                                                                                                <td>Amount ${index + 1}</td>
+                                                                                                <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
+                                                                                            </tr>
+                                                                                        `).join('')}
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="cart-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                                                                    <div class="order-total table-responsive">
+                                                                                        <table class="table table-borderless text-right">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>Total:</td>
+                                                                                                    <td>$1000.00</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Tax (18%):</td>
+                                                                                                    <td>$180.00</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="f-w-7 font-18"><h4>Amount:</h4></td>
+                                                                                                    <td class="f-w-7 font-18"><h4>$1180.00</h4></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="cart-footer text-right">
+                                                                            <button type="button" class="btn btn-info my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
+                                                                            <a href="page-checkout.html" class="btn btn-success my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
     
-        lines.forEach((line, lineIndex) => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <th scope="row">${lineIndex + 1}</th>
-                <td>${line.description}</td>
-                <td>${line.quantities.quantity}</td>
-                <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-            `;
-            orderDetailsBody.appendChild(newRow);
-        });
+                // Remove existing modal if present
+                const existingModal = document.getElementById('orderModal');
+                if (existingModal) {
+                    existingModal.parentNode.removeChild(existingModal);
+                }
     
-        document.getElementById('popupContainer').style.display = 'block';
+                // Append new modal to body
+                document.body.insertAdjacentHTML('beforeend', modalHtml);
+    
+                // Show the modal
+                $('#orderModal').modal('show');
+            })
+            .catch(error => console.error('Error fetching data:', error));
     }
+    
 
     
 function closePopup() {
