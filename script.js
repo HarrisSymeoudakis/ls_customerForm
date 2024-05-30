@@ -33,43 +33,31 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
         addressInfo.classList.add('text-black', 'address-info');
         addressInfo.textContent = `${countryId}, ${zipCode}, ${city}, ${linesValue}`;
 
+        const actionsContainer = document.createElement('p');
+            actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
+            actionsContainer.innerHTML = `
+        <button class="btn btn-primary edit-address-btn"><i class="icofont-ui-edit"></i> EDIT</button>
+        <button class="text-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
+    `;
+
         // Append the elements to construct the address box
         mediaBody.appendChild(title);
         mediaBody.appendChild(addressInfo);
+        mediaBody.appendChild(actionsContainer);
         mediaContainer.appendChild(iconContainer);
         mediaContainer.appendChild(mediaBody);
         goldMembersContainer.appendChild(mediaContainer);
         cardContainer.appendChild(goldMembersContainer);
         addressItem.appendChild(cardContainer);
 
-        // Append the edit and delete buttons
-        const editBtn = document.createElement('button');
-        editBtn.classList.add('btn', 'btn-primary', 'mr-2');
-        editBtn.textContent = 'Edit';
-        editBtn.addEventListener('click', function() {
-            // Handle edit functionality here
-            // For now, let's log a message
-            console.log('Edit button clicked for new address box');
-            // Toggle the class for edit mode
-            cardContainer.classList.toggle('border', 'border-primary');
-            cardContainer.classList.toggle('shadow-sm');
-            addressInfo.contentEditable = true;
-            title.contentEditable = true;
-        });
+        const editButton = addressItem.querySelector('.edit-address-btn');
+            editButton.addEventListener('click', handleEditButtonClick);
 
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('btn', 'btn-danger');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.addEventListener('click', function() {
-            // Handle delete functionality here
-            // For now, let's log a message
-            console.log('Delete button clicked for new address box');
-            // Remove the address box from the DOM
-            addressItem.remove();
-        });
+            const deleteButton = addressItem.querySelector('.delete-address-btn');
+    deleteButton.addEventListener('click', handleDeleteButtonClick);
 
-        mediaBody.appendChild(editBtn);
-        mediaBody.appendChild(deleteBtn);
+
+       
 
         // Append the new address box to the address container
         const addressContainer = document.getElementById('addressContainer');
