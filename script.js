@@ -7,7 +7,7 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
     const linesValue = '123 Main St';
 
     const addressItem = document.createElement('div');
-        addressItem.classList.add('row');
+        addressItem.classList.add('row', 'addresses-item');
 
         const addressItemCol = document.createElement('div');
         addressItemCol.classList.add( 'col-md-6');
@@ -147,7 +147,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             if (addressCount % 2 === 0) { // Check if it's time to start a new row
                 // Create a new row element
                 const row = document.createElement('div');
-                row.classList.add('row', 'addresses-item');
+                row.classList.add('row');
                 addressContainer.appendChild(row); // Append the new row to the container
             }
         
@@ -155,7 +155,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
         
             // Create elements for the address details
             const addressItem = document.createElement('div');
-            addressItem.classList.add('col-md-6');
+            addressItem.classList.add('col-md-6', 'addresses-item');
         
             const cardContainer = document.createElement('div');
             cardContainer.classList.add('bg-white', 'card', 'mb-4', 'border', 'shadow-sm');
