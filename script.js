@@ -67,8 +67,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             const mediaBody = document.createElement('div');
             mediaBody.classList.add('media-body');
         
-            const title = document.createElement('p');
-            title.classList.add('mb-1');
+            const title = document.createElement('h6');
+            title.classList.add('mb-1','address-title');
             title.textContent = addressTypes;
         
             const addressInfo = document.createElement('p');
