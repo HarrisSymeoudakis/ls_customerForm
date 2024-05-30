@@ -111,9 +111,13 @@ function handleDeleteButtonClick(event) {
     reorganizeAddresses();
 }
 
+// Function to reorganize addresses into rows of two
 function reorganizeAddresses() {
     const addressContainer = document.getElementById('addressContainer');
     const addresses = addressContainer.querySelectorAll('.addresses-item');
+
+    // Remove all existing rows
+    addressContainer.innerHTML = '';
 
     let row = null;
     addresses.forEach((address, index) => {
