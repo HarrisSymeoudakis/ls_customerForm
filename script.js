@@ -112,6 +112,7 @@ function handleDeleteButtonClick(event) {
 }
 
 // Function to reorganize addresses into rows of two
+// Function to reorganize addresses into rows of two
 function reorganizeAddresses() {
     const addressContainer = document.getElementById('addressContainer');
     const addresses = addressContainer.querySelectorAll('.addresses-item');
@@ -121,18 +122,21 @@ function reorganizeAddresses() {
 
     let row = null;
     addresses.forEach((address, index) => {
-        console.log(index);
-        console.log(address.innerHTML);
         if (index % 2 === 0) {
             // Create a new row for every even index
             row = document.createElement('div');
             row.classList.add('row');
             addressContainer.appendChild(row);
         }
-        // Append the address to the current row
-        row.appendChild(address);
+        // Create a column for the address item
+        const col = document.createElement('div');
+        col.classList.add('col-md-6');
+        col.appendChild(address);
+        // Append the column to the current row
+        row.appendChild(col);
     });
 }
+
 
 fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
     .then(response => response.json())
