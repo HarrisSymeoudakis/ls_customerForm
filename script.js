@@ -1,7 +1,12 @@
 function handleEditButtonClick(event) {
     // Enable address editing
-    const addressInfo = event.target.closest('.addresses-item').querySelector('.address-info');
+    const addressItem = event.target.closest('.addresses-item');
+    const addressInfo = addressItem.querySelector('.address-info');
+    const title = addressItem.querySelector('.address-title');
+
     addressInfo.contentEditable = true;
+    title.contentEditable = true;
+
     addressInfo.focus();
 }
 
