@@ -1,3 +1,20 @@
+function handleEditButtonClick(event) {
+    // Remove border class from all addresses
+    const addresses = document.querySelectorAll('.addresses-item');
+    addresses.forEach(address => {
+        address.classList.remove('border', 'border-primary');
+    });
+
+    // Add border class to the clicked address
+    const clickedAddress = event.target.closest('.addresses-item');
+    clickedAddress.classList.add('border', 'border-primary');
+
+    // Enable address editing for the clicked address
+    const addressInfo = clickedAddress.querySelector('.address-info');
+    addressInfo.contentEditable = true;
+    addressInfo.focus();
+}
+
 fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
     .then(response => response.json())
     .then(data => {
@@ -22,7 +39,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             addressItem.classList.add('col-md-6');
         
             const cardContainer = document.createElement('div');
-            cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'border-primary', 'shadow');
+            cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
         
             const goldMembersContainer = document.createElement('div');
             goldMembersContainer.classList.add('gold-members', 'p-4');
@@ -42,7 +59,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             title.textContent = addressTypes;
         
             const addressInfo = document.createElement('p');
-            addressInfo.classList.add('text-black');
+            addressInfo.classList.add('text-black', 'address-info');
             addressInfo.innerHTML = `
                 ${address.country.id}, ${address.zipCode}, ${address.city}, ${address.lines[0]?.value || ''}
             `;
@@ -50,9 +67,9 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             const actionsContainer = document.createElement('p');
             actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
             actionsContainer.innerHTML = `
-                <a class="btn btn-primary" data-toggle="modal" data-target="#add-address-modal" href="#"><i class="icofont-ui-edit"></i> EDIT</a>
-                <a class="text-danger" data-toggle="modal" data-target="#delete-address-modal" href="#"><i class="icofont-ui-delete"></i> DELETE</a>
-            `;
+        <button class="btn btn-primary edit-address-btn"><i class="icofont-ui-edit"></i> EDIT</button>
+        <button class="text-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
+    `;
         
             // Append elements to construct the address item
             mediaBody.appendChild(title);
@@ -68,6 +85,9 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             const currentRow = addressContainer.lastChild; // Get the last row
             currentRow.appendChild(addressItem);
         
+            const editButton = addressItem.querySelector('.edit-address-btn');
+            editButton.addEventListener('click', handleEditButtonClick);
+
             addressCount++; // Increment the address count
         });
         
