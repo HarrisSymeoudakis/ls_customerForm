@@ -121,6 +121,8 @@ function reorganizeAddresses() {
 
     let row = null;
     addresses.forEach((address, index) => {
+        console.log(index);
+        console.log(address.innerHTML);
         if (index % 2 === 0) {
             // Create a new row for every even index
             row = document.createElement('div');
