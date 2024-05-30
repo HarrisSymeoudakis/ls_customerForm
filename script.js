@@ -330,8 +330,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
                                                                                                 <td>${quantity}</td>
-                                                                                                <td>${unitPrice.toFixed(2)}</td>
-                                                                                                <td>Amount ${index + 1}</td>
+                                                                                                <td>${index + 1}</td>
+                                                                                                <td> ${unitPrice.toFixed(2)}</td>
                                                                                                 <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
                                                                                                 <td class="text-right">${total.toFixed(2)}</td>
                                                                                             </tr>
