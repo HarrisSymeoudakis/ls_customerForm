@@ -227,14 +227,14 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
         console.log(data);
         // Get the tbody element where we want to append the new rows
         const tbodyOrders = document.getElementById('ordersTableBody');
-        const tbodyReservations = document.getElementById('reservationsTableBody');
+        
         // Iterate through each header in the response
         data.forEach((order, index) => {
             const header = order.header;
             if (header) {
                 // Create a new row element
                 const newRowOrder = document.createElement('tr');
-                const newRowReservation = document.createElement('tr');
+              
                 // Create cells and add content
                 newRowOrder.innerHTML = `
                 <td>${header.documentKey.number}</td>
@@ -267,6 +267,33 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                     </td>
                 `;
 
+
+
+
+                // Append the new row to the tbody
+                tbodyOrders.appendChild(newRowOrder);
+                
+            }
+        });
+    })
+    .catch(error => console.error('Error fetching data:', error));
+    
+    
+    
+    
+fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        const tbodyReservations = document.getElementById('reservationsTableBody');
+        data.forEach((order, index) => {
+            const header = order.header;
+            if (header) {
+                // Create a new row element
+               
+                const newRowReservation = document.createElement('tr');
+                // Create cells and add content
+                
                 newRowReservation.innerHTML = `
                 <td>${header.documentKey.number}</td>
                 <td>${new Date(header.documentDate).toLocaleDateString()}</td>
@@ -290,13 +317,11 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 
 
                 // Append the new row to the tbody
-                tbodyOrders.appendChild(newRowOrder);
+                
                 tbodyReservations.appendChild(newRowReservation);
             }
         });
-    })
-    .catch(error => console.error('Error fetching data:', error));
-
+    });
 let responseData;
 let callbackURL;
 
