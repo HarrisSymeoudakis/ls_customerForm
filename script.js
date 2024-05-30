@@ -10,10 +10,10 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
         addressItem.classList.add('row');
 
         const addressItemCol = document.createElement('div');
-        addressItemCol.classList.add( 'col-md-6', 'addresses-item');
+        addressItemCol.classList.add( 'col-md-6');
 
         const cardContainer = document.createElement('div');
-        cardContainer.classList.add('bg-white', 'card', 'mb-4', 'border', 'shadow-sm');
+        cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
 
         const goldMembersContainer = document.createElement('div');
         goldMembersContainer.classList.add('gold-members', 'p-4');
@@ -126,7 +126,7 @@ function reorganizeAddresses() {
         if (index % 2 === 0) {
             // Create a new row for every even index
             row = document.createElement('div');
-            row.classList.add('row', 'addresses-item');
+            row.classList.add('row');
             addressContainer.appendChild(row);
         }
         // Append the address to the current row
@@ -155,10 +155,10 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
         
             // Create elements for the address details
             const addressItem = document.createElement('div');
-            addressItem.classList.add('col-md-6', 'addresses-item');
+            addressItem.classList.add('col-md-6');
         
             const cardContainer = document.createElement('div');
-            cardContainer.classList.add('bg-white', 'card', 'mb-4', 'border', 'shadow-sm');
+            cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
         
             const goldMembersContainer = document.createElement('div');
             goldMembersContainer.classList.add('gold-members', 'p-4');
