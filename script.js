@@ -353,7 +353,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                                    <td class="f-w-7 font-18"><h4>$${index + 1}</h4></td>
+                                                                                                    <td class="f-w-7 font-18"><h4>$1800</h4></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
