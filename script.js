@@ -238,11 +238,14 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
 
                 lines.forEach(line => {
 
+                    const quantity = line.quantities.quantity;
+                    const unitPrice = line.unitPrice;
+                    
                     const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
                     const total = (quantity * unitPrice) - discount;
-                    const quantities = line.quantities.quantity;
                     
-                    totalQuantity += quantities
+                    
+                    totalQuantity += quantity
                     totalAmount += total;
                 });
 
