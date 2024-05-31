@@ -229,53 +229,66 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
         
         data.forEach((order, index) => {
             const header = order.header;
+            const lines = order.lines || [];
+            
             if (header) {
+                // Calculate total quantity and total amount for the order
+                let totalQuantity = 0;
+                let totalAmount = 0;
+
+                lines.forEach(line => {
+                    const quantities = line.quantities || [];
+                    const amount = line.amount || 0;
+
+                    quantities.forEach(qty => {
+                        totalQuantity += qty.quantity || 0;
+                    });
+
+                    totalAmount += amount;
+                });
+
                 const newRowOrder = document.createElement('tr');
               
                 newRowOrder.innerHTML = `
-                <td>${header.documentKey.number}</td>
-                <td>${new Date(header.documentDate).toLocaleDateString()}</td>
-                <td>${header.storeId || 'N/A'}</td>
-                <td>${header.customer.id}</td>
-                <td>${header.customer.lastName}</td>
-                <td>quantity</td>
-                <td>tax inc</td>
-                <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
-                <td style="width: 20%;">
-                    <a href="#" class="table-link text-warning" onclick="showPopup(${index})">
-                        <span class="fa-stack">
-                            <i class="fa fa-square fa-stack-2x"></i>
-                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#" class="table-link text-info" onclick="showPopup(${index})">
-                        <span class="fa-stack">
-                            <i class="fa fa-square fa-stack-2x"></i>
-                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                <a href="#" class="table-link danger" onclick="deleteOrder(${index})">
-                    <span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                    </span>
-                </a>
-            </td>
+                    <td>${header.documentKey.number}</td>
+                    <td>${new Date(header.documentDate).toLocaleDateString()}</td>
+                    <td>${header.storeId || 'N/A'}</td>
+                    <td>${header.customer.id}</td>
+                    <td>${header.customer.lastName}</td>
+                    <td>${totalQuantity}</td>
+                    <td>${totalAmount.toFixed(2)}</td>
+                    <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
+                    <td style="width: 20%;">
+                        <a href="#" class="table-link text-warning" onclick="showPopup(${index})">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="table-link text-info" onclick="showPopup(${index})">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="table-link danger" onclick="deleteOrder(${index})">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </td>
                 `;
-
-
-
 
                 // Append the new row to the tbody
                 tbodyOrders.appendChild(newRowOrder);
-                
             }
         });
 
         window.ordersData = data;
     })
     .catch(error => console.error('Error fetching data:', error));
-    
+
     
     
     function showPopup(orderIndex) {
