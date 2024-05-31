@@ -282,6 +282,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
         fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
+                
                 const order = data[orderIndex];
                 const modalHtml = `
                     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
@@ -321,16 +322,19 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
+                                                                                    
                                                                                     ${order.lines.map((line, index) => {
                                                                                         const quantity = line.quantities.quantity;
                                                                                         const unitPrice = line.unitPrice;
-                                                                                        const total = quantity * unitPrice;
+                                                                                        
+                                                                                        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+                                                                                         const total = (quantity * unitPrice) - discount;
                                                                                         return `
                                                                                             <tr>
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
                                                                                                 <td>${quantity}</td>
-                                                                                                <td>${index + 1}</td>
+                                                                                                <td>${discount}</td>
                                                                                                 <td> ${unitPrice.toFixed(2)}</td>
                                                                                                 <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
                                                                                                 <td class="text-right">${total.toFixed(2)}</td>
@@ -348,16 +352,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         <table class="table table-borderless text-right">
                                                                                             <tbody>
                                                                                                 <tr>
-                                                                                                    <td>Total:</td>
-                                                                                                    <td>$1000.00</td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>Tax (18%):</td>
-                                                                                                    <td>$180.00</td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td class="f-w-7 font-18"><h4>Amount:</h4></td>
-                                                                                                    <td class="f-w-7 font-18"><h4>$1180.00</h4></td>
+                                                                                                    <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
+                                                                                                    <td class="f-w-7 font-18"><h4>$${index + 1}</h4></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
