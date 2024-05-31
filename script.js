@@ -237,14 +237,13 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                 let totalAmount = 0;
 
                 lines.forEach(line => {
-                    const quantities = line.quantities || [];
-                    const amount = line.amount || 0;
 
-                    quantities.forEach(qty => {
-                        totalQuantity += qty.quantity || 0;
-                    });
-
-                    totalAmount += amount;
+                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+                    const total = (quantity * unitPrice) - discount;
+                    const quantities = line.quantities.quantity;
+                    
+                    totalQuantity += quantities
+                    totalAmount += total;
                 });
 
                 const newRowOrder = document.createElement('tr');
@@ -586,4 +585,3 @@ function validateEmail() {
         message.style.color = "red";
     }
 }
-
