@@ -261,13 +261,13 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                     <td>${totalAmount.toFixed(2)}</td>
                     <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
                     <td style="width: 20%;">
-                        <a href="#" class="table-link text-warning" onclick="showPopup(${index})">
+                        <a href="#" class="table-link text-warning" onclick="showOrder(${index})">
                             <span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#" class="table-link text-info" onclick="showPopup(${index})">
+                        <a href="#" class="table-link text-info" onclick="editOrder(${index})">
                             <span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -418,11 +418,25 @@ function closePopup() {
 
 // Placeholder functions for edit and delete
 function editOrder(index) {
-    alert('Edit order functionality is not implemented yet.');
+    showPopup(index);
+   
+}
+
+function showPopup(index) {
+    showPopup(index);
+    
 }
 
 function deleteOrder(index) {
-    alert('Delete order functionality is not implemented yet.');
+    // Find the row corresponding to the order to be deleted
+    const rowToDelete = document.getElementById(`orderRow_${index}`);
+    
+    if (rowToDelete) {
+        rowToDelete.remove(); // Remove the row from the table
+        console.log('Order deleted successfully.');
+    } else {
+        console.error('Failed to delete order: Row not found.');
+    }
 }
     
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
