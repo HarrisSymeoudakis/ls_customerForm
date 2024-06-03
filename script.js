@@ -377,8 +377,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                             </div>
                                                                         </div>
                                                                         <div class="cart-footer text-right">
-                                                                            <button type="button" class="btn btn-info my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
-                                                                            <a href="page-checkout.html" class="btn btn-success my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                            <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
+                                                                            <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
