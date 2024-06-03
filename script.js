@@ -273,10 +273,10 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#" class="table-link danger" onclick="deleteOrder(${index})">
+                        <a href="#" class="table-link danger" onclick="confirmDelete(${index})">
                             <span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
                     </td>
@@ -291,6 +291,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
     })
     .catch(error => console.error('Error fetching data:', error));
 
+    
     
     
     function showPopup(orderIndex) {
@@ -353,7 +354,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
                                                                                         const total = (quantity * unitPrice) - discount;
                                                                                         return `
-                                                                                            <tr>
+                                                                                        id="line-row-${index}"
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
                                                                                                 <td>${quantity}</td>
@@ -361,6 +362,14 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                                 <td>€${unitPrice.toFixed(2)}</td>
                                                                                                 <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
                                                                                                 <td class="text-right">€${total.toFixed(2)}</td>
+                                                                                                <td>
+        <a href="#" class="table-link danger" onclick="confirmDeleteLine(${index})">
+            <span class="fa-stack">
+                <i class="fa fa-square fa-stack-2x"></i>
+                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+            </span>
+        </a>
+    </td>
                                                                                             </tr>
                                                                                         `;
                                                                                     }).join('')}
@@ -435,16 +444,25 @@ function showOrder(index) {
     
 }
 
-function deleteOrder(index) {
-    // Find the row corresponding to the order to be deleted
-    const rowToDelete = document.getElementById(`orderRow_${index}`);
-    
-    if (rowToDelete) {
-        rowToDelete.remove(); // Remove the row from the table
-        console.log('Order deleted successfully.');
-    } else {
-        console.error('Failed to delete order: Row not found.');
+function confirmDeleteLine(orderIndex) {
+    const confirmation = confirm("Are you sure you want to delete this record?");
+    if (confirmation) {
+        deleteLine(orderIndex);
     }
+}
+
+function deleteOrder(orderIndex) {
+    // Your logic to delete the order from the server or local data
+    
+    document.querySelector(`#order-row-${orderIndex}`).remove();
+        
+}
+
+function deleteLine(orderIndex) {
+    // Your logic to delete the order from the server or local data
+    
+    document.querySelector(`#line-row-${orderIndex}`).remove();
+        
 }
     
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
