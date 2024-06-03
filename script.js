@@ -422,7 +422,7 @@ function editOrder(index) {
    
 }
 
-function showPopup(index) {
+function showOrder(index) {
     showPopup(index);
     
 }
