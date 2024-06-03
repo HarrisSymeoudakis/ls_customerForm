@@ -466,7 +466,7 @@ function deleteLine(orderIndex, lineIndex) {
     const totalAmount = calculateTotalAmount(order.lines);
 
     // Update the total amount in the modal
-    document.querySelector('#orderModal .order-total h3').textContent = " ";
+    document.querySelector('#orderModal .order-total h3').textContent = `€${totalAmount}`;
 }
 
 function deleteOrder(orderIndex) {
