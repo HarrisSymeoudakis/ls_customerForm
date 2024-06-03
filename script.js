@@ -301,14 +301,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                 const order = data[orderIndex];
     
                 // Calculate total amount for the entire order
-                let totalAmount = 0;
-                order.lines.forEach(line => {
-                    const quantity = line.quantities.quantity;
-                    const unitPrice = line.unitPrice;
-                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                    const total = (quantity * unitPrice) - discount;
-                    totalAmount += total;
-                });
+                let totalAmount = calculateTotalAmount(order.lines);
     
                 const modalHtml = `
                     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
@@ -354,7 +347,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
                                                                                         const total = (quantity * unitPrice) - discount;
                                                                                         return `
-                                                                                        <tr id="line-row-${index}">
+                                                                                            <tr id="line-row-${index}">
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
                                                                                                 <td>${quantity}</td>
@@ -363,13 +356,13 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                                 <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
                                                                                                 <td class="text-right">€${total.toFixed(2)}</td>
                                                                                                 <td>
-        <a href="#" class="table-link danger" onclick="confirmDeleteLine(${index})">
-            <span class="fa-stack">
-                <i class="fa fa-square fa-stack-2x"></i>
-                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-            </span>
-        </a>
-    </td>
+                                                                                                    <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index})">
+                                                                                                        <span class="fa-stack">
+                                                                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                                                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                                                                        </span>
+                                                                                                    </a>
+                                                                                                </td>
                                                                                             </tr>
                                                                                         `;
                                                                                     }).join('')}
@@ -385,7 +378,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                                    <td class="f-w-7 font-18"><h4>€${totalAmount.toFixed(2)}</h4></td>
+                                                                                                    <td class="f-w-7 font-18"><h4>€${totalAmount}</h4></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -427,7 +420,6 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
             .catch(error => console.error('Error fetching data:', error));
     }
     
-
     
 function closePopup() {
     document.getElementById('popupContainer').style.display = 'none';
@@ -444,11 +436,37 @@ function showOrder(index) {
     
 }
 
-function confirmDeleteLine(orderIndex) {
+function confirmDeleteLine(orderIndex, lineIndex) {
     const confirmation = confirm("Are you sure you want to delete this record?");
     if (confirmation) {
-        deleteLine(orderIndex);
+        deleteLine(orderIndex, lineIndex);
     }
+}
+
+
+function calculateTotalAmount(lines) {
+    let totalAmount = 0;
+    lines.forEach(line => {
+        const quantity = line.quantities.quantity;
+        const unitPrice = line.unitPrice;
+        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+        const total = (quantity * unitPrice) - discount;
+        totalAmount += total;
+    });
+    return totalAmount.toFixed(2);
+}
+
+function deleteLine(orderIndex, lineIndex) {
+    const order = window.ordersData[orderIndex];
+    order.lines.splice(lineIndex, 1); // Remove the line from the data
+
+    document.querySelector(`#line-row-${lineIndex}`).remove(); // Remove the line from the DOM
+
+    // Recalculate the total amount
+    const totalAmount = calculateTotalAmount(order.lines);
+
+    // Update the total amount in the modal
+    document.querySelector('#orderModal .order-total h4').textContent = `€${totalAmount}`;
 }
 
 function deleteOrder(orderIndex) {
@@ -458,12 +476,7 @@ function deleteOrder(orderIndex) {
         
 }
 
-function deleteLine(orderIndex) {
-    // Your logic to delete the order from the server or local data
-    
-    document.querySelector(`#line-row-${orderIndex}`).remove();
-        
-}
+
     
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
     .then(response => response.json())
