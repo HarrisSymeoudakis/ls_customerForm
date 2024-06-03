@@ -442,7 +442,7 @@ function confirmDeleteLine(orderIndex, lineNumber) {
     const order = window.ordersData[orderIndex];
     
     // Find the line index based on the lineNumber
-    const lineIndex = lineNumber - 1; // Adjust for 0-based indexing
+    const lineIndex = lineNumber; // Adjust for 0-based indexing
     
     if (lineIndex >= 0 && lineIndex < order.lines.length) {
         // Remove the line from the data
