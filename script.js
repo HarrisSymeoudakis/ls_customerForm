@@ -354,7 +354,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
                                                                                         const total = (quantity * unitPrice) - discount;
                                                                                         return `
-                                                                                        id="line-row-${index}"
+                                                                                        <tr id="line-row-${index}">
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
                                                                                                 <td>${quantity}</td>
