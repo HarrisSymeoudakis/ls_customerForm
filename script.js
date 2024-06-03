@@ -379,6 +379,9 @@ function showPopup(orderIndex) {
                                                                             <div class="order-total table-responsive">
                                                                                 <table class="table table-borderless text-right">
                                                                                     <tbody>
+                                                                                    <tr>
+                                                                                    <button class="btn btn-primary">New Line</button>
+                                                                                    </tr>
                                                                                         <tr>
                                                                                             <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
                                                                                             <td class="f-w-7 font-18 amount"><h3>€${totalAmount}</h4></td>
