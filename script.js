@@ -297,8 +297,18 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
         fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
             .then(response => response.json())
             .then(data => {
-                
                 const order = data[orderIndex];
+    
+                // Calculate total amount for the entire order
+                let totalAmount = 0;
+                order.lines.forEach(line => {
+                    const quantity = line.quantities.quantity;
+                    const unitPrice = line.unitPrice;
+                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+                    const total = (quantity * unitPrice) - discount;
+                    totalAmount += total;
+                });
+    
                 const modalHtml = `
                     <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -337,22 +347,20 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
-                                                                                    
                                                                                     ${order.lines.map((line, index) => {
                                                                                         const quantity = line.quantities.quantity;
                                                                                         const unitPrice = line.unitPrice;
-                                                                                        
                                                                                         const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                                                                                         const total = (quantity * unitPrice) - discount;
+                                                                                        const total = (quantity * unitPrice) - discount;
                                                                                         return `
                                                                                             <tr>
                                                                                                 <td>${index + 1}</td>
                                                                                                 <td>${line.description}</td>
                                                                                                 <td>${quantity}</td>
-                                                                                                <td>${discount}</td>
-                                                                                                <td> ${unitPrice.toFixed(2)}</td>
+                                                                                                <td>€${discount}</td>
+                                                                                                <td>€${unitPrice.toFixed(2)}</td>
                                                                                                 <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-                                                                                                <td class="text-right">${total.toFixed(2)}</td>
+                                                                                                <td class="text-right">€${total.toFixed(2)}</td>
                                                                                             </tr>
                                                                                         `;
                                                                                     }).join('')}
@@ -368,7 +376,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                                    <td class="f-w-7 font-18"><h4>$1800</h4></td>
+                                                                                                    <td class="f-w-7 font-18"><h4>€${totalAmount.toFixed(2)}</h4></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
