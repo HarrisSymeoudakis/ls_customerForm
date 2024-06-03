@@ -438,10 +438,29 @@ function showOrder(index) {
     
 }
 
-function confirmDeleteLine(orderIndex, lineIndex) {
-    const confirmation = confirm("Are you sure you want to delete this record?");
-    if (confirmation) {
-        deleteLine(orderIndex, lineIndex);
+function confirmDeleteLine(orderIndex, lineNumber) {
+    const order = window.ordersData[orderIndex];
+    
+    // Find the line index based on the lineNumber
+    const lineIndex = lineNumber - 1; // Adjust for 0-based indexing
+    
+    if (lineIndex >= 0 && lineIndex < order.lines.length) {
+        // Remove the line from the data
+        order.lines.splice(lineIndex, 1);
+
+        // Remove the line from the DOM
+        const lineRow = document.querySelector(`#line-row-${lineIndex}`);
+        if (lineRow) {
+            lineRow.remove();
+        }
+
+        // Recalculate the total amount
+        const totalAmount = calculateTotalAmount(order.lines);
+
+        // Update the total amount in the modal
+        document.querySelector('#orderModal .order-total h3').textContent = `€${totalAmount}`;
+    } else {
+        console.error(`Line with No Reference ${lineNumber} not found.`);
     }
 }
 
@@ -476,44 +495,11 @@ function deleteOrder(orderIndex) {
     
     document.querySelector(`#order-row-${orderIndex}`).remove();
 
-    updateLinesInModal(orderIndex);
+    
         
 }
 
-function updateLinesInModal(orderIndex) {
-    const order = window.ordersData[orderIndex];
-    const tbody = document.querySelector('#orderModal table tbody');
-    tbody.innerHTML = ''; // Clear existing rows
 
-    order.lines.forEach((line, index) => {
-        const quantity = line.quantities.quantity;
-        const unitPrice = line.unitPrice;
-        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-        const total = (quantity * unitPrice) - discount;
-
-        const rowHtml = `
-            <tr id="line-row-${index}">
-                <td>${index + 1}</td>
-                <td>${line.description}</td>
-                <td>${quantity}</td>
-                <td>€${discount}</td>
-                <td>€${unitPrice.toFixed(2)}</td>
-                <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-                <td class="text-right">€${total.toFixed(2)}</td>
-                <td>
-                    <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index})">
-                        <span class="fa-stack">
-                            <i class="fa fa-square fa-stack-2x"></i>
-                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </td>
-            </tr>
-        `;
-        tbody.insertAdjacentHTML('beforeend', rowHtml);
-    });
-}
-    
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
     .then(response => response.json())
     .then(data => {
