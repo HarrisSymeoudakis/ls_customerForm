@@ -374,23 +374,11 @@ function showPopup(orderIndex) {
                                                                     </div>
                                                                 </div>
                                                                 <div class="cart-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
-                                                                            <div class="order-total table-responsive">
-                                                                                <table class="table table-borderless text-right">
-                                                                                    <tbody>
-                                                                                    <tr>
-                                                                                    <button class="btn btn-primary">New Line</button>
-                                                                                    </tr>
-                                                                                        <tr>
-                                                                                            <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                            <td class="f-w-7 font-18 amount"><h3>€${totalAmount}</h4></td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="new-line">
+                                                                <button class="btn btn-primary">New Line</button>
+                                                                </div>
+                                                                <h4>Tax Inc. Total Amount:</h4>
+                                                                <h3>€${totalAmount}</h4>
                                                                 </div>
                                                                 <div class="cart-footer text-right">
                                                                     <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
