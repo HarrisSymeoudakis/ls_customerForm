@@ -294,103 +294,104 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
     
     
     
-    function showPopup(orderIndex) {
-        fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
-            .then(response => response.json())
-            .then(data => {
-                const order = data[orderIndex];
-    
-                // Calculate total amount for the entire order
-                let totalAmount = calculateTotalAmount(order.lines);
-    
-                const modalHtml = `
-                    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <div class="contentbar">
-                                            <div class="row">
-                                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="card m-b-30">
-                                                        <div class="card-header">
-                                                            <h5 class="card-title">Cart</h5>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="row justify-content-center">
-                                                                <div class="col-lg-10 col-xl-8">
-                                                                    <div class="cart-container">
-                                                                        <div class="cart-head">
-                                                                            <div class="table-responsive">
-                                                                                <table class="table table-borderless">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th scope="col">No Reference</th>
-                                                                                            <th scope="col">Description</th>                                               
-                                                                                            <th scope="col">Quantity</th>
-                                                                                            <th scope="col">Price Discount</th>
-                                                                                            <th scope="col">Amount</th>
-                                                                                            <th scope="col">Delivery Date</th>
-                                                                                            <th scope="col" class="text-right">Total</th>
+function showPopup(orderIndex) {
+    fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+        .then(response => response.json())
+        .then(data => {
+            const order = data[orderIndex];
+
+            // Store the order data globally for easy access
+            window.ordersData = data;
+
+            // Calculate total amount for the entire order
+            let totalAmount = calculateTotalAmount(order.lines);
+
+            const modalHtml = `
+                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="contentbar">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="card m-b-30">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Cart</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-lg-10 col-xl-8">
+                                                                <div class="cart-container">
+                                                                    <div class="cart-head">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-borderless">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th scope="col">No Reference</th>
+                                                                                        <th scope="col">Description</th>                                               
+                                                                                        <th scope="col">Quantity</th>
+                                                                                        <th scope="col">Price Discount</th>
+                                                                                        <th scope="col">Amount</th>
+                                                                                        <th scope="col">Delivery Date</th>
+                                                                                        <th scope="col" class="text-right">Total</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="order-lines-tbody">
+                                                                                ${order.lines.map((line, index) => {
+                                                                                    const quantity = line.quantities.quantity;
+                                                                                    const unitPrice = line.unitPrice;
+                                                                                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+                                                                                    const total = (quantity * unitPrice) - discount;
+                                                                                    return `
+                                                                                        <tr id="line-row-${index}">
+                                                                                            <td>${index + 1}</td>
+                                                                                            <td>${line.description}</td>
+                                                                                            <td>${quantity}</td>
+                                                                                            <td>€${discount}</td>
+                                                                                            <td>€${unitPrice.toFixed(2)}</td>
+                                                                                            <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
+                                                                                            <td class="text-right">€${total.toFixed(2)}</td>
+                                                                                            <td>
+                                                                                                <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index})">
+                                                                                                    <span class="fa-stack">
+                                                                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                                                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </td>
                                                                                         </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                    ${order.lines.map((line, index) => {
-                                                                                        const quantity = line.quantities.quantity;
-                                                                                        const unitPrice = line.unitPrice;
-                                                                                        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                                                                                        const total = (quantity * unitPrice) - discount;
-                                                                                        return `
-                                                                                            <tr id="line-row-${index}">
-                                                                                                <td>${index + 1}</td>
-                                                                                                <td>${line.description}</td>
-                                                                                                <td>${quantity}</td>
-                                                                                                <td>€${discount}</td>
-                                                                                                <td>€${unitPrice.toFixed(2)}</td>
-                                                                                                <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-                                                                                                <td class="text-right">€${total.toFixed(2)}</td>
-                                                                                                <td>
-                                                                                                    <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index})">
-                                                                                                        <span class="fa-stack">
-                                                                                                            <i class="fa fa-square fa-stack-2x"></i>
-                                                                                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                                                                        </span>
-                                                                                                    </a>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        `;
-                                                                                    }).join('')}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
+                                                                                    `;
+                                                                                }).join('')}
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
-                                                                        <div class="cart-body">
-                                                                            <div class="row">
-                                                                                <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
-                                                                                    <div class="order-total table-responsive">
-                                                                                        <table class="table table-borderless text-right">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                                    <td class="f-w-7 font-18 "><h3>€${totalAmount}</h3></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
+                                                                </div>
+                                                                <div class="cart-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                                                            <div class="order-total table-responsive">
+                                                                                <table class="table table-borderless text-right">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
+                                                                                            <td class="f-w-7 font-18 amount"><h4>€${totalAmount}</h4></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="cart-footer text-right">
-                                                                            <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
-                                                                            <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                        </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="cart-footer text-right">
+                                                                    <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
+                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -403,23 +404,24 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                             </div>
                         </div>
                     </div>
-                `;
-    
-                // Remove existing modal if present
-                const existingModal = document.getElementById('orderModal');
-                if (existingModal) {
-                    existingModal.parentNode.removeChild(existingModal);
-                }
-    
-                // Append new modal to body
-                document.body.insertAdjacentHTML('beforeend', modalHtml);
-    
-                // Show the modal
-                $('#orderModal').modal('show');
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
-    
+                </div>
+            `;
+
+            // Remove existing modal if present
+            const existingModal = document.getElementById('orderModal');
+            if (existingModal) {
+                existingModal.parentNode.removeChild(existingModal);
+            }
+
+            // Append new modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+            // Show the modal
+            $('#orderModal').modal('show');
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
     
 function closePopup() {
     document.getElementById('popupContainer').style.display = 'none';
@@ -473,10 +475,44 @@ function deleteOrder(orderIndex) {
     // Your logic to delete the order from the server or local data
     
     document.querySelector(`#order-row-${orderIndex}`).remove();
+
+    updateLinesInModal(orderIndex);
         
 }
 
+function updateLinesInModal(orderIndex) {
+    const order = window.ordersData[orderIndex];
+    const tbody = document.querySelector('#orderModal table tbody');
+    tbody.innerHTML = ''; // Clear existing rows
 
+    order.lines.forEach((line, index) => {
+        const quantity = line.quantities.quantity;
+        const unitPrice = line.unitPrice;
+        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+        const total = (quantity * unitPrice) - discount;
+
+        const rowHtml = `
+            <tr id="line-row-${index}">
+                <td>${index + 1}</td>
+                <td>${line.description}</td>
+                <td>${quantity}</td>
+                <td>€${discount}</td>
+                <td>€${unitPrice.toFixed(2)}</td>
+                <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
+                <td class="text-right">€${total.toFixed(2)}</td>
+                <td>
+                    <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index})">
+                        <span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', rowHtml);
+    });
+}
     
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
     .then(response => response.json())
