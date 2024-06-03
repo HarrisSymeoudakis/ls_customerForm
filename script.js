@@ -316,92 +316,67 @@ function showPopup(orderIndex) {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="contentbar">
+                           <div class="modal-body">
+    <div class="container">
+        <div class="contentbar">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="card m-b-30">
+                        <div class="card-header">
+                            <h5 class="card-title">Cart</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10 col-xl-8">
+                                    <div class="cart-container">
+                                        <div class="cart-head">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">No Reference</th>
+                                                            <th scope="col">Description</th>                                               
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Price Discount</th>
+                                                            <th scope="col">Amount</th>
+                                                            <th scope="col">Delivery Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="order-lines-tbody">
+                                                        <!-- Rows for order lines will be dynamically added here -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="cart-footer text-right">
+                                            <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
+                                            <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="card m-b-30">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">Cart</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-lg-10 col-xl-8">
-                                                                <div class="cart-container">
-                                                                    <div class="cart-head">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-borderless">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th scope="col">No Reference</th>
-                                                                                        <th scope="col">Description</th>                                               
-                                                                                        <th scope="col">Quantity</th>
-                                                                                        <th scope="col">Price Discount</th>
-                                                                                        <th scope="col">Amount</th>
-                                                                                        <th scope="col">Delivery Date</th>
-                                                                                        <th scope="col" class="text-right">Total</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody id="order-lines-tbody">
-                                                                                ${order.lines.map((line, index) => {
-                                                                                    const quantity = line.quantities.quantity;
-                                                                                    const unitPrice = line.unitPrice;
-                                                                                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                                                                                    const total = (quantity * unitPrice) - discount;
-                                                                                    return `
-                                                                                        <tr id="line-row-${index +1}">
-                                                                                            <td>${index +1 }</td>
-                                                                                            <td>${line.description}</td>
-                                                                                            <td>${quantity}</td>
-                                                                                            <td>€${discount}</td>
-                                                                                            <td>€${unitPrice.toFixed(2)}</td>
-                                                                                            <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-                                                                                            <td class="text-right">€${total.toFixed(2)}</td>
-                                                                                            <td>
-                                                                                                <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index+1})">
-                                                                                                    <span class="fa-stack">
-                                                                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                                                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                                                                    </span>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    `;
-                                                                                }).join('')}
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cart-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
-                                                                            <div class="order-total table-responsive">
-                                                                                <table class="table table-borderless text-right">
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                            <td class="f-w-7 font-18 amount"><h3>€${totalAmount}</h4></td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cart-footer text-right">
-                                                                    <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                                <div class="order-total">
+                                                    <table class="table table-borderless text-right">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="f-w-7 font-18">Tax Inc. Total Amount:</td>
+                                                                <td class="f-w-7 font-18 amount"><h3>€${totalAmount}</h3></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                         </div>
                     </div>
                 </div>
