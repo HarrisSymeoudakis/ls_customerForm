@@ -76,7 +76,9 @@ body {
     background-clip: padding-box;
     box-shadow: 0 1px 4px rgba(24,28,33,0.012);
 }
-
+.cart-body h3, .cart-body h4 {
+    text-align: right;
+}
 
 .account-settings-fileinput {
     position: absolute;
