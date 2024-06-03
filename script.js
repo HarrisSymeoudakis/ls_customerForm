@@ -350,8 +350,8 @@ function showPopup(orderIndex) {
                                                                                     const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
                                                                                     const total = (quantity * unitPrice) - discount;
                                                                                     return `
-                                                                                        <tr id="line-row-${index}">
-                                                                                            <td>${index + 1}</td>
+                                                                                        <tr id="line-row-${index +1}">
+                                                                                            <td>${index +1 }</td>
                                                                                             <td>${line.description}</td>
                                                                                             <td>${quantity}</td>
                                                                                             <td>€${discount}</td>
@@ -359,7 +359,7 @@ function showPopup(orderIndex) {
                                                                                             <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
                                                                                             <td class="text-right">€${total.toFixed(2)}</td>
                                                                                             <td>
-                                                                                                <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index})">
+                                                                                                <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index+1})">
                                                                                                     <span class="fa-stack">
                                                                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                                                                         <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -442,12 +442,11 @@ function confirmDeleteLine(orderIndex, lineNumber) {
     const order = window.ordersData[orderIndex];
     
     // Find the line index based on the lineNumber
-    const lineIndex = lineNumber; // Adjust for 0-based indexing
+    const lineIndex = lineNumber -1; // Adjust for 0-based indexing
     
     if (lineIndex >= 0 && lineIndex < order.lines.length) {
         // Remove the line from the data
-        order.lines.splice(lineIndex, 1);
-
+        
         // Remove the line from the DOM
         const lineRow = document.querySelector(`#line-row-${lineIndex}`);
         if (lineRow) {
