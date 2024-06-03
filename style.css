@@ -112,6 +112,11 @@ body {
 }
 .table a.table-link.danger {
     color: #e74c3c;
+    
+}
+
+.table-borderless{
+width:auto;
 }
 .label {
     border-radius: 3px;
