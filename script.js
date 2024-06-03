@@ -448,7 +448,8 @@ function confirmDeleteLine(orderIndex, lineNumber) {
         // Remove the line from the data
         order.lines[lineIndex].unitPrice=0;
         
-       
+        order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0 ? order.lines[lineIndex].discounts[0].amount : 0;
+
         // Remove the line from the DOM
         const lineRow = document.querySelector(`#line-row-${lineNumber}`);
         if (lineRow) {
