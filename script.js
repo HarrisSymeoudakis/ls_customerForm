@@ -326,8 +326,8 @@ function showPopup(orderIndex) {
                                                         <h5 class="card-title">Cart</h5>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-lg-10 col-xl-8">
+                                                        <div>
+                                                            <div>
                                                                 <div class="cart-container">
                                                                     <div class="cart-head">
                                                                         <div class="table-responsive">
