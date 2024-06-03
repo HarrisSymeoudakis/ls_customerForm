@@ -24,7 +24,7 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
     .then(data => {
         console.log('Success:', data);
         //window.location.href = `https://ls-customerserver.onrender.com/PostBackExtForm/redirect?sessionId=${sessionId}`;
-        window.location.href = `https://retail-services.cegid.cloud/et/pos/assignCustomer:${customerId}`;
+        window.location.href = `https://retail-services.cegid.cloud/et/pos/assignCustomer/:${customerId}`;
     })
     .catch(error => {
         console.error('Error:', error);
