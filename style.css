@@ -145,6 +145,7 @@ a {
 }
 
 .table thead tr th {
+    white-space: nowrap;
     text-transform: none;
     font-size: 0.875em;
     color: #3c4395;
