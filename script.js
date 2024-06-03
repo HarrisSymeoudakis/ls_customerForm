@@ -378,7 +378,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td class="f-w-7 font-18"><h4>Tax Inc. Total Amount:</h4></td>
-                                                                                                    <td class="f-w-7 font-18"><h4>€${totalAmount}</h4></td>
+                                                                                                    <td class="f-w-7 font-18 "><h3>€${totalAmount}</h3></td>
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
@@ -466,7 +466,7 @@ function deleteLine(orderIndex, lineIndex) {
     const totalAmount = calculateTotalAmount(order.lines);
 
     // Update the total amount in the modal
-    document.querySelector('#orderModal .order-total h4').textContent = " ";
+    document.querySelector('#orderModal .order-total h3').textContent = " ";
 }
 
 function deleteOrder(orderIndex) {
