@@ -30,3 +30,7 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
         console.error('Error:', error);
     });
 });
+
+document.getElementById('cancelBtn').addEventListener('click', function() {
+	window.location.href = 'https://retail-services.cegid.cloud/et/pos/';
+});
