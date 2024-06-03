@@ -455,7 +455,7 @@ function confirmDeleteLine(orderIndex, lineNumber) {
         const totalAmount = calculateTotalAmount(order.lines);
 
         // Update the total amount in the modal
-        document.querySelector('#orderModal .order-total h3').textContent = `€${totalAmount}`;
+        document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
     } else {
         console.error(`Line with No Reference ${lineNumber} not found.`);
     }
@@ -485,7 +485,7 @@ function deleteLine(orderIndex, lineIndex) {
     const totalAmount = calculateTotalAmount(order.lines);
 
     // Update the total amount in the modal
-    document.querySelector('#orderModal .order-total h3').textContent = `€${totalAmount}`;
+    document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
 }
 
 function deleteOrder(orderIndex) {
