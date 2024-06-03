@@ -439,6 +439,8 @@ function showOrder(index) {
 }
 
 function confirmDeleteLine(orderIndex, lineNumber) {
+    const confirmation = confirm("Are you sure you want to delete this record?");
+    if (confirmation) {
     const order = window.ordersData[orderIndex];
     
     // Find the line index based on the lineNumber
@@ -466,6 +468,7 @@ function confirmDeleteLine(orderIndex, lineNumber) {
     } else {
         console.error(`Line with No Reference ${lineNumber} not found.`);
     }
+}
 }
 
 
