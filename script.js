@@ -450,7 +450,7 @@ function confirmDeleteLine(orderIndex, lineNumber) {
         
        
         // Remove the line from the DOM
-        const lineRow = document.querySelector(`#line-row-${lineIndex}`);
+        const lineRow = document.querySelector(`#line-row-${lineNumber}`);
         if (lineRow) {
             lineRow.remove();
         }
