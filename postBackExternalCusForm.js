@@ -19,6 +19,7 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
+        window.location.href = `https://ls-customerserver.onrender.com/PostBackExtForm/redirect?sessionId=${sessionId}`;
     })
     .catch(error => {
         console.error('Error:', error);
