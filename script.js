@@ -888,7 +888,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
 				});
 				const newRowReservation = document.createElement('tr');
 				
-				newRowReservation.setAttribute("id", "reservation-row-"+header.documentKey.number);
+				newRowReservation.setAttribute("id", "reservation-row-"+index);
 				newRowReservation.innerHTML = `
 				
                 <td>${header.key.number}</td>
