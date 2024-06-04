@@ -347,7 +347,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 					totalAmount += total;
 				});
 				
-				newRowOrder= document.createElement('tr');
+				const newRowOrder= document.createElement('tr');
 				newRowOrder.setAttribute("id", "order-row-"+header.documentKey.number);
 				newRowOrder.innerHTML = `
                
