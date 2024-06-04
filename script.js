@@ -848,10 +848,12 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 				// Append the new row to the tbody
 				tbodyOrders.appendChild(newRowOrder);
 			}
+            
             const newButton = document.createElement('button');
 newButton.classList.add('btn', 'btn-primary'); // Add Bootstrap button styles
 newButton.textContent = 'New Order';
 newButton.onclick = showBlankPopup;
+tbodyOrders.appendChild(newButton);
 		});
 
 		window.ordersData = data;
