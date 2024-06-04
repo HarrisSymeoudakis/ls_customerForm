@@ -9,8 +9,11 @@ body {
 
 .top-right-image {
   position: absolute;
-  top: 8px; /* Adjust for desired top positioning */
-  right: 8px; /* Adjust for desired right positioning */
+  top: 8px; 
+  right: 8px; 
+    width: 150px; 
+  height: 100px; 
+    
 }
 
 .ui-w-80 {
