@@ -511,7 +511,7 @@ function showEditablePopup(orderIndex) {
 		.catch(error => console.error('Error fetching data:', error));
 }
 
-function showPopup(orderIndex) {
+function showPopup(orderIndex, text) {
 	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 		.then(response => response.json())
 		.then(data => {
@@ -528,7 +528,7 @@ function showPopup(orderIndex) {
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                                <h5 class="modal-title" id="orderModalLabel">${text}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -634,9 +634,14 @@ function editOrder(index) {
 }
 
 function showOrder(index) {
-	showPopup(index);
+	showPopup(index,"Order Details");
 
 }
+function showReservation(index) {
+	showPopup(index,"Reservation Details");
+
+}
+
 
 function confirmDelete(orderNumber) {
 	const confirmation = confirm("Are you sure you want to delete this record?");
@@ -776,7 +781,8 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
                 <td>${header.totalQuantity}</td>
                 <td>tax inc</td>
                     <td style="width: 20%;">
-                        <a href="#" class="table-link text-warning">
+                        
+                        <a href="#" class="table-link text-warning" onclick="showReservation(${header.key.number})">
                             <span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
