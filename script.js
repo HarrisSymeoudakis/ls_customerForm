@@ -471,7 +471,7 @@ function showEditablePopup(orderIndex) {
                                                                 </div>
                                                                 <div class="cart-body">
                                                                 <div class="new-line">
-                                                                <button class="btn btn-primary">New Line</button>
+                                                                
                                                                 </div>
                                                                 <h4>Tax Inc. Total Amount:</h4>
                                                                 <h3>€${totalAmount}</h4>
