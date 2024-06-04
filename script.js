@@ -249,9 +249,10 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                     totalAmount += total;
                 });
 
-                const newRowOrder = document.createElement('tr');
-              
+                
+                
                 newRowOrder.innerHTML = `
+                <tr id="order-row-${header.documentKey.number}">
                     <td>${header.documentKey.number}</td>
                     <td>${new Date(header.documentDate).toLocaleDateString()}</td>
                     <td>${header.storeId || 'N/A'}</td>
@@ -273,7 +274,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#" class="table-link danger" onclick="confirmDelete(${index})">
+                        <a href="#" class="table-link danger" onclick="confirmDelete(${header.documentKey.number})">
                             <span class="fa-stack">
                                 <i class="fa fa-square fa-stack-2x"></i>
                                  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -427,6 +428,57 @@ function editOrder(index) {
 function showOrder(index) {
     showPopup(index);
     
+}
+
+function confirmDelete(orderNumber) {
+    const confirmation = confirm("Are you sure you want to delete this record?");
+    if (confirmation) {
+    const ordersData = window.ordersData;
+    const orderIndex = ordersData.findIndex(orderLine => orderLine.header.documentKey.number === orderNumber);
+
+// If the order line is found, remove it
+if (orderIndex !== -1) {
+    ordersData.splice(orderIndex, 1);
+
+    // Also remove the corresponding row from the DOM
+    const orderRow = document.querySelector(`#order-row-${orderNumber}`);
+    if (orderRow) {
+        orderRow.remove();
+    }
+}
+
+    }
+
+    
+
+
+    })
+    // Find the line index based on the lineNumber
+    const lineIndex = lineNumber -1; // Adjust for 0-based indexing
+    
+    if (lineIndex >= 0 && lineIndex < order.lines.length) {
+        // Remove the line from the data
+        order.lines[lineIndex].unitPrice=0;
+        
+        if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0){
+            order.lines[lineIndex].discounts[0].amount=0;
+        }
+
+        // Remove the line from the DOM
+        const lineRow = document.querySelector(`#line-row-${lineNumber}`);
+        if (lineRow) {
+            lineRow.remove();
+        }
+
+        // Recalculate the total amount
+        const totalAmount = calculateTotalAmount(order.lines);
+
+        // Update the total amount in the modal
+        document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
+    } else {
+        console.error(`Line with No Reference ${lineNumber} not found.`);
+    }
+}
 }
 
 function confirmDeleteLine(orderIndex, lineNumber) {
