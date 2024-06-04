@@ -849,13 +849,13 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 				tbodyOrders.appendChild(newRowOrder);
 			}
             
-            const newButton = document.createElement('button');
+           
+		});
+ const newButton = document.createElement('button');
 newButton.classList.add('btn', 'btn-primary'); // Add Bootstrap button styles
 newButton.textContent = 'New Order';
 newButton.onclick = showBlankPopup;
 tbodyOrders.appendChild(newButton);
-		});
-
 		window.ordersData = data;
 	})
 	.catch(error => console.error('Error fetching data:', error));
