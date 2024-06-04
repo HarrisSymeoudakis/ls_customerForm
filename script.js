@@ -1,257 +1,353 @@
-document.getElementById('newAddressBtn').addEventListener('click', function() {
-    // Example data for a new address (replace with actual data)
-    const addressTypes = 'Home';
-    const countryId = 'USA';
-    const zipCode = '12345';
-    const city = 'New York';
-    const linesValue = '123 Main St';
+fetch('https://ls-customerserver.onrender.com/latest')
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		callbackURL = data.callbackUrl;
+		delete data.callbackUrl;
+		responseData = data;
 
-    const addressItem = document.createElement('div');
-        addressItem.classList.add('row');
+		const birthdate = `${data.birthMonth}/${data.birthDay}/${data.birthYear}`;
+		const gender = data.gender;
 
-        const addressItemCol = document.createElement('div');
-        addressItemCol.classList.add( 'col-md-6');
+		const finalAddress = data.postalAddresses[0] || {};
+		const phone = data.phones[0]?.phone || "";
+		const phonetype = data.phones[0]?.phoneType || "";
+		const email = data.emails[0]?.email || "";
 
-        const cardContainer = document.createElement('div');
-        cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+		document.getElementById('customerId').value = data.customerId || "";
+		document.getElementById('firstName').value = data.firstName || "";
+		document.getElementById('lastName').value = data.lastName || "";
+		document.getElementById('birthdate').value = birthdate || "";
+		document.getElementById('gender').value = gender || "";
+		document.getElementById('phone').value = phone;
+		document.getElementById('phonetype').value = phonetype;
+		document.getElementById('addressConsent').value = finalAddress.addressConsent || "";
+		document.getElementById('addressLine1').value = finalAddress.addressLine1 || "";
+		document.getElementById('city').value = finalAddress.city || "";
+		document.getElementById('postalCode').value = finalAddress.postalCode || "";
+		document.getElementById('email').value = email;
 
-        const goldMembersContainer = document.createElement('div');
-        goldMembersContainer.classList.add('gold-members', 'p-4');
+		validateEmail();
 
-        const mediaContainer = document.createElement('div');
-        mediaContainer.classList.add('media');
+		const emailField = document.getElementById('email');
+		emailField.addEventListener('input', validateEmail);
+	})
+	.catch(error => console.error('Error fetching data:', error));
 
-        const iconContainer = document.createElement('div');
-        iconContainer.classList.add('mr-3');
-        iconContainer.innerHTML = '<i class="icofont-ui-home icofont-3x"></i>';
+/* document.getElementById('saveChangesBtn').addEventListener('click', function() {
+    const customerId = document.getElementById('customerId').value;
+    const firstName = document.getElementById('firstName').value;
+    const email = document.getElementById('email').value;
+    const lastName = document.getElementById('lastName').value;
+    const birthdate = document.getElementById('birthdate').value;
+    const gender = document.getElementById('gender').value;
+    const phone = document.getElementById('phone').value;
+    const phonetype = document.getElementById('phonetype').value;
+    const address = document.getElementById('address').value;
+    const addressConsent = document.getElementById('addressConsent').value;
+    const addressLine1 = document.getElementById('addressLine1').value;
+    const city = document.getElementById('city').value;
+    const postalCode = document.getElementById('postalCode').value;
 
-        const mediaBody = document.createElement('div');
-        mediaBody.classList.add('media-body');
+    responseData.customerId = customerId || "";
+    responseData.firstName = firstName || "";
+    responseData.lastName = lastName || "";
+    responseData.emails[0].email = email || "";
+    responseData.gender = gender || "";
+    responseData.phones[0].phone = phone || "";
+    responseData.phones[0].phoneType = phonetype || "";
 
-        const title = document.createElement('h6');
-        title.classList.add('mb-1', 'address-title');
-        title.textContent = addressTypes;
+    const birthDates = birthdate.split("/");
+    responseData.birthMonth = birthDates[0] || "";
+    responseData.birthDay = birthDates[1] || "";
+    responseData.birthYear = birthDates[2] || "";
 
-        const addressInfo = document.createElement('p');
-        addressInfo.classList.add('text-black', 'address-info');
-        addressInfo.textContent = `${countryId}, ${zipCode}, ${city}, ${linesValue}`;
+    responseData.postalAddresses[0].addressConsent = addressConsent || "";
+    responseData.postalAddresses[0].addressLine1 = addressLine1 || "";
+    responseData.postalAddresses[0].city = city || "";
+    responseData.postalAddresses[0].postalCode = postalCode || "";
 
-        const actionsContainer = document.createElement('p');
-            actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
-            actionsContainer.innerHTML = `
+    console.log('Updated response:', responseData);
+    console.log('callbackURL:', callbackURL);
+
+    fetch('https://ls-customerserver.onrender.com/returning', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(responseData)
+    }).then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    }).catch((error) => {
+        console.error('Error:', error);
+    });
+}); */
+
+function validateEmail() {
+	const emailField = document.getElementById('email');
+	const email = emailField.value;
+	const message = document.getElementById('message');
+	const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}$/;
+
+	if (emailPattern.test(email)) {
+		message.textContent = "Valid Email Address";
+		message.style.color = "green";
+	} else {
+		message.textContent = "Invalid Email Address";
+		message.style.color = "red";
+	}
+}
+
+fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
+	.then(response => response.json())
+	.then(data => {
+		console.log(data)
+		addressesData = data;
+		// Assuming `addressesData` is the array containing the address information fetched from the server
+		const addressContainer = document.getElementById('addressContainer');
+		let addressCount = 0; // Initialize the address count
+
+		addressesData.forEach((address, index) => {
+			if (addressCount % 2 === 0) { // Check if it's time to start a new row
+				// Create a new row element
+				const row = document.createElement('div');
+				row.classList.add('row');
+				addressContainer.appendChild(row); // Append the new row to the container
+			}
+
+			const addressTypes = address.types.length > 1 ? address.types.join(', ') : address.types[0]; // Join multiple types with commas if more than one
+
+			// Create elements for the address details
+			const addressItem = document.createElement('div');
+			addressItem.classList.add('col-md-6');
+
+			const cardContainer = document.createElement('div');
+			cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+
+			const goldMembersContainer = document.createElement('div');
+			goldMembersContainer.classList.add('gold-members', 'p-4');
+
+			const mediaContainer = document.createElement('div');
+			mediaContainer.classList.add('media');
+
+			const iconContainer = document.createElement('div');
+			iconContainer.classList.add('mr-3');
+			iconContainer.innerHTML = '<i class="icofont-ui-home icofont-3x"></i>';
+
+			const mediaBody = document.createElement('div');
+			mediaBody.classList.add('media-body');
+
+			const title = document.createElement('h6');
+			title.classList.add('mb-1', 'address-title');
+			title.textContent = addressTypes;
+
+			const addressInfo = document.createElement('p');
+			addressInfo.classList.add('text-black', 'address-info');
+			addressInfo.innerHTML = `
+                ${address.country.id}, ${address.zipCode}, ${address.city}, ${address.lines[0]?.value || ''}
+            `;
+
+			const actionsContainer = document.createElement('p');
+			actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
+			actionsContainer.innerHTML = `
         <button class="btn btn-primary edit-address-btn"><i class="icofont-ui-edit"></i> EDIT</button>
         <button class="btn btn-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
     `;
 
-        // Append the elements to construct the address box
-        mediaBody.appendChild(title);
-        mediaBody.appendChild(addressInfo);
-        mediaBody.appendChild(actionsContainer);
-        mediaContainer.appendChild(iconContainer);
-        mediaContainer.appendChild(mediaBody);
-        goldMembersContainer.appendChild(mediaContainer);
-        cardContainer.appendChild(goldMembersContainer);
-        addressItem.appendChild(addressItemCol);
-        addressItemCol.appendChild(cardContainer);
+			// Append elements to construct the address item
+			mediaBody.appendChild(title);
+			mediaBody.appendChild(addressInfo);
+			mediaBody.appendChild(actionsContainer);
+			mediaContainer.appendChild(iconContainer);
+			mediaContainer.appendChild(mediaBody);
+			goldMembersContainer.appendChild(mediaContainer);
+			cardContainer.appendChild(goldMembersContainer);
+			addressItem.appendChild(cardContainer);
 
-        const editButton = addressItem.querySelector('.edit-address-btn');
-            editButton.addEventListener('click', handleEditButtonClick);
+			// Append the address item to the current row
+			const currentRow = addressContainer.lastChild; // Get the last row
+			currentRow.appendChild(addressItem);
 
-            const deleteButton = addressItem.querySelector('.delete-address-btn');
-    deleteButton.addEventListener('click', handleDeleteButtonClick);
+			const editButton = addressItem.querySelector('.edit-address-btn');
+			editButton.addEventListener('click', handleEditButtonClick);
 
+			const deleteButton = addressItem.querySelector('.delete-address-btn');
+			deleteButton.addEventListener('click', handleDeleteButtonClick);
 
-       
+			addressCount++; // Increment the address count
+		});
 
-        // Append the new address box to the address container
-        const addressContainer = document.getElementById('addressContainer');
-        addressContainer.appendChild(addressItem);
+		addressContainer.addEventListener('click', handleAddressContainerClick);
+	});
 
-        reorganizeAddresses();
+document.getElementById('newAddressBtn').addEventListener('click', function() {
+	// Example data for a new address (replace with actual data)
+	const addressTypes = 'Home';
+	const countryId = 'USA';
+	const zipCode = '12345';
+	const city = 'New York';
+	const linesValue = '123 Main St';
 
-    });
+	const addressItem = document.createElement('div');
+	addressItem.classList.add('row');
+
+	const addressItemCol = document.createElement('div');
+	addressItemCol.classList.add('col-md-6');
+
+	const cardContainer = document.createElement('div');
+	cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+
+	const goldMembersContainer = document.createElement('div');
+	goldMembersContainer.classList.add('gold-members', 'p-4');
+
+	const mediaContainer = document.createElement('div');
+	mediaContainer.classList.add('media');
+
+	const iconContainer = document.createElement('div');
+	iconContainer.classList.add('mr-3');
+	iconContainer.innerHTML = '<i class="icofont-ui-home icofont-3x"></i>';
+
+	const mediaBody = document.createElement('div');
+	mediaBody.classList.add('media-body');
+
+	const title = document.createElement('h6');
+	title.classList.add('mb-1', 'address-title');
+	title.textContent = addressTypes;
+
+	const addressInfo = document.createElement('p');
+	addressInfo.classList.add('text-black', 'address-info');
+	addressInfo.textContent = `${countryId}, ${zipCode}, ${city}, ${linesValue}`;
+
+	const actionsContainer = document.createElement('p');
+	actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
+	actionsContainer.innerHTML = `
+        <button class="btn btn-primary edit-address-btn"><i class="icofont-ui-edit"></i> EDIT</button>
+        <button class="btn btn-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
+    `;
+
+	// Append the elements to construct the address box
+	mediaBody.appendChild(title);
+	mediaBody.appendChild(addressInfo);
+	mediaBody.appendChild(actionsContainer);
+	mediaContainer.appendChild(iconContainer);
+	mediaContainer.appendChild(mediaBody);
+	goldMembersContainer.appendChild(mediaContainer);
+	cardContainer.appendChild(goldMembersContainer);
+	addressItem.appendChild(addressItemCol);
+	addressItemCol.appendChild(cardContainer);
+
+	const editButton = addressItem.querySelector('.edit-address-btn');
+	editButton.addEventListener('click', handleEditButtonClick);
+
+	const deleteButton = addressItem.querySelector('.delete-address-btn');
+	deleteButton.addEventListener('click', handleDeleteButtonClick);
+
+	// Append the new address box to the address container
+	const addressContainer = document.getElementById('addressContainer');
+	addressContainer.appendChild(addressItem);
+
+	reorganizeAddresses();
+
+});
 
 function handleEditButtonClick(event) {
-    // Disable editing for all editable elements except the one clicked
-    const allEditableElements = document.querySelectorAll('[contentEditable="true"]');
-    allEditableElements.forEach(element => {
-        if (element !== event.target.closest('.addresses-item').querySelector('.address-info') &&
-            element !== event.target.closest('.addresses-item').querySelector('.address-title')) {
-            element.contentEditable = false;
-        }
-    });
+	// Disable editing for all editable elements except the one clicked
+	const allEditableElements = document.querySelectorAll('[contentEditable="true"]');
+	allEditableElements.forEach(element => {
+		if (element !== event.target.closest('.addresses-item').querySelector('.address-info') &&
+			element !== event.target.closest('.addresses-item').querySelector('.address-title')) {
+			element.contentEditable = false;
+		}
+	});
 
-    // Enable address editing for the clicked item
-    const addressItem = event.target.closest('.addresses-item');
-    const addressInfo = addressItem.querySelector('.address-info');
-    const title = addressItem.querySelector('.address-title');
+	// Enable address editing for the clicked item
+	const addressItem = event.target.closest('.addresses-item');
+	const addressInfo = addressItem.querySelector('.address-info');
+	const title = addressItem.querySelector('.address-title');
 
-    addressInfo.contentEditable = true;
-    title.contentEditable = true;
+	addressInfo.contentEditable = true;
+	title.contentEditable = true;
 
-    addressInfo.focus();
+	addressInfo.focus();
 }
 
 function handleAddressContainerClick(event) {
-    // Remove border class from all addresses
-    const addresses = document.querySelectorAll('.addresses-item');
-    addresses.forEach(address => {
-        address.classList.remove('border', 'border-primary');
-    });
+	// Remove border class from all addresses
+	const addresses = document.querySelectorAll('.addresses-item');
+	addresses.forEach(address => {
+		address.classList.remove('border', 'border-primary');
+	});
 
-    // Add border class to the clicked address
-    const clickedAddress = event.target.closest('.addresses-item');
-    if (clickedAddress) {
-        clickedAddress.classList.add('border', 'border-primary');
-    }
+	// Add border class to the clicked address
+	const clickedAddress = event.target.closest('.addresses-item');
+	if (clickedAddress) {
+		clickedAddress.classList.add('border', 'border-primary');
+	}
 }
+
 function handleDeleteButtonClick(event) {
-    const addressItem = event.target.closest('.addresses-item');
-    addressItem.remove(); // Remove the entire address item from the DOM
-    reorganizeAddresses();
+	const addressItem = event.target.closest('.addresses-item');
+	addressItem.remove(); // Remove the entire address item from the DOM
+	reorganizeAddresses();
 }
 
 // Function to reorganize addresses into rows of two
 // Function to reorganize addresses into rows of two
 function reorganizeAddresses() {
-    const addressContainer = document.getElementById('addressContainer');
-    const addresses = addressContainer.querySelectorAll('.addresses-item');
+	const addressContainer = document.getElementById('addressContainer');
+	const addresses = addressContainer.querySelectorAll('.addresses-item');
 
-    // Remove all existing rows
-    addressContainer.innerHTML = '';
+	// Remove all existing rows
+	addressContainer.innerHTML = '';
 
-    let row = null;
-    addresses.forEach((address, index) => {
-        if (index % 2 === 0) {
-            // Create a new row for every even index
-            row = document.createElement('div');
-            row.classList.add('row');
-            addressContainer.appendChild(row);
-        }
-        // Create a column for the address item
-        const col = document.createElement('div');
-        col.classList.add('col-md-6');
-        col.appendChild(address);
-        // Append the column to the current row
-        row.appendChild(col);
-    });
+	let row = null;
+	addresses.forEach((address, index) => {
+		if (index % 2 === 0) {
+			// Create a new row for every even index
+			row = document.createElement('div');
+			row.classList.add('row');
+			addressContainer.appendChild(row);
+		}
+		// Create a column for the address item
+		const col = document.createElement('div');
+		col.classList.add('col-md-6');
+		col.appendChild(address);
+		// Append the column to the current row
+		row.appendChild(col);
+	});
 }
 
 
-fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        addressesData =data;
-        // Assuming `addressesData` is the array containing the address information fetched from the server
-        const addressContainer = document.getElementById('addressContainer');
-        let addressCount = 0; // Initialize the address count
-        
-        addressesData.forEach((address, index) => {
-            if (addressCount % 2 === 0) { // Check if it's time to start a new row
-                // Create a new row element
-                const row = document.createElement('div');
-                row.classList.add('row');
-                addressContainer.appendChild(row); // Append the new row to the container
-            }
-        
-            const addressTypes = address.types.length > 1 ? address.types.join(', ') : address.types[0]; // Join multiple types with commas if more than one
-        
-            // Create elements for the address details
-            const addressItem = document.createElement('div');
-            addressItem.classList.add('col-md-6');
-        
-            const cardContainer = document.createElement('div');
-            cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
-        
-            const goldMembersContainer = document.createElement('div');
-            goldMembersContainer.classList.add('gold-members', 'p-4');
-        
-            const mediaContainer = document.createElement('div');
-            mediaContainer.classList.add('media');
-        
-            const iconContainer = document.createElement('div');
-            iconContainer.classList.add('mr-3');
-            iconContainer.innerHTML = '<i class="icofont-ui-home icofont-3x"></i>';
-        
-            const mediaBody = document.createElement('div');
-            mediaBody.classList.add('media-body');
-        
-            const title = document.createElement('h6');
-            title.classList.add('mb-1','address-title');
-            title.textContent = addressTypes;
-        
-            const addressInfo = document.createElement('p');
-            addressInfo.classList.add('text-black', 'address-info');
-            addressInfo.innerHTML = `
-                ${address.country.id}, ${address.zipCode}, ${address.city}, ${address.lines[0]?.value || ''}
-            `;
-        
-            const actionsContainer = document.createElement('p');
-            actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
-            actionsContainer.innerHTML = `
-        <button class="btn btn-primary edit-address-btn"><i class="icofont-ui-edit"></i> EDIT</button>
-        <button class="btn btn-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
-    `;
-        
-            // Append elements to construct the address item
-            mediaBody.appendChild(title);
-            mediaBody.appendChild(addressInfo);
-            mediaBody.appendChild(actionsContainer);
-            mediaContainer.appendChild(iconContainer);
-            mediaContainer.appendChild(mediaBody);
-            goldMembersContainer.appendChild(mediaContainer);
-            cardContainer.appendChild(goldMembersContainer);
-            addressItem.appendChild(cardContainer);
-        
-            // Append the address item to the current row
-            const currentRow = addressContainer.lastChild; // Get the last row
-            currentRow.appendChild(addressItem);
-        
-            const editButton = addressItem.querySelector('.edit-address-btn');
-            editButton.addEventListener('click', handleEditButtonClick);
 
-            const deleteButton = addressItem.querySelector('.delete-address-btn');
-    deleteButton.addEventListener('click', handleDeleteButtonClick);
+fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		const tbodyOrders = document.getElementById('ordersTableBody');
 
+		data.forEach((order, index) => {
+			const header = order.header;
+			const lines = order.lines || [];
 
-            addressCount++; // Increment the address count
-        });
-        
-        addressContainer.addEventListener('click', handleAddressContainerClick);
-    });
+			if (header) {
+				// Calculate total quantity and total amount for the order
+				let totalQuantity = 0;
+				let totalAmount = 0;
 
-    fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        const tbodyOrders = document.getElementById('ordersTableBody');
-        
-        data.forEach((order, index) => {
-            const header = order.header;
-            const lines = order.lines || [];
-            
-            if (header) {
-                // Calculate total quantity and total amount for the order
-                let totalQuantity = 0;
-                let totalAmount = 0;
+				lines.forEach(line => {
 
-                lines.forEach(line => {
+					const quantity = line.quantities.quantity;
+					const unitPrice = line.unitPrice;
 
-                    const quantity = line.quantities.quantity;
-                    const unitPrice = line.unitPrice;
-                    
-                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                    const total = (quantity * unitPrice) - discount;
-                    
-                    
-                    totalQuantity += quantity
-                    totalAmount += total;
-                });
+					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+					const total = (quantity * unitPrice) - discount;
 
-                
-                
-                newRowOrder.innerHTML = `
+					totalQuantity += quantity
+					totalAmount += total;
+				});
+
+				newRowOrder.innerHTML = `
                 <tr id="order-row-${header.documentKey.number}">
                     <td>${header.documentKey.number}</td>
                     <td>${new Date(header.documentDate).toLocaleDateString()}</td>
@@ -283,31 +379,28 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
                     </td>
                 `;
 
-                // Append the new row to the tbody
-                tbodyOrders.appendChild(newRowOrder);
-            }
-        });
+				// Append the new row to the tbody
+				tbodyOrders.appendChild(newRowOrder);
+			}
+		});
 
-        window.ordersData = data;
-    })
-    .catch(error => console.error('Error fetching data:', error));
+		window.ordersData = data;
+	})
+	.catch(error => console.error('Error fetching data:', error));
 
-    
-    
-    
 function showPopup(orderIndex) {
-    fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
-        .then(response => response.json())
-        .then(data => {
-            const order = data[orderIndex];
+	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+		.then(response => response.json())
+		.then(data => {
+			const order = data[orderIndex];
 
-            // Store the order data globally for easy access
-            window.ordersData = data;
+			// Store the order data globally for easy access
+			window.ordersData = data;
 
-            // Calculate total amount for the entire order
-            let totalAmount = calculateTotalAmount(order.lines);
+			// Calculate total amount for the entire order
+			let totalAmount = calculateTotalAmount(order.lines);
 
-            const modalHtml = `
+			const modalHtml = `
                 <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -399,171 +492,166 @@ function showPopup(orderIndex) {
                 </div>
             `;
 
-            // Remove existing modal if present
-            const existingModal = document.getElementById('orderModal');
-            if (existingModal) {
-                existingModal.parentNode.removeChild(existingModal);
-            }
+			// Remove existing modal if present
+			const existingModal = document.getElementById('orderModal');
+			if (existingModal) {
+				existingModal.parentNode.removeChild(existingModal);
+			}
 
-            // Append new modal to body
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
+			// Append new modal to body
+			document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-            // Show the modal
-            $('#orderModal').modal('show');
-        })
-        .catch(error => console.error('Error fetching data:', error));
+			// Show the modal
+			$('#orderModal').modal('show');
+		})
+		.catch(error => console.error('Error fetching data:', error));
 }
 
-    
 function closePopup() {
-    document.getElementById('popupContainer').style.display = 'none';
+	document.getElementById('popupContainer').style.display = 'none';
 }
 
 // Placeholder functions for edit and delete
 function editOrder(index) {
-    showPopup(index);
-   
+	showPopup(index);
+
 }
 
 function showOrder(index) {
-    showPopup(index);
-    
+	showPopup(index);
+
 }
 
 function confirmDelete(orderNumber) {
-    const confirmation = confirm("Are you sure you want to delete this record?");
-    if (confirmation) {
-    const ordersData = window.ordersData;
-    const orderIndex = ordersData.findIndex(orderLine => orderLine.header.documentKey.number === orderNumber);
+	const confirmation = confirm("Are you sure you want to delete this record?");
+	if (confirmation) {
+		const ordersData = window.ordersData;
+		const orderIndex = ordersData.findIndex(orderLine => orderLine.header.documentKey.number === orderNumber);
 
-// If the order line is found, remove it
-if (orderIndex !== -1) {
-    ordersData.splice(orderIndex, 1);
+		// If the order line is found, remove it
+		if (orderIndex !== -1) {
+			ordersData.splice(orderIndex, 1);
 
-    // Also remove the corresponding row from the DOM
-    const orderRow = document.querySelector(`#order-row-${orderNumber}`);
-    if (orderRow) {
-        orderRow.remove();
-    }
+			// Also remove the corresponding row from the DOM
+			const orderRow = document.querySelector(`#order-row-${orderNumber}`);
+			if (orderRow) {
+				orderRow.remove();
+			}
+		}
+	}
+
 }
+function confirmDeleteLine(orderIndex,lineNumber) {
+// Find the line index based on the lineNumber
+const confirmation = confirm("Are you sure you want to delete this record?");
+	if (confirmation) {
+		const order = window.ordersData[orderIndex];
+const lineIndex = lineNumber - 1; // Adjust for 0-based indexing
 
-    }
+if (lineIndex >= 0 && lineIndex < order.lines.length) {
+	// Remove the line from the data
+	order.lines[lineIndex].unitPrice = 0;
 
-    
+	if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0) {
+		order.lines[lineIndex].discounts[0].amount = 0;
+	}
 
+	// Remove the line from the DOM
+	const lineRow = document.querySelector(`#line-row-${lineNumber}`);
+	if (lineRow) {
+		lineRow.remove();
+	}
 
-    })
-    // Find the line index based on the lineNumber
-    const lineIndex = lineNumber -1; // Adjust for 0-based indexing
-    
-    if (lineIndex >= 0 && lineIndex < order.lines.length) {
-        // Remove the line from the data
-        order.lines[lineIndex].unitPrice=0;
-        
-        if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0){
-            order.lines[lineIndex].discounts[0].amount=0;
-        }
+	// Recalculate the total amount
+	const totalAmount = calculateTotalAmount(order.lines);
 
-        // Remove the line from the DOM
-        const lineRow = document.querySelector(`#line-row-${lineNumber}`);
-        if (lineRow) {
-            lineRow.remove();
-        }
-
-        // Recalculate the total amount
-        const totalAmount = calculateTotalAmount(order.lines);
-
-        // Update the total amount in the modal
-        document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
-    } else {
-        console.error(`Line with No Reference ${lineNumber} not found.`);
-    }
+	// Update the total amount in the modal
+	document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
+} else {
+	console.error(`Line with No Reference ${lineNumber} not found.`);
+}
 }
 }
 
 function confirmDeleteLine(orderIndex, lineNumber) {
-    const confirmation = confirm("Are you sure you want to delete this record?");
-    if (confirmation) {
-    const order = window.ordersData[orderIndex];
-    
-    // Find the line index based on the lineNumber
-    const lineIndex = lineNumber -1; // Adjust for 0-based indexing
-    
-    if (lineIndex >= 0 && lineIndex < order.lines.length) {
-        // Remove the line from the data
-        order.lines[lineIndex].unitPrice=0;
-        
-        if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0){
-            order.lines[lineIndex].discounts[0].amount=0;
-        }
+	const confirmation = confirm("Are you sure you want to delete this record?");
+	if (confirmation) {
+		const order = window.ordersData[orderIndex];
 
-        // Remove the line from the DOM
-        const lineRow = document.querySelector(`#line-row-${lineNumber}`);
-        if (lineRow) {
-            lineRow.remove();
-        }
+		// Find the line index based on the lineNumber
+		const lineIndex = lineNumber - 1; // Adjust for 0-based indexing
 
-        // Recalculate the total amount
-        const totalAmount = calculateTotalAmount(order.lines);
+		if (lineIndex >= 0 && lineIndex < order.lines.length) {
+			// Remove the line from the data
+			order.lines[lineIndex].unitPrice = 0;
 
-        // Update the total amount in the modal
-        document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
-    } else {
-        console.error(`Line with No Reference ${lineNumber} not found.`);
-    }
+			if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0) {
+				order.lines[lineIndex].discounts[0].amount = 0;
+			}
+
+			// Remove the line from the DOM
+			const lineRow = document.querySelector(`#line-row-${lineNumber}`);
+			if (lineRow) {
+				lineRow.remove();
+			}
+
+			// Recalculate the total amount
+			const totalAmount = calculateTotalAmount(order.lines);
+
+			// Update the total amount in the modal
+			document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
+		} else {
+			console.error(`Line with No Reference ${lineNumber} not found.`);
+		}
+	}
 }
-}
-
 
 function calculateTotalAmount(lines) {
-    let totalAmount = 0;
-    lines.forEach(line => {
-        const quantity = line.quantities.quantity;
-        const unitPrice = line.unitPrice;
-        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-        const total = (quantity * unitPrice) - discount;
-        totalAmount += total;
-    });
-    return totalAmount.toFixed(2);
+	let totalAmount = 0;
+	lines.forEach(line => {
+		const quantity = line.quantities.quantity;
+		const unitPrice = line.unitPrice;
+		const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+		const total = (quantity * unitPrice) - discount;
+		totalAmount += total;
+	});
+	return totalAmount.toFixed(2);
 }
 
 function deleteLine(orderIndex, lineIndex) {
-    const order = window.ordersData[orderIndex];
-    order.lines.splice(lineIndex, 1); // Remove the line from the data
+	const order = window.ordersData[orderIndex];
+	order.lines.splice(lineIndex, 1); // Remove the line from the data
 
-    document.querySelector(`#line-row-${lineIndex}`).remove(); // Remove the line from the DOM
+	document.querySelector(`#line-row-${lineIndex}`).remove(); // Remove the line from the DOM
 
-    // Recalculate the total amount
-    const totalAmount = calculateTotalAmount(order.lines);
+	// Recalculate the total amount
+	const totalAmount = calculateTotalAmount(order.lines);
 
-    // Update the total amount in the modal
-    document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
+	// Update the total amount in the modal
+	document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
 }
 
 function deleteOrder(orderIndex) {
-    // Your logic to delete the order from the server or local data
-    
-    document.querySelector(`#order-row-${orderIndex}`).remove();
+	// Your logic to delete the order from the server or local data
 
-    
-        
+	document.querySelector(`#order-row-${orderIndex}`).remove();
+
 }
 
-
 fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        const tbodyReservations = document.getElementById('reservationsTableBody');
-        data.forEach((order, index) => {
-            const header = order.header;
-            if (header) {
-                // Create a new row element
-               
-                const newRowReservation = document.createElement('tr');
-                // Create cells and add content
-                
-                newRowReservation.innerHTML = `
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		const tbodyReservations = document.getElementById('reservationsTableBody');
+		data.forEach((order, index) => {
+			const header = order.header;
+			if (header) {
+				// Create a new row element
+
+				const newRowReservation = document.createElement('tr');
+				// Create cells and add content
+
+				newRowReservation.innerHTML = `
                 <td>${header.key.number}</td>
                 <td>${new Date(header.documentDate).toLocaleDateString()}</td>
                 <td>${header.storeId || 'N/A'}</td>
@@ -582,134 +670,30 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
                     </td>
                 `;
 
+				// Append the new row to the tbody
 
-
-                // Append the new row to the tbody
-                
-                tbodyReservations.appendChild(newRowReservation);
-            }
-        });
-    });
+				tbodyReservations.appendChild(newRowReservation);
+			}
+		});
+	});
 let responseData;
 let callbackURL;
 
 fetch('https://ls-customerserver.onrender.com/swagger/CustomerUserFields')
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-    responseData = data;
-    const usrFields = data.userFields
-    document.getElementById('usrfieldConnectedSalesperson').value = usrFields[0].value.listElement.value + " - " +usrFields[0].value.listElement.description|| "";
-    document.getElementById('usrfieldMiddleName').value =  usrFields[1].value.text || "";
-    document.getElementById('usrfieldSalutation').value = usrFields[2].value.text || "";
-    document.getElementById('usrfieldAcademicTitile').value = usrFields[3].value.text || "";
-    document.getElementById('usrfieldNobilityTitle').value = usrFields[4].value.text || "";
-    document.getElementById('usrfieldNameAddition').value = usrFields[5].value.text || "";
-    document.getElementById('usrfieldProfession').value = usrFields[6].value.text || "";
-    document.getElementById('usrfieldClosestStore').value = usrFields[7].value.text || "";
-    
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		responseData = data;
+		const usrFields = data.userFields
+		document.getElementById('usrfieldConnectedSalesperson').value = usrFields[0].value.listElement.value + " - " + usrFields[0].value.listElement.description || "";
+		document.getElementById('usrfieldMiddleName').value = usrFields[1].value.text || "";
+		document.getElementById('usrfieldSalutation').value = usrFields[2].value.text || "";
+		document.getElementById('usrfieldAcademicTitile').value = usrFields[3].value.text || "";
+		document.getElementById('usrfieldNobilityTitle').value = usrFields[4].value.text || "";
+		document.getElementById('usrfieldNameAddition').value = usrFields[5].value.text || "";
+		document.getElementById('usrfieldProfession').value = usrFields[6].value.text || "";
+		document.getElementById('usrfieldClosestStore').value = usrFields[7].value.text || "";
 
-   
-})
-.catch(error => console.error('Error fetching data:', error));
+	})
+	.catch(error => console.error('Error fetching data:', error));
 
-fetch('https://ls-customerserver.onrender.com/latest')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        callbackURL = data.callbackUrl;
-        delete data.callbackUrl;
-        responseData = data;
-
-        const birthdate = `${data.birthMonth}/${data.birthDay}/${data.birthYear}`;
-        const gender = data.gender;
-
-        const finalAddress = data.postalAddresses[0] || {};
-        const phone = data.phones[0]?.phone || "";
-        const phonetype = data.phones[0]?.phoneType || "";
-        const email = data.emails[0]?.email || "";
-
-        document.getElementById('customerId').value = data.customerId || "";
-        document.getElementById('firstName').value = data.firstName || "";
-        document.getElementById('lastName').value = data.lastName || "";
-        document.getElementById('birthdate').value = birthdate || "";
-        document.getElementById('gender').value = gender || "";
-        document.getElementById('phone').value = phone;
-        document.getElementById('phonetype').value = phonetype;
-        document.getElementById('addressConsent').value = finalAddress.addressConsent || "";
-        document.getElementById('addressLine1').value = finalAddress.addressLine1 || "";
-        document.getElementById('city').value = finalAddress.city || "";
-        document.getElementById('postalCode').value = finalAddress.postalCode || "";
-        document.getElementById('email').value = email;
-
-        validateEmail();
-
-        const emailField = document.getElementById('email');
-        emailField.addEventListener('input', validateEmail);
-    })
-    .catch(error => console.error('Error fetching data:', error));
-
-/* document.getElementById('saveChangesBtn').addEventListener('click', function() {
-    const customerId = document.getElementById('customerId').value;
-    const firstName = document.getElementById('firstName').value;
-    const email = document.getElementById('email').value;
-    const lastName = document.getElementById('lastName').value;
-    const birthdate = document.getElementById('birthdate').value;
-    const gender = document.getElementById('gender').value;
-    const phone = document.getElementById('phone').value;
-    const phonetype = document.getElementById('phonetype').value;
-    const address = document.getElementById('address').value;
-    const addressConsent = document.getElementById('addressConsent').value;
-    const addressLine1 = document.getElementById('addressLine1').value;
-    const city = document.getElementById('city').value;
-    const postalCode = document.getElementById('postalCode').value;
-
-    responseData.customerId = customerId || "";
-    responseData.firstName = firstName || "";
-    responseData.lastName = lastName || "";
-    responseData.emails[0].email = email || "";
-    responseData.gender = gender || "";
-    responseData.phones[0].phone = phone || "";
-    responseData.phones[0].phoneType = phonetype || "";
-
-    const birthDates = birthdate.split("/");
-    responseData.birthMonth = birthDates[0] || "";
-    responseData.birthDay = birthDates[1] || "";
-    responseData.birthYear = birthDates[2] || "";
-
-    responseData.postalAddresses[0].addressConsent = addressConsent || "";
-    responseData.postalAddresses[0].addressLine1 = addressLine1 || "";
-    responseData.postalAddresses[0].city = city || "";
-    responseData.postalAddresses[0].postalCode = postalCode || "";
-
-    console.log('Updated response:', responseData);
-    console.log('callbackURL:', callbackURL);
-
-    fetch('https://ls-customerserver.onrender.com/returning', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(responseData)
-    }).then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    }).catch((error) => {
-        console.error('Error:', error);
-    });
-}); */
-
-function validateEmail() {
-    const emailField = document.getElementById('email');
-    const email = emailField.value;
-    const message = document.getElementById('message');
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}$/;
-
-    if (emailPattern.test(email)) {
-        message.textContent = "Valid Email Address";
-        message.style.color = "green";
-    } else {
-        message.textContent = "Invalid Email Address";
-        message.style.color = "red";
-    }
-}
