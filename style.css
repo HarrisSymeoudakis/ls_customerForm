@@ -135,6 +135,12 @@ body {
     
 }
 
+.container {
+  display: flex;
+  justify-content: space-between; /* Align elements to opposite sides */
+  /* Existing styles from your code */
+}
+
 .table-borderless{
 width:auto;
 }
