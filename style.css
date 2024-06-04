@@ -1,13 +1,17 @@
 body {
-    background-image: url("background.jpg");
+/*     background-image: url("background.jpg");
     background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
-  background-size: cover;
+  background-size: cover; */
     margin-top: 20px;
 }
 
-
+.top-right-image {
+  position: absolute;
+  top: 8px; /* Adjust for desired top positioning */
+  right: 8px; /* Adjust for desired right positioning */
+}
 
 .ui-w-80 {
     width: 80px !important;
