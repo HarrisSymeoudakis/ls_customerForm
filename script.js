@@ -347,8 +347,10 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 					totalAmount += total;
 				});
 
+				newRowOrder= document.createElement('tr');
+				newRowOrder.setAttribute("id", ""order-row-"+header.documentKey.number);
 				newRowOrder.innerHTML = `
-                <tr id="order-row-${header.documentKey.number}">
+               
                     <td>${header.documentKey.number}</td>
                     <td>${new Date(header.documentDate).toLocaleDateString()}</td>
                     <td>${header.storeId || 'N/A'}</td>
