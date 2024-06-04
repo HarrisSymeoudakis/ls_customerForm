@@ -8,7 +8,7 @@ body {
 }
 
 .top-right-image {
-  position: absolute;
+  position: relative;
   top: 8px; 
   right: 8px; 
     width: 320px; 
