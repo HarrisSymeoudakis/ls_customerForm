@@ -825,8 +825,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                                                                     <div class="new-line">
                                                                    
                                                                     </div>
-                                                                    <h4>Tax Inc. Total Amount:</h4>
-                                                                    <h3>€${totalAmount}</h4>
+                                                                   
                                                                     </div>
                                                                     <div class="cart-footer text-right">
                                                                         
@@ -878,7 +877,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
 
 				lines.forEach(line => {
 
-					const quantity = line.quantities.quantity;
+					const quantity = line.quantity;
 					const unitPrice = line.unitPrice;
 
 					
@@ -898,7 +897,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
                 <td>${header.customer.id}</td>
                 <td>${header.customer.lastName}</td>
                 <td>${header.totalQuantity}</td>
-                <td>tax inc</td>
+                
                     <td style="width: 20%;">
                         
                         <a href="#" class="table-link text-warning" onclick="showReservation(${index})">
