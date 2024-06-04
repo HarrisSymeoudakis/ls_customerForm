@@ -802,7 +802,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
                                                                                             <th scope="col">No Reference</th>
                                                                                             <th scope="col">Description</th>                                               
                                                                                             <th scope="col">Quantity</th>
-                                                                                            <th scope="col" class="text-right">Total</th>
+                                                                                            
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody id="order-lines-tbody">
