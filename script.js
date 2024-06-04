@@ -318,6 +318,100 @@ function reorganizeAddresses() {
 	});
 }
 
+function showBlankPopup() {
+	
+			
+
+			// Store the order data globally for easy access
+			
+
+			// Calculate total amount for the entire order
+			let totalAmount = 0;
+
+			const modalHtml = `
+                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="contentbar">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="card m-b-30">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Cart</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div>
+                                                            <div>
+                                                                <div class="cart-container">
+                                                                    <div class="cart-head">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-borderless">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th scope="col">No Reference</th>
+                                                                                        <th scope="col">Description</th>                                               
+                                                                                        <th scope="col">Quantity</th>
+                                                                                        <th scope="col">Price Discount</th>
+                                                                                        <th scope="col">Amount</th>
+                                                                                        <th scope="col">Delivery Date</th>
+                                                                                        <th scope="col" class="text-right">Total</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cart-body">
+                                                                
+                                                                <div class="new-line">
+                                                                <button class="btn btn-primary">New Line</button>
+                                                                </div>
+                                                                
+                                                                <h4>Tax Inc. Total Amount:</h4>
+                                                                <h3>€${totalAmount}</h4>
+                                                                </div>
+                                                                <div class="cart-footer text-right">
+                                                                    <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
+                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+			// Remove existing modal if present
+			const existingModal = document.getElementById('orderModal');
+			if (existingModal) {
+				existingModal.parentNode.removeChild(existingModal);
+			}
+
+			// Append new modal to body
+			document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+			// Show the modal
+			$('#orderModal').modal('show');
+		
+		
+}
+
 
 function showEditablePopup(orderIndex) {
 	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
@@ -754,6 +848,10 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 				// Append the new row to the tbody
 				tbodyOrders.appendChild(newRowOrder);
 			}
+            const newButton = document.createElement('button');
+newButton.classList.add('btn', 'btn-primary'); // Add Bootstrap button styles
+newButton.textContent = 'New Order';
+newButton.onclick = showBlankPopup;
 		});
 
 		window.ordersData = data;
