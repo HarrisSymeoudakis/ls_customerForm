@@ -40,7 +40,7 @@ document.getElementById('newAddressBtn').addEventListener('click', function() {
             actionsContainer.classList.add('mb-0', 'text-black', 'font-weight-bold');
             actionsContainer.innerHTML = `
         <button class="btn btn-primary edit-address-btn"><i class="icofont-ui-edit"></i> EDIT</button>
-        <button class="text-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
+        <button class="btn btn-danger delete-address-btn"><i class="icofont-ui-delete"></i> DELETE</button>
     `;
 
         // Append the elements to construct the address box
