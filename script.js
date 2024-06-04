@@ -348,7 +348,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 				});
 
 				newRowOrder= document.createElement('tr');
-				newRowOrder.setAttribute("id", ""order-row-"+header.documentKey.number);
+				newRowOrder.setAttribute("id", "order-row-"+header.documentKey.number);
 				newRowOrder.innerHTML = `
                
                     <td>${header.documentKey.number}</td>
