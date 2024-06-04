@@ -390,7 +390,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 	})
 	.catch(error => console.error('Error fetching data:', error));
 
-function showPopup(orderIndex) {
+function showEditablePopup(orderIndex) {
 	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 		.then(response => response.json())
 		.then(data => {
@@ -509,13 +509,125 @@ function showPopup(orderIndex) {
 		.catch(error => console.error('Error fetching data:', error));
 }
 
+function showPopup(orderIndex) {
+	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
+		.then(response => response.json())
+		.then(data => {
+			const order = data[orderIndex];
+
+			// Store the order data globally for easy access
+			window.ordersData = data;
+
+			// Calculate total amount for the entire order
+			let totalAmount = calculateTotalAmount(order.lines);
+
+			const modalHtml = `
+                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="contentbar">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="card m-b-30">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Cart</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div>
+                                                            <div>
+                                                                <div class="cart-container">
+                                                                    <div class="cart-head">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-borderless">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th scope="col">No Reference</th>
+                                                                                        <th scope="col">Description</th>                                               
+                                                                                        <th scope="col">Quantity</th>
+                                                                                        <th scope="col">Price Discount</th>
+                                                                                        <th scope="col">Amount</th>
+                                                                                        <th scope="col">Delivery Date</th>
+                                                                                        <th scope="col" class="text-right">Total</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="order-lines-tbody">
+                                                                                ${order.lines.map((line, index) => {
+                                                                                    const quantity = line.quantities.quantity;
+                                                                                    const unitPrice = line.unitPrice;
+                                                                                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+                                                                                    const total = (quantity * unitPrice) - discount;
+                                                                                    return `
+                                                                                        <tr id="line-row-${index +1}">
+                                                                                            <td>${index +1 }</td>
+                                                                                            <td>${line.description}</td>
+                                                                                            <td>${quantity}</td>
+                                                                                            <td>€${discount}</td>
+                                                                                            <td>€${unitPrice.toFixed(2)}</td>
+                                                                                            <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
+                                                                                            <td class="text-right">€${total.toFixed(2)}</td>
+                                                                                            
+                                                                                        </tr>
+                                                                                    `;
+                                                                                }).join('')}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cart-body">
+                                                                <div class="new-line">
+                                                                <button class="btn btn-primary">New Line</button>
+                                                                </div>
+                                                                <h4>Tax Inc. Total Amount:</h4>
+                                                                <h3>€${totalAmount}</h4>
+                                                                </div>
+                                                                <div class="cart-footer text-right">
+                                                                    
+                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+			// Remove existing modal if present
+			const existingModal = document.getElementById('orderModal');
+			if (existingModal) {
+				existingModal.parentNode.removeChild(existingModal);
+			}
+
+			// Append new modal to body
+			document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+			// Show the modal
+			$('#orderModal').modal('show');
+		})
+		.catch(error => console.error('Error fetching data:', error));
+}
+
 function closePopup() {
 	document.getElementById('popupContainer').style.display = 'none';
 }
 
 // Placeholder functions for edit and delete
 function editOrder(index) {
-	showPopup(index);
+	showEditablePopup(index);
 
 }
 
