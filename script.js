@@ -123,7 +123,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/Addresses ')
 			addressItem.classList.add('col-md-6');
 
 			const cardContainer = document.createElement('div');
-			cardContainer.classList.add('bg-white', 'card', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
+			cardContainer.classList.add('bg-white', 'card-allo', 'addresses-item', 'mb-4', 'border', 'shadow-sm');
 
 			const goldMembersContainer = document.createElement('div');
 			goldMembersContainer.classList.add('gold-members', 'p-4');
