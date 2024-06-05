@@ -1,705 +1,283 @@
+#<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+</head>
 
-
-function showBlankPopup() {
-	
-			
-
-			// Store the order data globally for easy access
-			
-
-			// Calculate total amount for the entire order
-			let totalAmount = 0;
-
-			const modalHtml = `
-                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="contentbar">
-                                        <div class="row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="card m-b-30">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">Cart</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div>
-                                                            <div>
-                                                                <div class="cart-container">
-                                                                    <div class="cart-head">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-borderless">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th scope="col">No Reference</th>
-                                                                                        <th scope="col">Description</th>                                               
-                                                                                        <th scope="col">Quantity</th>
-                                                                                        <th scope="col">Price Discount</th>
-                                                                                        <th scope="col">Amount</th>
-                                                                                        <th scope="col">Delivery Date</th>
-                                                                                        <th scope="col" class="text-right">Total</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cart-body">
-                                                                
-                                                                <div class="new-line">
-                                                                <button class="btn btn-primary">New Line</button>
-                                                                </div>
-                                                                
-                                                                <h4>Tax Inc. Total Amount:</h4>
-                                                                <h3>€${totalAmount}</h4>
-                                                                </div>
-                                                                <div class="cart-footer text-right">
-                                                                    
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Create Order<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<body>
+    
+    <div class="container light-style flex-grow-1 container-p-y">
+        <img src="/logo.jpg" alt="Image description" class="top-right-image">
+        <h4 class="font-weight-bold py-3 mb-4" style="color: #3c4395">Account settings</h4>
+        <div class="card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush account-settings-links">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list"
+                            href="#account-general">General</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-additional-information">Additional Information</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-customer-addresses">Addresses</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-customer-orders">Customer Orders</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-customer-reservations">Customer Reservations</a>
                     </div>
                 </div>
-            `;
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="account-general">
+                            <hr class="border-light m-0">
+                            <div class="card-body">
+                                <!-- Username occupying half the width -->
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="customerId" class="form-label">Customer Id</label>
+                                        <input type="text" class="form-control" id="customerId" readonly>
+                                    </div>
+                                </div>
+                                <!-- First name and Last name on the same row -->
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName">
+                                    </div>
+                                </div>
+                                <!-- Birthdate and Gender on the same row -->
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="birthdate" class="form-label">Birthdate</label>
+                                        <input type="text" class="form-control" id="birthdate">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="gender" class="form-label">Gender</label>
+                                        <input type="text" class="form-control" id="gender">
+                                    </div>
+                                </div>
+                                <!-- Address and Email as they are -->
+                                <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <label for="addressConsent" class="col-form-label">Consent</label>
+                                        <input type="text" class="form-control" id="addressConsent">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="addressLine1" class="col-form-label">Address</label>
+                                        <input type="text" class="form-control" id="addressLine1">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="city" class="col-form-label">City</label>
+                                        <input type="text" class="form-control" id="city">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="postalCode" class="col-form-label">Postal Code</label>
+                                        <input type="text" class="form-control" id="postalCode">
+                                    </div>
+                                </div>
 
-			// Remove existing modal if present
-			const existingModal = document.getElementById('orderModal');
-			if (existingModal) {
-				existingModal.parentNode.removeChild(existingModal);
-			}
-
-			// Append new modal to body
-			document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-			// Show the modal
-			$('#orderModal').modal('show');
-		
-		
-}
-
-
-function showEditablePopup(orderIndex) {
-	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
-		.then(response => response.json())
-		.then(data => {
-			const order = data[orderIndex];
-
-			// Store the order data globally for easy access
-			window.ordersData = data;
-
-			// Calculate total amount for the entire order
-			let totalAmount = calculateTotalAmount(order.lines);
-
-			const modalHtml = `
-                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="contentbar">
-                                        <div class="row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="card m-b-30">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">Cart</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div>
-                                                            <div>
-                                                                <div class="cart-container">
-                                                                    <div class="cart-head">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-borderless">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th scope="col">No Reference</th>
-                                                                                        <th scope="col">Description</th>                                               
-                                                                                        <th scope="col">Quantity</th>
-                                                                                        <th scope="col">Price Discount</th>
-                                                                                        <th scope="col">Amount</th>
-                                                                                        <th scope="col">Delivery Date</th>
-                                                                                        <th scope="col" class="text-right">Total</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody id="order-lines-tbody">
-                                                                                ${order.lines.map((line, index) => {
-                                                                                    const quantity = line.quantities.quantity;
-                                                                                    const unitPrice = line.unitPrice;
-                                                                                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                                                                                    const total = (quantity * unitPrice) - discount;
-                                                                                    return `
-                                                                                        <tr id="line-row-${index +1}">
-                                                                                            <td>${index +1 }</td>
-                                                                                            <td>${line.description}</td>
-                                                                                            <td>${quantity}</td>
-                                                                                            <td>€${discount}</td>
-                                                                                            <td>€${unitPrice.toFixed(2)}</td>
-                                                                                            <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-                                                                                            <td class="text-right">€${total.toFixed(2)}</td>
-                                                                                            <td>
-                                                                                                <a href="#" class="table-link danger" onclick="confirmDeleteLine(${orderIndex}, ${index+1})">
-                                                                                                    <span class="fa-stack">
-                                                                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                                                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                                                                    </span>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    `;
-                                                                                }).join('')}
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cart-body">
-                                                                
-                                                                <div class="new-line">
-                                                                <button class="btn btn-primary">New Line</button>
-                                                                </div>
-                                                                
-                                                                <h4>Tax Inc. Total Amount:</h4>
-                                                                <h3>€${totalAmount}</h4>
-                                                                </div>
-                                                                <div class="cart-footer text-right">
-                                                                    <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="email" class="form-label">E-mail</label>
+                                        <input type="text" class="form-control mb-1" id="email" onblur="validateEmail()">
+                                        <div id="message" class="mt-2"></div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" id="phone">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phonetype" class="form-label">Phone Type</label>
+                                        <input type="text" class="form-control" id="phonetype">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            `;
-
-			// Remove existing modal if present
-			const existingModal = document.getElementById('orderModal');
-			if (existingModal) {
-				existingModal.parentNode.removeChild(existingModal);
-			}
-
-			// Append new modal to body
-			document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-			// Show the modal
-			$('#orderModal').modal('show');
-		})
-		.catch(error => console.error('Error fetching data:', error));
-}
-
-function showPopup(orderIndex, text) {
-	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
-		.then(response => response.json())
-		.then(data => {
-			const order = data[orderIndex];
-
-			// Store the order data globally for easy access
-			window.ordersData = data;
-
-			// Calculate total amount for the entire order
-			let totalAmount = calculateTotalAmount(order.lines);
-
-			const modalHtml = `
-                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="contentbar">
-                                        <div class="row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="card m-b-30">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">Cart</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div>
-                                                            <div>
-                                                                <div class="cart-container">
-                                                                    <div class="cart-head">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-borderless">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th scope="col">No Reference</th>
-                                                                                        <th scope="col">Description</th>                                               
-                                                                                        <th scope="col">Quantity</th>
-                                                                                        <th scope="col">Price Discount</th>
-                                                                                        <th scope="col">Amount</th>
-                                                                                        <th scope="col">Delivery Date</th>
-                                                                                        <th scope="col" class="text-right">Total</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody id="order-lines-tbody">
-                                                                                ${order.lines.map((line, index) => {
-                                                                                    const quantity = line.quantities.quantity;
-                                                                                    const unitPrice = line.unitPrice;
-                                                                                    const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                                                                                    const total = (quantity * unitPrice) - discount;
-                                                                                    return `
-                                                                                        <tr id="line-row-${index +1}">
-                                                                                            <td>${index +1 }</td>
-                                                                                            <td>${line.description}</td>
-                                                                                            <td>${quantity}</td>
-                                                                                            <td>€${discount}</td>
-                                                                                            <td>€${unitPrice.toFixed(2)}</td>
-                                                                                            <td>${new Date(line.deliveryDate).toLocaleDateString()}</td>
-                                                                                            <td class="text-right">€${total.toFixed(2)}</td>
-                                                                                            
-                                                                                        </tr>
-                                                                                    `;
-                                                                                }).join('')}
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cart-body">
-                                                                <div class="new-line">
-                                                               
-                                                                </div>
-                                                                <h4>Tax Inc. Total Amount:</h4>
-                                                                <h3>€${totalAmount}</h4>
-                                                                </div>
-                                                                <div class="cart-footer text-right">
-                                                                    
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-			// Remove existing modal if present
-			const existingModal = document.getElementById('orderModal');
-			if (existingModal) {
-				existingModal.parentNode.removeChild(existingModal);
-			}
-
-			// Append new modal to body
-			document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-			// Show the modal
-			$('#orderModal').modal('show');
-		})
-		.catch(error => console.error('Error fetching data:', error));
-}
-
-function closePopup() {
-	document.getElementById('popupContainer').style.display = 'none';
-}
-
-// Placeholder functions for edit and delete
-function editOrder(index) {
-	showEditablePopup(index);
-
-}
-
-function showOrder(index) {
-	showPopup(index);
-
-}
-function showReservation(index) {
-	showPopupReservation(index);
-
-}
-
-
-function confirmDelete(orderNumber) {
-	const confirmation = confirm("Are you sure you want to delete this record?");
-	if (confirmation) {
-		const ordersData = window.ordersData;
-		const orderIndex = ordersData.findIndex(orderLine => orderLine.header.documentKey.number === orderNumber);
-
-		// If the order line is found, remove it
-		if (orderIndex !== -1) {
-			ordersData.splice(orderIndex, 1);
-
-			// Also remove the corresponding row from the DOM
-			const orderRow = document.querySelector(`#order-row-${orderNumber}`);
-			if (orderRow) {
-				orderRow.remove();
-			}
-		}
-	}
-
-}
-function confirmDeleteLine(orderIndex,lineNumber) {
-// Find the line index based on the lineNumber
-const confirmation = confirm("Are you sure you want to delete this record?");
-	if (confirmation) {
-		const order = window.ordersData[orderIndex];
-const lineIndex = lineNumber - 1; // Adjust for 0-based indexing
-
-if (lineIndex >= 0 && lineIndex < order.lines.length) {
-	// Remove the line from the data
-	order.lines[lineIndex].unitPrice = 0;
-
-	if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0) {
-		order.lines[lineIndex].discounts[0].amount = 0;
-	}
-
-	// Remove the line from the DOM
-	const lineRow = document.querySelector(`#line-row-${lineNumber}`);
-	if (lineRow) {
-		lineRow.remove();
-	}
-
-	// Recalculate the total amount
-	const totalAmount = calculateTotalAmount(order.lines);
-
-	// Update the total amount in the modal
-	document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
-} else {
-	console.error(`Line with No Reference ${lineNumber} not found.`);
-}
-}
-}
-
-function confirmDeleteLine(orderIndex, lineNumber) {
-	const confirmation = confirm("Are you sure you want to delete this record?");
-	if (confirmation) {
-		const order = window.ordersData[orderIndex];
-
-		// Find the line index based on the lineNumber
-		const lineIndex = lineNumber - 1; // Adjust for 0-based indexing
-
-		if (lineIndex >= 0 && lineIndex < order.lines.length) {
-			// Remove the line from the data
-			order.lines[lineIndex].unitPrice = 0;
-
-			if (order.lines[lineIndex].discounts && order.lines[lineIndex].discounts.length > 0) {
-				order.lines[lineIndex].discounts[0].amount = 0;
-			}
-
-			// Remove the line from the DOM
-			const lineRow = document.querySelector(`#line-row-${lineNumber}`);
-			if (lineRow) {
-				lineRow.remove();
-			}
-
-			// Recalculate the total amount
-			const totalAmount = calculateTotalAmount(order.lines);
-
-			// Update the total amount in the modal
-			document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
-		} else {
-			console.error(`Line with No Reference ${lineNumber} not found.`);
-		}
-	}
-}
-
-function calculateTotalAmount(lines) {
-	let totalAmount = 0;
-	lines.forEach(line => {
-		const quantity = line.quantities.quantity;
-		const unitPrice = line.unitPrice;
-		const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-		const total = (quantity * unitPrice) - discount;
-		totalAmount += total;
-	});
-	return totalAmount.toFixed(2);
-}
-
-function deleteLine(orderIndex, lineIndex) {
-	const order = window.ordersData[orderIndex];
-	order.lines.splice(lineIndex, 1); // Remove the line from the data
-
-	document.querySelector(`#line-row-${lineIndex}`).remove(); // Remove the line from the DOM
-
-	// Recalculate the total amount
-	const totalAmount = calculateTotalAmount(order.lines);
-
-	// Update the total amount in the modal
-	document.querySelector('#orderModal .cart-body h3').textContent = `€${totalAmount}`;
-}
-
-function deleteOrder(orderIndex) {
-	// Your logic to delete the order from the server or local data
-
-	document.querySelector(`#order-row-${orderIndex}`).remove();
-
-}
-
-
-
-fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
-	.then(response => response.json())
-	.then(data => {
-		console.log(data);
-		const tbodyOrders = document.getElementById('ordersTableBody');
-
-		data.forEach((order, index) => {
-			const header = order.header;
-			const lines = order.lines || [];
-
-			if (header) {
-				// Calculate total quantity and total amount for the order
-				let totalQuantity = 0;
-				let totalAmount = 0;
-
-				lines.forEach(line => {
-
-					const quantity = line.quantities.quantity;
-					const unitPrice = line.unitPrice;
-
-					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-					const total = (quantity * unitPrice) - discount;
-
-					totalQuantity += quantity
-					totalAmount += total;
-				});
-				
-				const newRowOrder= document.createElement('tr');
-				newRowOrder.setAttribute("id", "order-row-"+header.documentKey.number);
-				newRowOrder.innerHTML = `
-               
-                    <td>${header.documentKey.number}</td>
-                    <td>${new Date(header.documentDate).toLocaleDateString()}</td>
-                    <td>${header.storeId || 'N/A'}</td>
-                    <td>${header.customer.id}</td>
-                    <td>${header.customer.lastName}</td>
-                    <td>${totalQuantity}</td>
-                    <td>${totalAmount.toFixed(2)}</td>
-                    <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
-                    <td style="width: 20%;">
-                        <a href="#" class="table-link text-warning" onclick="showOrder(${index})">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#" class="table-link text-info" onclick="editOrder(${index})">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#" class="table-link danger" onclick="confirmDelete(${header.documentKey.number})">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </td>
-                `;
-
-				// Append the new row to the tbody
-				tbodyOrders.appendChild(newRowOrder);
-			}
-            
-           
-		});
- const newButton = document.createElement('button');
-newButton.classList.add('btn', 'btn-primary-reversed'); // Add Bootstrap button styles
-newButton.textContent = 'New Order';
-newButton.onclick = showBlankPopup;
-tbodyOrders.appendChild(newButton);
-		window.ordersData = data;
-	})
-	.catch(error => console.error('Error fetching data:', error));
-
-    function showPopupReservation(orderIndex) {
-        fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
-            .then(response => response.json())
-            .then(data => {
-                const order = data[orderIndex];
-    
-                // Store the order data globally for easy access
-                window.ordersData = data;
-    
-                // Calculate total amount for the entire order
-                
-                const modalHtml = `
-                    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="orderModalLabel">Reservation Details</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <div class="contentbar">
-                                            <div class="row">
-                                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                                    <div class="card m-b-30">
-                                                        <div class="card-header">
-                                                            <h5 class="card-title">Cart</h5>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div>
-                                                                <div>
-                                                                    <div class="cart-container">
-                                                                        <div class="cart-head">
-                                                                            <div class="table-responsive">
-                                                                                <table class="table table-borderless">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th scope="col">No Reference</th>
-                                                                                            <th scope="col">Description</th>                                               
-                                                                                            <th scope="col">Quantity</th>
-                                                                                            
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody id="order-lines-tbody">
-                                                                                    ${order.lines.map((line, index) => {
-                                                                                        const quantity = line.quantity;
-                                                                                        
-                                                                                        return `
-                                                                                            <tr id="line-row-${index +1}">
-                                                                                                <td>${index +1 }</td>
-                                                                                                <td>${line.description}</td>
-                                                                                                <td>${quantity}</td>
-                                                                                            </tr>
-                                                                                        `;
-                                                                                    }).join('')}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cart-body">
-                                                                    <div class="new-line">
-                                                                   
-                                                                    </div>
-                                                                   
-                                                                    </div>
-                                                                    <div class="cart-footer text-right">
-                                                                        
-                                                                        <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-    
-                // Remove existing modal if present
-                const existingModal = document.getElementById('orderModal');
-                if (existingModal) {
-                    existingModal.parentNode.removeChild(existingModal);
-                }
-    
-                // Append new modal to body
-                document.body.insertAdjacentHTML('beforeend', modalHtml);
-    
-                // Show the modal
-                $('#orderModal').modal('show');
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
-
-fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
-	.then(response => response.json())
-	.then(data => {
-		console.log(data);
-		const tbodyReservations = document.getElementById('reservationsTableBody');
-		
-		data.forEach((order, index) => {
-			const header = order.header;
-			const lines = order.lines || [];
-
-			if (header) {
-				// Calculate total quantity and total amount for the order
-				let totalQuantity = 0;
-				let totalAmount = 0;
-
-				lines.forEach(line => {
-
-					const quantity = line.quantity;
-					const unitPrice = line.unitPrice;
-
-					
-					const total = (quantity * unitPrice) 
-
-					totalQuantity += quantity
-					totalAmount += total;
-				});
-				const newRowReservation = document.createElement('tr');
-				
-				newRowReservation.setAttribute("id", "reservation-row-"+index);
-				newRowReservation.innerHTML = `
-				
-                <td>${header.key.number}</td>
-                <td>${new Date(header.documentDate).toLocaleDateString()}</td>
-                <td>${header.storeId || 'N/A'}</td>
-                <td>${header.customer.id}</td>
-                <td>${header.customer.lastName}</td>
-                <td>${header.totalQuantity}</td>
-                
-                    <td style="width: 20%;">
                         
-                        <a href="#" class="table-link text-warning" onclick="showReservation(${index})">
-                            <span class="fa-stack">
-                                <i class="fa fa-square fa-stack-2x"></i>
-                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    
-                    </td>
-                `;
+                        
+                        <div class="tab-pane fade" id="account-additional-information">
+                            <hr class="border-light m-0">
+                            <div class="card-body">
+                                
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="usrfieldConnectedSalesperson" class="form-label">Connected Salesperson </label>
+                                        <input type="text" class="form-control" id="usrfieldConnectedSalesperson">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="usrfieldMiddleName" class="form-label">Middle Name </label>
+                                        <input type="text" class="form-control" id="usrfieldMiddleName">
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="usrfieldSalutation" class="form-label">Salutation</label>
+                                        <input type="text" class="form-control" id="usrfieldSalutation">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="usrfieldAcademicTitile" class="form-label">Academic Title </label>
+                                        <input type="text" class="form-control" id="usrfieldAcademicTitile">
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="usrfieldNobilityTitle" class="form-label">Nobility Title </label>
+                                        <input type="text" class="form-control" id="usrfieldNobilityTitle">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="usrfieldNameAddition" class="form-label">Name Addition </label>
+                                        <input type="text" class="form-control" id="usrfieldNameAddition">
+                                    </div>
+                                </div>
 
-				// Append the new row to the tbody
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="usrfieldProfession" class="form-label">Profession </label>
+                                        <input type="text" class="form-control" id="usrfieldProfession">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="usrfieldClosestStore" class="form-label">Closest Store </label>
+                                        <input type="text" class="form-control" id="usrfieldClosestStore">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-customer-addresses">
+                            
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                                        <div class="tab-content" id="myTabContent">
+                                            <div class="tab-pane fade  active show" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
+                                                <h4 class="font-weight-bold mt-0 mb-4" style="color:#3c4395;">Manage Addresses</h4>
+                                                 <div id="addressContainer">
+                                                            <!-- Document dates will be appended here -->
+                                                        </div>
+                                                <div id="addressesContainer">
+                                                            <!-- Document dates will be appended here -->
+                                                        </div>
+                                                <button id="newAddressBtn" class="btn btn-primary">New Address</button>
 
-				tbodyReservations.appendChild(newRowReservation);
-			}
-		});
-	});
-let responseData;
-let callbackURL;
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-customer-orders">
+                            
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="main-box no-header clearfix">
+                                            <div class="main-box-body clearfix">
+                                                <div class="table-responsive">
+                                                    <table class="table user-list">
+                                                        <thead>
+                                                            <tr>
+                                                           
+                                                            <th><span>Number</span></th>
+                                                            <th class="text-center"><span>Document Date</span></th>
+                                                            <th><span>Store</span></th>
+                                                            <th><span>Customer</span></th>
+                                                            <th><span>Company Name</span></th>
+                                                            <th><span>Total qty</span></th>
+                                                            <th><span>Tax inc. total Currency</span></th>
+                                                            <th><span>Delivery date</span></th>
+                                                            <th>&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ordersTableBody">
+                                                            <!-- Document dates will be appended here -->
+                                                        </tbody>
+                                                        
+                                                    </table>
+                                                   <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                        </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-customer-reservations">
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="main-box no-header clearfix">
+                                        <div class="main-box-body clearfix">
+                                            <div class="table-responsive">
+                                                <table class="table user-list">
+                                                    <thead>
+                                                        <tr>
+                                                       
+                                                        <th><span>Number</span></th>
+                                                        <th class="text-center"><span>Document Date</span></th>
+                                                        <th><span>Store</span></th>
+                                                        <th><span>Customer</span></th>
+                                                        <th><span>Company Name</span></th>
+                                                        <th><span>Total qty</span></th>
+                                                       
+                                                        <th>&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="reservationsTableBody">
+                                                        <!-- Document dates will be appended here -->
+                                                    </tbody>
+                                                    
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+                        <!-- Additional tab panes... -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-right mt-3">
+            <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>&nbsp;
+            <button type="button" class="btn btn-default" id="cancelBtn">Cancel</button>
+        </div>
+        
+    </div>
+    <script src="/script.js"></script>
+    <script src="/addresses-information.js"></script>
+    <script src="/general-information.js"></script>
+    <script src="/userfields-information.js"></script>
+    
+    <script src="/postBackExternalCusForm.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-
+</html>
