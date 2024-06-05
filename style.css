@@ -30,15 +30,16 @@ body {
     }
 }
 .btn-primary-reversed {
-color: var(--bs-btn-hover-color);
-    background-color: var(--bs-btn-hover-bg);
-    border-color: var(--bs-btn-hover-border-color);
+
+    color: #fff !important;
+    background-color: #3c4395 !important;
+     border-color: #f3a32c !important;
 }
 
 .btn-primary-reversed:hover {
-    color: #fff;
-    background-color: #f3a32c;
-    border-color: #3c4395;
+    color: #fff !important;
+    background-color: #f3a32c !important ;
+    border-color: #3c4395 !important;
 
 }
 
