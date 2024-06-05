@@ -380,8 +380,8 @@ function showBlankPopup() {
                                                                 <h3>€${totalAmount}</h4>
                                                                 </div>
                                                                 <div class="cart-footer text-right">
-                                                                    <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                    
+                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Create Cart<i class="ri-arrow-right-line ml-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -852,7 +852,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
            
 		});
  const newButton = document.createElement('button');
-newButton.classList.add('btn', 'btn-primary'); // Add Bootstrap button styles
+newButton.classList.add('btn', 'btn-primary-reversed '); // Add Bootstrap button styles
 newButton.textContent = 'New Order';
 newButton.onclick = showBlankPopup;
 tbodyOrders.appendChild(newButton);
@@ -1036,4 +1036,5 @@ fetch('https://ls-customerserver.onrender.com/swagger/CustomerUserFields')
 
 	})
 	.catch(error => console.error('Error fetching data:', error));
+
 
