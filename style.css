@@ -29,7 +29,18 @@ body {
         max-width: 90%;
     }
 }
+.btn-primary-reversed {
+color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+}
 
+.btn-primary-reversed:hover {
+    color: #fff;
+    background-color: #f3a32c;
+    border-color: #3c4395;
+
+}
 
 .btn-primary {
     --bs-btn-color: #fff;
