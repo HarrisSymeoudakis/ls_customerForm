@@ -852,7 +852,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
            
 		});
  const newButton = document.createElement('button');
-newButton.classList.add('btn', 'btn-primary-reversed '); // Add Bootstrap button styles
+newButton.classList.add('btn', 'btn-primary-reversed'); // Add Bootstrap button styles
 newButton.textContent = 'New Order';
 newButton.onclick = showBlankPopup;
 tbodyOrders.appendChild(newButton);
