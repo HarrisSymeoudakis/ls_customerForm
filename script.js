@@ -88,14 +88,17 @@ function validateEmail() {
 	const emailField = document.getElementById('email');
 	const email = emailField.value;
 	const message = document.getElementById('message');
+
 	const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}$/;
 
 	if (emailPattern.test(email)) {
 		message.textContent = "Valid Email Address";
 		message.style.color = "green";
+        emailField.style.backgroundColor = "#90ee90";
 	} else {
 		message.textContent = "Invalid Email Address";
 		message.style.color = "red";
+        emailField.style.backgroundColor = "#ff474c";
 	}
 }
 
@@ -381,7 +384,7 @@ function showBlankPopup() {
                                                                 </div>
                                                                 <div class="cart-footer text-right">
                                                                     
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Create Cart<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Create Order<i class="ri-arrow-right-line ml-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
