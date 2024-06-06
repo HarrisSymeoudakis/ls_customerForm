@@ -93,7 +93,7 @@ function validateEmail() {
 
 	if (emailPattern.test(email)) {
 		message.textContent = "Valid Email Address";
-		message.style.color = "green";
+		message.style.color = "#fff";
         emailField.style.backgroundColor = "#90ee90";
 	} else {
 		message.textContent = "Invalid Email Address";
