@@ -773,10 +773,10 @@ function fetchAndDisplayOrders() {
 
                     if (header) {
                         const matches = (
-                            (customerIdInput ? header.customer.id === customerIdInput : true) &&
-                            (customerNameInput ? header.customer.firstName === customerNameInput : true) &&
-                            (customerLastNameInput ? header.customer.lastName === customerLastNameInput : true) &&
-                            (storeIdInput ? header.storeId === storeIdInput : true) &&
+                            (customerIdInput ? header.customer.id === customerIdInput : true) ||
+                            (customerNameInput ? header.customer.firstName === customerNameInput : true) ||
+                            (customerLastNameInput ? header.customer.lastName === customerLastNameInput : true) ||
+                            (storeIdInput ? header.storeId === storeIdInput : true) ||
                             (orderNumberInput ? header.documentKey.number === orderNumberInput : true)
                         );
 
