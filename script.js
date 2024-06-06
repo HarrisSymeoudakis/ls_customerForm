@@ -745,6 +745,10 @@ document.getElementById('delete').addEventListener('click', () => {
   document.getElementById('input6').value = '';
 });
 
+fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);});
 
 // Function to fetch and process data
 function fetchAndDisplayOrders() {
