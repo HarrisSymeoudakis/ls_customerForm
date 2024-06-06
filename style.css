@@ -1183,11 +1183,11 @@ legend {
   width: 100%;
 }
 
-.s007 form .inner-form .input-field {
+.s007  .inner-form .input-field {
   position: relative;
 }
 
-.s007 form .inner-form .input-field input {
+.s007  .inner-form .input-field input {
   height: 100%;
   border: 0;
   background: #fff;
@@ -1201,27 +1201,27 @@ legend {
   color: #555;
 }
 
-.s007 form .inner-form .input-field input.placeholder {
+.s007  .inner-form .input-field input.placeholder {
   color: #999;
   font-size: 18px;
 }
 
-.s007 form .inner-form .input-field input:-moz-placeholder {
+.s007  .inner-form .input-field input:-moz-placeholder {
   color: #999;
   font-size: 18px;
 }
 
-.s007 form .inner-form .input-field input::-webkit-input-placeholder {
+.s007  .inner-form .input-field input::-webkit-input-placeholder {
   color: #999;
   font-size: 18px;
 }
 
-.s007 form .inner-form .input-field input:hover, .s007 form .inner-form .input-field input:focus {
+.s007  .inner-form .input-field input:hover, .s007 form .inner-form .input-field input:focus {
   box-shadow: none;
   outline: 0;
 }
 
-.s007 form .inner-form .input-field .btn-search {
+.s007  .inner-form .input-field .btn-search {
   min-width: 100px;
   height: 40px;
   padding: 0 15px;
@@ -1236,11 +1236,11 @@ legend {
   font-weight: bold;
 }
 
-.s007 form .inner-form .input-field .btn-search:hover {
+.s007  .inner-form .input-field .btn-search:hover {
   background: #4ea63f;
 }
 
-.s007 form .inner-form .input-field .btn-delete {
+.s007  .inner-form .input-field .btn-delete {
   min-width: 100px;
   height: 40px;
   padding: 0 15px;
@@ -1255,7 +1255,7 @@ legend {
   font-weight: bold;
 }
 
-.s007 form .inner-form .input-field .btn-delete:hover {
+.s007  .inner-form .input-field .btn-delete:hover {
   color: #000;
 }
 
@@ -1348,7 +1348,7 @@ legend {
   margin-bottom: 0;
 }
 
-.s007 form .inner-form .advance-search .input-field {
+.s007  .inner-form .advance-search .input-field {
   width: calc(33.3333% - 30px);
 }
 
@@ -1470,7 +1470,7 @@ legend {
 }
 
 @media screen and (max-width: 767px) {
-  .s007 ] .inner-form .basic-search .input-field input {
+  .s007  .inner-form .basic-search .input-field input {
     padding: 10px 110px 10px 60px;
   }
   .s007  .inner-form .basic-search .input-field .icon-wrap {
@@ -1485,7 +1485,7 @@ legend {
   .s007 form .inner-form .advance-search .row {
     display: block;
   }
-  .s007 form .inner-form .advance-search .input-field {
+  .s007  .inner-form .advance-search .input-field {
     width: 100%;
     margin-bottom: 20px;
   }
