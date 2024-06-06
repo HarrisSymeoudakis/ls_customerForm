@@ -1262,6 +1262,7 @@ legend {
 .s007 form .inner-form .basic-search {
   margin-bottom: 5px;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+    display: block;
 }
 
 
