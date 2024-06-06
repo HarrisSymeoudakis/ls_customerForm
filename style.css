@@ -1262,7 +1262,7 @@ legend {
 .s007  .inner-form .basic-search {
   margin-bottom: 5px;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
-    display: block;
+    display: inline;
 }
 
 
@@ -1470,15 +1470,15 @@ legend {
 }
 
 @media screen and (max-width: 767px) {
-  .s007 form .inner-form .basic-search .input-field input {
+  .s007 ] .inner-form .basic-search .input-field input {
     padding: 10px 110px 10px 60px;
   }
-  .s007 form .inner-form .basic-search .input-field .icon-wrap {
+  .s007  .inner-form .basic-search .input-field .icon-wrap {
     width: 60px;
     -ms-flex-pack: center;
         justify-content: center;
   }
-  .s007 form .inner-form .basic-search .input-field .icon-wrap svg {
+  .s007  .inner-form .basic-search .input-field .icon-wrap svg {
     width: 26px;
     height: 26px;
   }
