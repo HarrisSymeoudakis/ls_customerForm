@@ -1348,7 +1348,7 @@ legend {
   margin-bottom: 0;
 }
 
-.s007  .inner-form .advance-search .input-field {
+.s007 form .inner-form .advance-search .input-field {
   width: calc(33.3333% - 30px);
 }
 
@@ -1485,7 +1485,7 @@ legend {
   .s007 form .inner-form .advance-search .row {
     display: block;
   }
-  .s007  .inner-form .advance-search .input-field {
+  .s007 form .inner-form .advance-search .input-field {
     width: 100%;
     margin-bottom: 20px;
   }
