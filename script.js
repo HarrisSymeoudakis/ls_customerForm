@@ -750,105 +750,107 @@ fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActive
         .then(data => {
             console.log(data);});
 
-// Function to fetch and process data
-fetchAndDisplayOrders();
 function fetchAndDisplayOrders() {
-    fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            const tbodyOrders = document.getElementById('customFilteringBody');
+            fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const tbodyOrders = document.getElementById('customfilteringbody');
 
-            // Clear the current content of tbodyOrders
-            tbodyOrders.innerHTML = '';
+                    // Clear the current content of tbodyOrders
+                    tbodyOrders.innerHTML = '';
 
-            // Event listener for the search button
-            document.getElementById('searchButton').addEventListener('click', () => {
-                // Get input fields values to match
-                const customerIdInput = document.getElementById('customerIdInput').value; 
-                const customerNameInput = document.getElementById('customerNameInput').value; 
-                const customerLastNameInput = document.getElementById('customerLastNameInput').value; 
-                const storeIdInput = document.getElementById('storeIdInput').value; 
-                const orderNumberInput = parseInt(document.getElementById('orderNumberInput').value, 10); 
+                    // Event listener for the search button
+                    document.getElementById('searchButton').addEventListener('click', () => {
+                        // Get input fields values to match
+                        const customerIdInput = document.getElementById('customerIdInput').value; 
+                        const customerNameInput = document.getElementById('customerNameInput').value; 
+                        const customerLastNameInput = document.getElementById('customerLastNameInput').value; 
+                        const storeIdInput = document.getElementById('storeIdInput').value; 
+                        const orderNumberInput = parseInt(document.getElementById('orderNumberInput').value, 10); 
 
-                // Iterate over data and match with input values
-                data.forEach((order, index) => {
-                    const header = order.header;
-                    const lines = order.lines || [];
+                        // Clear previous results
+                        tbodyOrders.innerHTML = '';
 
-                    if (header) {
-                        const matches = (
-                            (customerIdInput ? header.customer.id === customerIdInput : true) ||
-                            (customerNameInput ? header.customer.firstName === customerNameInput : true) ||
-                            (customerLastNameInput ? header.customer.lastName === customerLastNameInput : true) ||
-                            (storeIdInput ? header.storeId === storeIdInput : true) ||
-                            (orderNumberInput ? header.documentKey.number === orderNumberInput : true)
-                        );
+                        // Iterate over data and match with input values
+                        data.forEach((order, index) => {
+                            const header = order.header;
+                            const lines = order.lines || [];
 
-                        if (matches) {
-                            // Calculate total quantity and total amount for the order
-                            let totalQuantity = 0;
-                            let totalAmount = 0;
+                            if (header) {
+                                const matches = (
+                                    (customerIdInput ? header.customer.id === customerIdInput : true) &&
+                                    (customerNameInput ? header.customer.firstName === customerNameInput : true) &&
+                                    (customerLastNameInput ? header.customer.lastName === customerLastNameInput : true) &&
+                                    (storeIdInput ? header.storeId === storeIdInput : true) &&
+                                    (orderNumberInput ? header.documentKey.number === orderNumberInput : true)
+                                );
 
-                            lines.forEach(line => {
-                                const quantity = line.quantities.quantity;
-                                const unitPrice = line.unitPrice || 0; // Assuming unitPrice is present in the line item
+                                if (matches) {
+                                    // Calculate total quantity and total amount for the order
+                                    let totalQuantity = 0;
+                                    let totalAmount = 0;
 
-                                const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-                                const total = (quantity * unitPrice) - discount;
+                                    lines.forEach(line => {
+                                        const quantity = line.quantities.quantity;
+                                        const unitPrice = line.unitPrice || 0; // Assuming unitPrice is present in the line item
 
-                                totalQuantity += quantity;
-                                totalAmount += total;
-                            });
+                                        const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+                                        const total = (quantity * unitPrice) - discount;
 
-                            // Create a new row for the order
-                            const newRowOrder = document.createElement('tr');
-                            newRowOrder.setAttribute("id", "order-row-" + header.documentKey.number);
-                            newRowOrder.innerHTML = `
-                                <td>${header.documentKey.number}</td>
-                                <td>${new Date(header.documentDate).toLocaleDateString()}</td>
-                                <td>${header.storeId || 'N/A'}</td>
-                                <td>${header.customer.id}</td>
-                                <td>${header.customer.lastName}</td>
-                                <td>${totalQuantity}</td>
-                                <td>${totalAmount.toFixed(2)}</td>
-                                <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
-                                <td style="width: 20%;">
-                                    <a href="#" class="table-link text-warning" onclick="showOrder(${index})">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x"></i>
-                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <a href="#" class="table-link text-info" onclick="editOrder(${index})">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x"></i>
-                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <a href="#" class="table-link danger" onclick="confirmDelete(${header.documentKey.number})">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-square fa-stack-2x"></i>
-                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </td>
-                            `;
+                                        totalQuantity += quantity;
+                                        totalAmount += total;
+                                    });
 
-                            // Append the new row to the tbody
-                            tbodyOrders.appendChild(newRowOrder);
-                        }
-                    }
-                });
-            });
+                                    // Create a new row for the order
+                                    const newRowOrder = document.createElement('tr');
+                                    newRowOrder.setAttribute("id", "order-row-" + header.documentKey.number);
+                                    newRowOrder.innerHTML = `
+                                        <td>${header.documentKey.number}</td>
+                                        <td>${new Date(header.documentDate).toLocaleDateString()}</td>
+                                        <td>${header.storeId || 'N/A'}</td>
+                                        <td>${header.customer.id}</td>
+                                        <td>${header.customer.lastName}</td>
+                                        <td>${totalQuantity}</td>
+                                        <td>${totalAmount.toFixed(2)}</td>
+                                        <td>${new Date(header.deliveryDate).toLocaleDateString()}</td>
+                                        <td style="width: 20%;">
+                                            <a href="#" class="table-link text-warning" onclick="showOrder(${index})">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="table-link text-info" onclick="editOrder(${index})">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="table-link danger" onclick="confirmDelete(${header.documentKey.number})">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    `;
 
-            // Store data in a global variable for later use
-            window.ordersData = data;
-        })
-        .catch(error => console.error('Error fetching data:', error));
-}
+                                    // Append the new row to the tbody
+                                    tbodyOrders.appendChild(newRowOrder);
+                                }
+                            }
+                        });
+                    });
 
-// Call the function to fetch and display orders
+                    // Store data in a global variable for later use
+                    window.ordersData = data;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Call the function to fetch and display orders
+        fetchAndDisplayOrders();
 
 
 
