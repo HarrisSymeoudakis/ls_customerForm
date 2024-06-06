@@ -751,6 +751,7 @@ fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActive
             console.log(data);});
 
 // Function to fetch and process data
+fetchAndDisplayOrders();
 function fetchAndDisplayOrders() {
     fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders')
         .then(response => response.json())
