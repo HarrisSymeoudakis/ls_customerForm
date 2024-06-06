@@ -698,11 +698,50 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
 	});
 
 
-let allActiveOrder;
-fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders')
-	.then(response => response.json())
-	.then(data => {
-		console.log(data);
-		
-	});
+async function searchOrders() {
+  // Collecting input values
+  const ci = document.getElementById('input1').value;
+  const cn = document.getElementById('input2').value;
+  const cl = document.getElementById('input3').value;
+  const si = document.getElementById('input4').value;
+  const on = document.getElementById('input5').value;
+
+  // Building the filter dictionary
+  const filters = {};
+  if (ci) filters.ci = ci;
+  if (cn) filters.cn = cn;
+  if (cl) filters.cl = cl;
+  if (si) filters.si = si;
+  if (on) filters.on = on;
+
+  // Fetching the JSON data
+  const response = await fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders');
+  const orders = await response.json();
+
+  // Filtering the orders based on input values
+  const filteredOrders = orders.filter(order => {
+    return (!filters.ci || order.header.customer.id.includes(filters.ci)) &&
+           (!filters.cn || order.header.customer.firstName.includes(filters.cn)) &&
+           (!filters.cl || order.header.customer.lastName.includes(filters.cl)) &&
+           (!filters.si || order.header.storeId.includes(filters.si)) &&
+           (!filters.on || order.header.documentKey.number.toString().includes(filters.on));
+  });
+
+  // Getting unique indexes of the matching orders
+  const uniqueIndexes = filteredOrders.map(order => order.header.documentKey.number);
+
+  // Returning or displaying the list of unique indexes
+  console.log(uniqueIndexes);
+  // Optionally, you can display these indexes in the UI
+}
+
+// Clear button functionality
+document.getElementById('delete').addEventListener('click', () => {
+  document.getElementById('input1').value = '';
+  document.getElementById('input2').value = '';
+  document.getElementById('input3').value = '';
+  document.getElementById('input4').value = '';
+  document.getElementById('input5').value = '';
+  document.getElementById('input6').value = '';
+});
 
