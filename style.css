@@ -1183,11 +1183,11 @@ legend {
   width: 100%;
 }
 
-.s007  .inner-form .input-field {
+.s007 form .inner-form .input-field {
   position: relative;
 }
 
-.s007  .inner-form .input-field input {
+.s007 form  .inner-form .input-field input {
   height: 100%;
   border: 0;
   background: #fff;
@@ -1201,22 +1201,22 @@ legend {
   color: #555;
 }
 
-.s007  .inner-form .input-field input.placeholder {
+.s007 form .inner-form .input-field input.placeholder {
   color: #999;
   font-size: 18px;
 }
 
-.s007  .inner-form .input-field input:-moz-placeholder {
+.s007 form .inner-form .input-field input:-moz-placeholder {
   color: #999;
   font-size: 18px;
 }
 
-.s007  .inner-form .input-field input::-webkit-input-placeholder {
+.s007 form .inner-form .input-field input::-webkit-input-placeholder {
   color: #999;
   font-size: 18px;
 }
 
-.s007  .inner-form .input-field input:hover, .s007 form .inner-form .input-field input:focus {
+.s007 form .inner-form .input-field input:hover, .s007 form .inner-form .input-field input:focus {
   box-shadow: none;
   outline: 0;
 }
