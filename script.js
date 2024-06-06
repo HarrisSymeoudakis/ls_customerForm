@@ -698,3 +698,12 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerReservations')
 	});
 
 
+
+let allActiveOrder;
+fetch('https://ls-allcustomerordersserver.onrender.com/swagger/AllCustomerActiveOrders ')
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		
+	});
+
