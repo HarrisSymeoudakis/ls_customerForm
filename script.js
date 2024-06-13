@@ -288,6 +288,7 @@ function viewBasket(customerId,storeId){
 
     // Convert postData to JSON string
     var postDataString = JSON.stringify(postData);
+	console.log(postDataString);
     xhr.send(postDataString);
 }
 
