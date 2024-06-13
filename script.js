@@ -227,10 +227,7 @@ function showEditablePopup(orderIndex) {
 				const customerId=order.header.customer.id;
 				const storeId=order.header.storeId;
 				viewBasket(customerId,storeId);
-				setTimeout(function() {
-  console.log("World");
-}, 30000);
-				
+					
 				// document.getElementById('viewBasketAll').addEventListener('click', function() {
 
 			});
@@ -256,10 +253,11 @@ function viewBasket(customerId,storeId){
                 if (response.externalBasketUrl) {
                     console.log(response.externalBasketUrl);
 
-			 setTimeout(function() {
-  console.log("World");
-}, 15000);
-                    window.location.href = response.externalBasketUrl;
+			setTimeout(function() {
+  window.location.href = response.externalBasketUrl;
+}, 30000);
+			
+                    
                 }
             } else {
                 console.error('Error:', xhr.status);
