@@ -223,7 +223,7 @@ function showEditablePopup(orderIndex) {
 					const priceWithDiscount = unitPrice - discount;
 					const warehouseIdVar = line.warehouseId;
 					const finalPrice = quantityVar*(unitPrice - discount);
-					console.log(finalPrice);
+					
 					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar,finalPrice);
 				});
 
@@ -497,7 +497,9 @@ function showPopup(orderIndex, text) {
 					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
 					const priceWithDiscount = unitPrice - discount;
 					const warehouseIdVar = line.warehouseId;
-					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
+					const finalPrice = quantityVar*(unitPrice - discount);
+					
+					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar,finalPrice);
 				});
 
 				const customerId=order.header.customer.id;
@@ -830,7 +832,9 @@ tbodyOrders.appendChild(newButton);
 					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
 					const priceWithDiscount = unitPrice - discount;
 					const warehouseIdVar = line.warehouseId;
-					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
+					const finalPrice = quantityVar*(unitPrice - discount);
+					
+					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar,finalPrice);
 				});
 
 				const customerId=order.header.customer.id;
