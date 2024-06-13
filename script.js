@@ -253,9 +253,9 @@ function viewBasket(customerId,storeId){
                 if (response.externalBasketUrl) {
                     console.log(response.externalBasketUrl);
 
-			setTimeout(function() {
+			
   window.location.href = response.externalBasketUrl;
-}, 7000);
+
 			
                     
                 }
