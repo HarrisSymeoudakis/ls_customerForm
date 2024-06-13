@@ -222,7 +222,7 @@ function showEditablePopup(orderIndex) {
 					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
 					const priceWithDiscount = unitPrice - discount;
 					const warehouseIdVar = line.warehouseId;
-					const finalPrice = quantityVar*unitPrice - discount;
+					const finalPrice = quantityVar*(unitPrice - discount);
 					console.log(finalPrice);
 					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar,finalPrice);
 				});
@@ -621,7 +621,7 @@ function calculateTotalAmount(lines) {
 		const quantity = line.quantities.quantity;
 		const unitPrice = line.unitPrice;
 		const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-		const total = (quantity * unitPrice) - discount;
+		const total = quantity *( unitPrice - discount);
 		totalAmount += total;
 	});
 	return totalAmount.toFixed(2);
