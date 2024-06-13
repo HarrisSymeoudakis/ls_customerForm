@@ -457,8 +457,8 @@ function showPopup(orderIndex, text) {
                                                                 </div>
                                                                 <div class="cart-footer text-right">
                                                                     
-                                                                    <a href="page-checkout.html" id="proceed-to-checkout" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                </div>
+                                                                     <button type="button" class="btn btn-primary my-1" id="proceed-to-checkout">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></button>
+								     </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -791,8 +791,8 @@ tbodyOrders.appendChild(newButton);
                                                                     </div>
                                                                     <div class="cart-footer text-right">
                                                                         
-                                                                        <a href="page-checkout.html" id="proceed-to-checkout" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
-                                                                    </div>
+                                                                         <button type="button" class="btn btn-primary my-1" id="proceed-to-checkout">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></button>
+									 </div>
                                                                 </div>
                                                             </div>
                                                         </div>
