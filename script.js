@@ -223,6 +223,7 @@ function showEditablePopup(orderIndex) {
 					const priceWithDiscount = unitPrice - discount;
 					const warehouseIdVar = line.warehouseId;
 					const finalPrice = quantityVar*unitPrice - discount;
+					console.log(finalPrice);
 					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar,finalPrice);
 				});
 
