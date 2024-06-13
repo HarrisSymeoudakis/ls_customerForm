@@ -229,7 +229,7 @@ function showEditablePopup(orderIndex) {
 				viewBasket(customerId,storeId);
 				setTimeout(function() {
   console.log("World");
-}, 5000);
+}, 30000);
 				
 				// document.getElementById('viewBasketAll').addEventListener('click', function() {
 
