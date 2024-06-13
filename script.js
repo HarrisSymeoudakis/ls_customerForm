@@ -255,7 +255,7 @@ function viewBasket(customerId,storeId){
 
 			setTimeout(function() {
   window.location.href = response.externalBasketUrl;
-}, 30000);
+}, 7000);
 			
                     
                 }
