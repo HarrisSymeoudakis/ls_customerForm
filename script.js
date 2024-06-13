@@ -213,6 +213,7 @@ function showEditablePopup(orderIndex) {
 
 			// Add event listener to "Proceed to Checkout" button
 			document.getElementById('proceed-to-checkout').addEventListener('click', () => {
+				
 				order.lines.forEach(line => {
 					const itemCodeVar = line.item.id;
 					const quantityVar = line.quantities.quantity;
@@ -222,11 +223,73 @@ function showEditablePopup(orderIndex) {
 					const warehouseIdVar = line.warehouseId;
 					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
 				});
+
+				const customerId=order.header.customer.id;
+				const storeId=order.header.storeId;
+				viewBaskerAll(customerId,storeId);
+				// document.getElementById('viewBasketAll').addEventListener('click', function() {
+
 			});
 		})
 		.catch(error => console.error('Error fetching data:', error));
 }
 
+
+function viewBasket(customerId,storeId){
+    var xhr = new XMLHttpRequest();
+    var postUrl = 'http://localhost:3000/et/pos/external-basket/v1'; // Proxy server URL
+    //var postUrl = 'https://proxyserver-z74x.onrender.com/et/pos/external-basket/v1'; // Proxy server URL
+    xhr.open('POST', postUrl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // Include access token in the request headers
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log('POST request successful');
+                setTimeout(() => {
+    console.log('Hello, World!');
+}, 1000);
+                var response = JSON.parse(xhr.responseText);
+                if (response.externalBasketUrl) {
+                    console.log(response.externalBasketUrl);
+                    window.location.href = response.externalBasketUrl;
+                }
+            } else {
+                console.error('Error:', xhr.status);
+                // Handle error if needed
+            }
+        }
+    };
+
+    // Retrieve cart items from localStorage
+    var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    // Filter out items with quantity greater than 0
+    cartItems = cartItems.filter(item => item.quantity > 0);
+
+    // Re-enumerate itemLineId
+    cartItems.forEach((item, index) => {
+        item.itemLineId = index + 1; // Increment index by 1
+    });
+
+    
+    var postData = {
+        "externalReference": "SimpleSale",
+        "basketType": "RECEIPT",
+        "customer": {
+            "customerCode": customerId // Change the value dynamically here
+        },
+        "itemLines": cartItems,
+        "store": {
+            "storeId": storeId
+        }
+    };
+
+    // Convert postData to JSON string
+    var postDataString = JSON.stringify(postData);
+    xhr.send(postDataString);
+}
 
 function addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar) {
     const existingItems = localStorage.getItem('cartItems'); 
