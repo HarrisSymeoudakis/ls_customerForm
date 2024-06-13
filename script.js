@@ -230,6 +230,12 @@ function showEditablePopup(orderIndex) {
 				setTimeout(function() {
   console.log("World");
 }, 5000);
+				setTimeout(function() {
+  console.log("World");
+}, 5000);
+				setTimeout(function() {
+  console.log("World");
+}, 5000);
 				// document.getElementById('viewBasketAll').addEventListener('click', function() {
 
 			});
@@ -259,9 +265,9 @@ function viewBasket(customerId,storeId){
 
 
 
-			 setTimeout(() => {
-    console.log('Hello, World!');
-}, 10000);
+			 setTimeout(function() {
+  console.log("World");
+}, 5000);
                     window.location.href = response.externalBasketUrl;
                 }
             } else {
