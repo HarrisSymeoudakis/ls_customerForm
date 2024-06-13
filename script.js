@@ -183,7 +183,7 @@ function showEditablePopup(orderIndex) {
                                                                 </div>
                                                                 <div class="cart-footer text-right">
                                                                     <button type="button" class="btn btn-success my-1"><i class="ri-save-line mr-2"></i>Update Cart</button>
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                    <button type="button" class="btn btn-primary my-1" id="proceed-to-checkout">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -210,10 +210,104 @@ function showEditablePopup(orderIndex) {
 
 			// Show the modal
 			$('#orderModal').modal('show');
+
+			// Add event listener to "Proceed to Checkout" button
+			document.getElementById('proceed-to-checkout').addEventListener('click', () => {
+				order.lines.forEach(line => {
+					const itemCodeVar = line.item.id;
+					const quantityVar = line.quantities.quantity;
+					const unitPrice = line.unitPrice;
+					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+					const priceWithDiscount = unitPrice - discount;
+					const warehouseIdVar = line.warehouseId;
+					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
+				});
+			});
 		})
 		.catch(error => console.error('Error fetching data:', error));
 }
 
+
+function addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar) {
+    const existingItems = localStorage.getItem('cartItems'); 
+    const cartItems = existingItems ? JSON.parse(existingItems) : [];
+    const existingItemIndex = cartItems.findIndex(item => item.item.itemCode === itemCodeVar);
+    if (existingItemIndex !== -1) {
+        cartItems[existingItemIndex].quantity++;
+    } else {
+        const item = {
+            "itemCode": itemCodeVar
+        };
+
+        const cartItem = {
+            "itemLineId": itemLineIdCounter++,
+            "item": item,
+            "quantity": quantityVar,
+            "price": {
+                "basePrice": unitPrice,
+                "currentPrice": priceWithDiscount
+            },
+            "lineAmount": {
+                "currency": "EUR",
+                "value": unitPrice
+            },
+            "inventoryOrigin": {
+                "warehouseId": warehouseIdVar
+            }
+        };
+        
+        cartItems.push(cartItem);
+    }
+    console.log(cartItems);
+    
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
+
+let accessToken;
+let itemLineIdCounter = 1; // Initialize item line ID counter
+let finalItems="";
+
+window.onload = function() {
+        localStorage.setItem('cartItems', JSON.stringify([]));
+};
+
+
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        accessToken = await getToken(); // Assign access token retrieved from getToken to the global accessToken variable
+        console.log('Access token:', accessToken);
+    } catch (error) {
+        console.error('Failed to get access token:', error);
+    }
+});
+
+async function getToken() {
+    console.log("hello");
+    return new Promise((resolve, reject) => {
+        var tokenRequest = new XMLHttpRequest();
+        var tokenUrl = 'http://localhost:3000/et/as/connect/token'; // Proxy server URL
+        //var tokenUrl = 'https://proxyserver-z74x.onrender.com/et/as/connect/token'; // Proxy server URL
+        var tokenData = 'client_id=CegidRetailResourceFlowClient&username=AI@90478305_003_TEST&password=1234&grant_type=password&scope=RetailBackendApi offline_access'; // Construct x-www-form-urlencoded body
+
+        tokenRequest.open('POST', tokenUrl, true);
+        tokenRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        tokenRequest.onreadystatechange = function() {
+            if (tokenRequest.readyState === 4) {
+                if (tokenRequest.status === 200) {
+                    var tokenResponse = JSON.parse(tokenRequest.responseText);
+                    accessToken = tokenResponse.access_token;
+                    resolve(accessToken); // Resolve the promise with the access token
+                } else {
+                    console.error('Error:', "error with token");
+                    reject('Failed to get access token'); // Reject the promise if there's an error
+                }
+            }
+        };
+
+        tokenRequest.send(tokenData);
+    });
+}
 function showPopup(orderIndex, text) {
 	fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 		.then(response => response.json())
