@@ -230,12 +230,7 @@ function showEditablePopup(orderIndex) {
 				setTimeout(function() {
   console.log("World");
 }, 5000);
-				setTimeout(function() {
-  console.log("World");
-}, 5000);
-				setTimeout(function() {
-  console.log("World");
-}, 5000);
+				
 				// document.getElementById('viewBasketAll').addEventListener('click', function() {
 
 			});
@@ -256,18 +251,14 @@ function viewBasket(customerId,storeId){
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log('POST request successful');
-                setTimeout(() => {
-    console.log('Hello, World!');
-}, 1000);
+
                 var response = JSON.parse(xhr.responseText);
                 if (response.externalBasketUrl) {
                     console.log(response.externalBasketUrl);
 
-
-
 			 setTimeout(function() {
   console.log("World");
-}, 5000);
+}, 15000);
                     window.location.href = response.externalBasketUrl;
                 }
             } else {
