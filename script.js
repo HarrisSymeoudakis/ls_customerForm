@@ -670,7 +670,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/customerOrders')
 					const unitPrice = line.unitPrice;
 
 					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
-					const total = (quantity * unitPrice) - discount;
+					const total = quantity * (unitPrice - discount);
 
 					totalQuantity += quantity
 					totalAmount += total;
