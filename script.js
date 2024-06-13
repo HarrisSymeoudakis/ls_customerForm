@@ -256,6 +256,12 @@ function viewBasket(customerId,storeId){
                 var response = JSON.parse(xhr.responseText);
                 if (response.externalBasketUrl) {
                     console.log(response.externalBasketUrl);
+
+
+
+			 setTimeout(() => {
+    console.log('Hello, World!');
+}, 10000);
                     window.location.href = response.externalBasketUrl;
                 }
             } else {
