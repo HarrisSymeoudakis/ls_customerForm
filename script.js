@@ -457,7 +457,7 @@ function showPopup(orderIndex, text) {
                                                                 </div>
                                                                 <div class="cart-footer text-right">
                                                                     
-                                                                    <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                    <a href="page-checkout.html" id="proceed-to-checkout" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -484,6 +484,26 @@ function showPopup(orderIndex, text) {
 
 			// Show the modal
 			$('#orderModal').modal('show');
+
+			document.getElementById('proceed-to-checkout').addEventListener('click', () => {
+				
+				order.lines.forEach(line => {
+					const itemCodeVar = line.item.id;
+					const quantityVar = line.quantities.quantity;
+					const unitPrice = line.unitPrice;
+					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+					const priceWithDiscount = unitPrice - discount;
+					const warehouseIdVar = line.warehouseId;
+					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
+				});
+
+				const customerId=order.header.customer.id;
+				const storeId=order.header.storeId;
+				viewBasket(customerId,storeId);
+					
+				// document.getElementById('viewBasketAll').addEventListener('click', function() {
+
+			});
 		})
 		.catch(error => console.error('Error fetching data:', error));
 }
@@ -771,7 +791,7 @@ tbodyOrders.appendChild(newButton);
                                                                     </div>
                                                                     <div class="cart-footer text-right">
                                                                         
-                                                                        <a href="page-checkout.html" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
+                                                                        <a href="page-checkout.html" id="proceed-to-checkout" class="btn btn-primary my-1">Proceed to Checkout<i class="ri-arrow-right-line ml-2"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -798,6 +818,25 @@ tbodyOrders.appendChild(newButton);
     
                 // Show the modal
                 $('#orderModal').modal('show');
+		    document.getElementById('proceed-to-checkout').addEventListener('click', () => {
+				
+				order.lines.forEach(line => {
+					const itemCodeVar = line.item.id;
+					const quantityVar = line.quantities.quantity;
+					const unitPrice = line.unitPrice;
+					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
+					const priceWithDiscount = unitPrice - discount;
+					const warehouseIdVar = line.warehouseId;
+					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
+				});
+
+				const customerId=order.header.customer.id;
+				const storeId=order.header.storeId;
+				viewBasket(customerId,storeId);
+					
+				// document.getElementById('viewBasketAll').addEventListener('click', function() {
+
+			});
             })
             .catch(error => console.error('Error fetching data:', error));
     }
