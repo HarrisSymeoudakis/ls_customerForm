@@ -215,13 +215,15 @@ function showEditablePopup(orderIndex) {
 			document.getElementById('proceed-to-checkout').addEventListener('click', () => {
 				
 				order.lines.forEach(line => {
+					
 					const itemCodeVar = line.item.id;
 					const quantityVar = line.quantities.quantity;
 					const unitPrice = line.unitPrice;
 					const discount = line.discounts && line.discounts.length > 0 ? line.discounts[0].amount : 0;
 					const priceWithDiscount = unitPrice - discount;
 					const warehouseIdVar = line.warehouseId;
-					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar);
+					const finalPrice = quantityVar*unitPrice - discount;
+					addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar,finalPrice);
 				});
 
 				const customerId=order.header.customer.id;
@@ -296,7 +298,7 @@ function viewBasket(customerId,storeId){
     xhr.send(postDataString);
 }
 
-function addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar) {
+function addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, warehouseIdVar ,finalPrice) {
     const existingItems = localStorage.getItem('cartItems'); 
     const cartItems = existingItems ? JSON.parse(existingItems) : [];
     const existingItemIndex = cartItems.findIndex(item => item.item.itemCode === itemCodeVar);
@@ -317,7 +319,7 @@ function addToCart(itemCodeVar, quantityVar, unitPrice, priceWithDiscount, wareh
             },
             "lineAmount": {
                 "currency": "EUR",
-                "value": unitPrice
+                "value": finalPrice
             },
             "inventoryOrigin": {
                 "warehouseId": warehouseIdVar
