@@ -3,7 +3,7 @@ fetch('https://ls-customerserver.onrender.com/swagger/CustomerUserFields')
 	.then(data => {
 		console.log(data);
 		responseData = data;
-		// const usrFields = data.userFields
+		const usrFields = data.userFields
 		// document.getElementById('usrfieldConnectedSalesperson').value = usrFields[0].value.listElement.value + " - " + usrFields[0].value.listElement.description || "";
 		// document.getElementById('usrfieldMiddleName').value = usrFields[1].value.text || "";
 		// document.getElementById('usrfieldSalutation').value = usrFields[2].value.text || "";
