@@ -78,7 +78,8 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
 
 
   // Patch for general Information
-const url = 'https://90478305-partner-retail-ondemand.cegid.cloud/Y2/90478305_003_TEST/api/customers/v2/${customerId}';
+// const url = 'https://90478305-partner-retail-ondemand.cegid.cloud/Y2/90478305_003_TEST/api/customers/v2/${customerId}';
+const url = `https://ls-customerserver.onrender.com/api/customers/v2/${customerId}`;  // Proxy server URL
 
 const jsonBody = {
     "id": customerId,
