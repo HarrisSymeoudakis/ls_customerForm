@@ -129,6 +129,8 @@ document.getElementById('saveChangesBtn').addEventListener('click', function() {
         }
     };
 
+    console.log(jsonBody);
+
     fetch(url, {
         method: 'PATCH',
         headers: {
